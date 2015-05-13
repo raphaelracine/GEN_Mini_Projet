@@ -1,5 +1,7 @@
 package scotlandyardserver;
 
+import scotlandyardserver.admin.map.GUIMap;
+
 public class Serveur_Scotland_Yard {
 
     private static final int DEFAULT_PORT = 3000; // Numéro du port par défaut
@@ -11,6 +13,7 @@ public class Serveur_Scotland_Yard {
      */
     public static void main(String[] args) {
         int usedPort = (args.length > 0) ? Integer.parseInt(args[0]) : DEFAULT_PORT;
-        Server.getInstance(usedPort);
+        
+        new GUIMap(Server.getInstance(usedPort));
     }
 }
