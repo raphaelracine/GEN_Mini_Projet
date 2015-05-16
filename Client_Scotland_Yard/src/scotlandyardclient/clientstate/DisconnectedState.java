@@ -53,4 +53,8 @@ public class DisconnectedState extends ClientState {
     public boolean editAccount(String newUsername, String newPassword) {
         return false;
     }
+      @Override
+    public boolean createGame(String command) {
+        return false;
+    }
 }

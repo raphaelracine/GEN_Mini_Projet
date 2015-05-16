@@ -42,5 +42,18 @@ public class LoggedInState extends ConnectedState {
         }
         return false;
     }
+    @Override
+    public boolean createGame(String command){
+        sendCommand(command);
+        String response = receiveCommand();
+
+        if (response.equals("CREATEGAMEACCEPTED")) {
+     
+            return true;
+        } else if (response.equals("CREATEGAMEREFUSED")) {
+            return false;
+        }
+        return false;
+    }
 
 }

@@ -42,7 +42,9 @@ public class Client {
     public boolean editAccount(String newUsername, String newPassword) {
         return state.editAccount(newUsername, newPassword);
     }
-
+    public boolean createGame(String command){
+       return state.createGame(command);
+    }
     public boolean logIn(String username, String password) {
         return state.logIn(username, password);
     }

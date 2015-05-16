@@ -46,4 +46,8 @@ class LoggedOutState extends ConnectedState {
     public boolean editAccount(String newUsername, String newPassword) {
         return false;
     }
+      @Override
+    public boolean createGame(String command){
+        return false;
+    }
 }
