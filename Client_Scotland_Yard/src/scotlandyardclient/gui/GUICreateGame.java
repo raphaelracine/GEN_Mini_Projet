@@ -54,26 +54,17 @@ public class GUICreateGame extends JFrame {
                     return;
                 }
                  else{
-                    boolean result = Client.getInstance().createGame("CREATEGAME#"
+                   boolean result = Client.getInstance().createGame("CREATEGAME#"
                             + gamePanel.txtParty + "#" + gamePanel.playersNumber()
                             + "#" + gamePanel.mapName());
-                    String text;
                         if(result){
-                        text = "CREATEGAMEACCEPTED";
+                       JOptionPane.showMessageDialog(rootPane, "la partie a été créee",
+                            "Erreur", JOptionPane.ERROR_MESSAGE);
                         }
                         else{
-                        text = "SORRY, CREATEGAMEREFUSED";
+                        JOptionPane.showMessageDialog(rootPane, "la partie ne peut être créee",
+                            "Erreur", JOptionPane.ERROR_MESSAGE);
                         }
-                        class GUIGame extends JFrame{
-                            public GUIGame(){
-                                JLabel message = new JLabel(text);
-                                getContentPane().add(message);
-                                setTitle("GUIGame");
-                                pack();
-                                setVisible(true);
-                            }
-                        }
-                        new GUIGame();
                  }
                 }
 

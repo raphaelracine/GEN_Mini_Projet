@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Henri/Desktop/HEIG-SEM3/GEN/PROJET/GitHub/GEN_Mini_Projet/Client_Scotland_Yard/src/scotlandyardclient/clientstate/ClientState.java</file>
+            <file>file:/C:/Users/Henri/Desktop/HEIG-SEM3/GEN/PROJET/GitHub/GEN_Mini_Projet/Client_Scotland_Yard/src/scotlandyardclient/clientstate/LoggedOutState.java</file>
+            <file>file:/C:/Users/Henri/Desktop/HEIG-SEM3/GEN/PROJET/GitHub/GEN_Mini_Projet/Client_Scotland_Yard/src/scotlandyardclient/Client_Scotland_Yard.java</file>
+            <file>file:/C:/Users/Henri/Desktop/HEIG-SEM3/GEN/PROJET/GitHub/GEN_Mini_Projet/Client_Scotland_Yard/src/scotlandyardclient/clientstate/LoggedInState.java</file>
+            <file>file:/C:/Users/Henri/Desktop/HEIG-SEM3/GEN/PROJET/GitHub/GEN_Mini_Projet/Client_Scotland_Yard/src/scotlandyardclient/Client.java</file>
+            <file>file:/C:/Users/Henri/Desktop/HEIG-SEM3/GEN/PROJET/GitHub/GEN_Mini_Projet/Client_Scotland_Yard/src/scotlandyardclient/clientstate/DisconnectedState.java</file>
+            <file>file:/C:/Users/Henri/Desktop/HEIG-SEM3/GEN/PROJET/GitHub/GEN_Mini_Projet/Client_Scotland_Yard/src/scotlandyardclient/gui/GUICreateGame.java</file>
+        </group>
     </open-files>
 </project-private>
