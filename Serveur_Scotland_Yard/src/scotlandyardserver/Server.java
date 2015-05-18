@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import scotlandyardserver.client.Client;
 import scotlandyardserver.client.ClientsManager;
+import scotlandyardserver.games.GamesManager;
 
 public class Server {
 
@@ -11,6 +12,8 @@ public class Server {
     private final int portNumber;
 
     private final ClientsManager clientsManager;
+    private final GamesManager gamesManager;
+
     private final CommandManager commandManager;
 
     private final DataBaseConnection databaseConnection;
@@ -20,6 +23,7 @@ public class Server {
         clientsManager = new ClientsManager(this);
         commandManager = new CommandManager(this);
         databaseConnection = new DataBaseConnection();
+        gamesManager = new GamesManager();
     }
 
     public static Server getInstance(int portNumber) {
@@ -34,6 +38,10 @@ public class Server {
     public ClientsManager getClientsManager() {
         return clientsManager;
 
+    }
+    
+    public GamesManager getGamesManager() {
+        return gamesManager;
     }
 
     public int getPort() {
@@ -56,6 +64,7 @@ public class Server {
 
     }
 
+    /** METHODES A DEPLACER AILLEUR AU MOMENT VENU **/
     public void playDetectiveTurn(Client client, int stationNumber, String transportUsed, int gameId) {
     }
 
@@ -64,6 +73,8 @@ public class Server {
 
     public void launchGame(Client client, int numberOfPlayer, String map) {
     }
+    
+    /**/
 
     public void createAccount(Client client, String username, String password) {
         try {

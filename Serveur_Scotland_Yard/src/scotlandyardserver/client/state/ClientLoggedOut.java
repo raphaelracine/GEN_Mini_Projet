@@ -55,4 +55,9 @@ public class ClientLoggedOut extends ClientState {
     @Override
     public void setUsername(String newUsername) {
     }
+
+    @Override
+    public void createGame(String name, int numberOfPlayers, String map) {
+        // Un client ne peut pas créer de jeu s'il n'est pas loggué
+    }
 }

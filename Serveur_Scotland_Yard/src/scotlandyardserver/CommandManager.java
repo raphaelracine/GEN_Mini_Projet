@@ -10,7 +10,7 @@ public class CommandManager {
 
         PLAY_DETECTIVE_TURN(3),
         PLAY_MISTER_X_TURN(4),
-        LAUNCH_GAME(2),
+        CREATEGAME(3),
         AUTHENTICATE(2),
         UNAUTHENTICATE(0),
         CREATEACCOUNT(2),
@@ -59,11 +59,11 @@ public class CommandManager {
             } else {
                 client.sendMessage(BAD_COMMAND);
             }
-        } else if (nameOfCommand.equals(CommandFromClient.LAUNCH_GAME.name())) {
-            if (CommandFromClient.LAUNCH_GAME.numberOfArgs() == nbArgs) {
-                server.launchGame(client,
-                        Integer.parseInt(commandWithArgs[1]),
-                        commandWithArgs[2]
+        } else if (nameOfCommand.equals(CommandFromClient.CREATEGAME.name())) {
+            if (CommandFromClient.CREATEGAME.numberOfArgs() == nbArgs) {
+                client.createGame(commandWithArgs[1],
+                        Integer.parseInt(commandWithArgs[2]),
+                        commandWithArgs[3]
                 );
             } else {
                 client.sendMessage(BAD_COMMAND);

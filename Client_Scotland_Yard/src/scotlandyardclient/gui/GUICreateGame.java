@@ -1,4 +1,3 @@
-
 package scotlandyardclient.gui;
 
 import java.awt.*;
@@ -8,9 +7,9 @@ import scotlandyardclient.Client;
 import scotlandyardclient.Utils;
 
 public class GUICreateGame extends JFrame {
-      
-        class UserPanel extends JPanel {
-            
+
+    class UserPanel extends JPanel {
+
         private JButton cancel = new JButton("Annuler");
         private JButton ok = new JButton("Ok");
 
@@ -47,25 +46,23 @@ public class GUICreateGame extends JFrame {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                 if (!Utils.checkPatternMatches(gamePanel.getTxtParty().getText(),
-                         "^(?=.*.)(?!.*[#|\\s]).{6,20}$")) {
-                    JOptionPane.showMessageDialog(rootPane, "Nom de la partie invalide...",
-                            "Erreur", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                 else{
-                   boolean result = Client.getInstance().createGame("CREATEGAME#"
-                            + gamePanel.txtParty + "#" + gamePanel.playersNumber()
-                            + "#" + gamePanel.mapName());
-                        if(result){
-                       JOptionPane.showMessageDialog(rootPane, "la partie a été créee",
-                            "Erreur", JOptionPane.ERROR_MESSAGE);
+                    if (!Utils.checkPatternMatches(gamePanel.getTxtParty().getText(),
+                            "^(?=.*.)(?!.*[#|\\s]).{6,20}$")) {
+                        JOptionPane.showMessageDialog(rootPane, "Nom de la partie invalide...",
+                                "Erreur", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    } else {
+                        boolean result = Client.getInstance().createGame("CREATEGAME#"
+                                + gamePanel.txtParty + "#" + gamePanel.playersNumber()
+                                + "#" + gamePanel.mapName());
+                        if (result) {
+                            JOptionPane.showMessageDialog(rootPane, "la partie a été créee",
+                                    "Erreur", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(rootPane, "la partie ne peut être créee",
+                                    "Erreur", JOptionPane.ERROR_MESSAGE);
                         }
-                        else{
-                        JOptionPane.showMessageDialog(rootPane, "la partie ne peut être créee",
-                            "Erreur", JOptionPane.ERROR_MESSAGE);
-                        }
-                 }
+                    }
                 }
 
                 @Override
@@ -86,18 +83,19 @@ public class GUICreateGame extends JFrame {
             });
         }
     }
-        class GamePanel extends JPanel{
-            
+
+    class GamePanel extends JPanel {
+
         private JLabel lblParty;
         private JLabel lblPlayersNunmber;
         private JLabel lblMap;
-            
+
         private JTextField txtParty;
         private JComboBox comboPlayersNumber;
         private JComboBox comboMap;
-            
-        public GamePanel(){
-                
+
+        public GamePanel() {
+
             setLayout(new GridLayout(3, 2));
             lblParty = new JLabel("Nom de la partie");
             lblPlayersNunmber = new JLabel("Nombre de joueurs");
@@ -106,13 +104,15 @@ public class GUICreateGame extends JFrame {
             txtParty = new JTextField(20);
 
             comboPlayersNumber = new JComboBox();
-            for(int i = 2; i <= 6; i++)
-               comboPlayersNumber.addItem(i);
+            for (int i = 2; i <= 6; i++) {
+                comboPlayersNumber.addItem(i);
+            }
 
             comboMap = new JComboBox();
-            String[] maps ={"carte d'yverdon", "carte de la ville de geneve"};
-            for(String s: maps)
-            comboMap.addItem(s);
+            String[] maps = {"carte d'yverdon", "carte de la ville de geneve"};
+            for (String s : maps) {
+                comboMap.addItem(s);
+            }
             // en attente pour lundi
 //            Client.getInstance().sendCommand("REQUESTMAPLIST");
 //            String response = null;
@@ -122,40 +122,43 @@ public class GUICreateGame extends JFrame {
 //            String maps = response.substring(begin + 1, end);
 //            for(String s : maps.split(","))
 //                comboMap.addItem(s);
-            
+
             add(lblParty);
             add(txtParty);
             add(lblPlayersNunmber);
             add(comboPlayersNumber);
             add(lblMap);
             add(comboMap);
-            }
-        
-            public JTextField getTxtParty(){
-                return txtParty;
-            }
-            public String mapName(){
-                return comboMap.getSelectedItem().toString();
-            }
-            public int playersNumber(){
-                return (Integer)comboPlayersNumber.getSelectedItem();
-            }
+        }
 
+        public JTextField getTxtParty() {
+            return txtParty;
         }
-        private GUIGameRoom gameRom;
-        private GamePanel gamePanel;
-        private UserPanel userpanel;
-        public GUICreateGame(GUIGameRoom gameRom){
-            this.gameRom = gameRom;
-            gamePanel = new GamePanel();
-            userpanel = new UserPanel();
-            
-            getContentPane().add(gamePanel, BorderLayout.CENTER);
-            getContentPane().add(userpanel, BorderLayout.SOUTH);
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setTitle("GUICreateGame");
-            pack();
-            setVisible(true);
+
+        public String mapName() {
+            return comboMap.getSelectedItem().toString();
         }
-  
+
+        public int playersNumber() {
+            return (Integer) comboPlayersNumber.getSelectedItem();
+        }
+
+    }
+    private final GUIGameRoom gameRom;
+    private final GamePanel gamePanel;
+    private final UserPanel userpanel;
+
+    public GUICreateGame(GUIGameRoom gameRom) {
+        this.gameRom = gameRom;
+        gamePanel = new GamePanel();
+        userpanel = new UserPanel();
+
+        getContentPane().add(gamePanel, BorderLayout.CENTER);
+        getContentPane().add(userpanel, BorderLayout.SOUTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("GUICreateGame");
+        pack();
+        setVisible(true);
+    }
+
 }

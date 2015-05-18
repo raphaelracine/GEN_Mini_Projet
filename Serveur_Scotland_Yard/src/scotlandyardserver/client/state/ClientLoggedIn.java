@@ -48,4 +48,14 @@ public class ClientLoggedIn extends ClientState {
         this.username = newUsername;
     }
 
+    @Override
+    public void createGame(String name, int numberOfPlayers, String map) {
+        if(client().server().getGamesManager().createGame(client(), name, numberOfPlayers, map)) {
+            client().sendMessage("CREATEGAMEACCEPTED");
+            client().setState(new ClientLoggedInAGame(client(), username));
+        }
+        else
+            client().sendMessage("CREATEGAMEREFUSED");
+    }
+
 }

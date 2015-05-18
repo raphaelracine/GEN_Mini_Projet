@@ -48,10 +48,13 @@ public class Client implements Runnable {
             while ((shouldRun) && (command = in.readLine()) != null) {
                 if (command.equalsIgnoreCase("bye")) {
                     shouldRun = false;
+                    logOut();
                 } else {
                     server.interpreteReceivedCommand(command, this);
                 }
             }
+            
+            logOut();
             socket.close();
             in.close();
             out.close();
@@ -105,4 +108,7 @@ public class Client implements Runnable {
         state.setUsername(newUsername);
     }
 
+    public void createGame(String name, int numberOfPlayers, String map) {
+        state.createGame(name, numberOfPlayers, map);
+    }
 }
