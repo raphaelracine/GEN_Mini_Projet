@@ -47,7 +47,7 @@ class LoggedOutState extends ConnectedState {
         return false;
     }
       @Override
-    public boolean createGame(String command){
+    public boolean createGame(String partyName, int playersNb, String map){
         return false;
     }
 }

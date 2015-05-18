@@ -43,8 +43,8 @@ public class LoggedInState extends ConnectedState {
         return false;
     }
     @Override
-    public boolean createGame(String command){
-        sendCommand(command);
+    public boolean createGame(String partyName, int playersNb, String map){
+        sendCommand("CREATEGAME#" + partyName + "#" + playersNb + "#"+ map);
         String response = receiveCommand();
 
         if (response.equals("CREATEGAMEACCEPTED")) {

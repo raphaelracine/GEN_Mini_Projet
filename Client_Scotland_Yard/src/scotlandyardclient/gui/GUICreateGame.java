@@ -52,9 +52,9 @@ public class GUICreateGame extends JFrame {
                                 "Erreur", JOptionPane.ERROR_MESSAGE);
                         return;
                     } else {
-                        boolean result = Client.getInstance().createGame("CREATEGAME#"
-                                + gamePanel.txtParty + "#" + gamePanel.playersNumber()
-                                + "#" + gamePanel.mapName());
+                        boolean result = Client.getInstance().createGame(
+                               gamePanel.txtParty.getText(),gamePanel.playersNumber()
+                                , gamePanel.mapName());
                         if (result) {
                             JOptionPane.showMessageDialog(rootPane, "la partie a été créee",
                                     "Erreur", JOptionPane.ERROR_MESSAGE);

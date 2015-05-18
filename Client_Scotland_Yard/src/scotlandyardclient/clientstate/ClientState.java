@@ -18,5 +18,5 @@ public abstract class ClientState {
 
     public abstract boolean editAccount(String newUsername, String newPassword);
     
-    public abstract boolean createGame(String command);
+    public abstract boolean createGame(String partyName, int playersNb, String map);
 }

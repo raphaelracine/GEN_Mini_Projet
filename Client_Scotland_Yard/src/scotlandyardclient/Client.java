@@ -42,8 +42,8 @@ public class Client {
     public boolean editAccount(String newUsername, String newPassword) {
         return state.editAccount(newUsername, newPassword);
     }
-    public boolean createGame(String command){
-       return state.createGame(command);
+    public boolean createGame(String partyName, int playersNb, String map){
+       return state.createGame(partyName, playersNb, map);
     }
     public boolean logIn(String username, String password) {
         return state.logIn(username, password);

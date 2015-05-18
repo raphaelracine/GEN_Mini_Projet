@@ -89,7 +89,7 @@ public class GUIGameRoom extends JFrame {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                   new GUICreateGame(GUIGameRoom.this);
                 }
 
                 @Override
