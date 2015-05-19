@@ -1,5 +1,7 @@
 package scotlandyardserver;
 
+import scotlandyardserver.commands.CommandManager;
+import scotlandyardserver.database.DataBaseConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import scotlandyardserver.client.Client;
@@ -88,7 +90,7 @@ public class Server {
         }
     }
 
-    void editAccount(Client client, String newUsername, String newPassword) {
+    public void editAccount(Client client, String newUsername, String newPassword) {
         try {
             String request = "UPDATE user SET username='" + newUsername
                     + "', password='" + newPassword + "' WHERE "

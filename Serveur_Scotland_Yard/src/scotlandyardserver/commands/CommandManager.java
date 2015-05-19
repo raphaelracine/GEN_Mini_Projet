@@ -1,5 +1,6 @@
-package scotlandyardserver;
+package scotlandyardserver.commands;
 
+import scotlandyardserver.Server;
 import scotlandyardserver.client.Client;
 
 public class CommandManager {
