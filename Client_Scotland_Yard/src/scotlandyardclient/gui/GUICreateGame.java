@@ -114,27 +114,11 @@ public class GUICreateGame extends JFrame {
             }
 
             comboMap = new JComboBox();
-            String[] maps = {"carte d'yverdon", "carte de la ville de geneve"};
-            for (String s : maps) {
-                comboMap.addItem(s);
-            }
-            // en attente pour lundi
+            
             Client.getInstance().sendCommand("REQUESTMAPLIST");
-            LinkedList<String> list = null;
             
-            try {
-                list = Client.getInstance().receiveJSon(list.getClass());
-                for(String s: list)
-                    System.out.println(s);
-            } catch (IOException ex) {
-                Logger.getLogger(GUICreateGame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-//            int begin = response.indexOf("[");
-//            int end = response.lastIndexOf("]");
-//            String maps = response.substring(begin + 1, end);
-//            for(String s : maps.split(","))
-//                comboMap.addItem(s);
+            for(String map : Client.getInstance().getMapNames().names())
+                comboMap.addItem(map);
 
             add(lblParty);
             add(txtParty);

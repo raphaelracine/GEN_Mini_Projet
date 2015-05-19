@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import scotlandyardclient.Client;
+import scotlandyardclient.json.MapNames;
 
 public class DisconnectedState extends ClientState {
 
@@ -59,7 +60,7 @@ public class DisconnectedState extends ClientState {
     }
 
     @Override
-    public <T> T receiveJSon(Class<T> type) throws IOException {
+    public MapNames getMapNames() {
         return null;
     }
 }

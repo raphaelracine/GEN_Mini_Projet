@@ -1,9 +1,10 @@
 package scotlandyardclient.clientstate;
 
+import com.google.gson.Gson;
 import java.io.IOException;
-import scotlandyardclient.JSon.JsonObjectMapper;
 import java.net.Socket;
 import scotlandyardclient.Client;
+import scotlandyardclient.json.MapNames;
 
 public class LoggedInState extends ConnectedState {
 
@@ -57,10 +58,9 @@ public class LoggedInState extends ConnectedState {
         }
         return false;
     }
-
+    
     @Override
-    public <T> T receiveJSon(Class<T> type) throws IOException {
-       return JsonObjectMapper.parseJson(receiveCommand(), type);
+    public MapNames getMapNames() {
+        return new Gson().fromJson(receiveCommand(), MapNames.class);
     }
-
 }

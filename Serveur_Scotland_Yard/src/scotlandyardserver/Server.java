@@ -4,9 +4,14 @@ import scotlandyardserver.commands.CommandManager;
 import scotlandyardserver.database.DataBaseConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import scotlandyardserver.client.Client;
 import scotlandyardserver.client.ClientsManager;
 import scotlandyardserver.games.GamesManager;
+import scotlandyardserver.json.MapNames;
+
+import com.google.gson.*;
 
 public class Server {
 
@@ -100,6 +105,20 @@ public class Server {
             client.sendMessage("EDITACCOUNTACCEPTED");
         } catch (SQLException ex) {
             client.sendMessage("EDITACCOUNTREFUSED");
+        }
+    }
+
+    public void requestMapNames(Client client) {
+        try {
+            ResultSet rs = getSQLSelection("SELECT name FROM map");
+            MapNames names = new MapNames();
+            
+            while(rs.next())
+                names.add(rs.getString("name"));
+            
+            client.sendMessage(new Gson().toJson(names));
+        } catch (SQLException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

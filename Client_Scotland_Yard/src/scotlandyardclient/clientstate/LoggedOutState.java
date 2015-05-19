@@ -3,6 +3,7 @@ package scotlandyardclient.clientstate;
 import java.io.IOException;
 import java.net.Socket;
 import scotlandyardclient.Client;
+import scotlandyardclient.json.MapNames;
 
 class LoggedOutState extends ConnectedState {
 
@@ -53,7 +54,7 @@ class LoggedOutState extends ConnectedState {
     }
 
     @Override
-    public <T> T receiveJSon(Class<T> type) throws IOException {
+    public MapNames getMapNames() {
         return null;
     }
 }

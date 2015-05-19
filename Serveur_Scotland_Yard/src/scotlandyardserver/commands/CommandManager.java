@@ -16,6 +16,7 @@ public class CommandManager {
         AUTHENTICATE(2),
         UNAUTHENTICATE(0),
         CREATEACCOUNT(2),
+        REQUESTMAPLIST(0),
         EDITACCOUNT(2);
 
         private int numberOfArgs;
@@ -61,7 +62,7 @@ public class CommandManager {
             } else {
                 client.sendMessage(BAD_COMMAND);
             }
-            
+
         } else if (nameOfCommand.equals(CommandFromClient.CREATEGAME.name())) {
             if (CommandFromClient.CREATEGAME.numberOfArgs() == nbArgs) {
                 client.createGame(commandWithArgs[1],
@@ -104,14 +105,28 @@ public class CommandManager {
             } else {
                 client.sendMessage(BAD_COMMAND);
             }
-            } else if (nameOfCommand.equals(CommandFromClient.JOINGAME.name())) {
+        } else if (nameOfCommand.equals(CommandFromClient.JOINGAME.name())) {
             if (CommandFromClient.JOINGAME.numberOfArgs() == nbArgs) {
                 client.joinGame(commandWithArgs[1]);
             } else {
                 client.sendMessage(BAD_COMMAND);
             }
+        } else if (nameOfCommand.equals(CommandFromClient.EDITACCOUNT.name())) {
+            if (CommandFromClient.EDITACCOUNT.numberOfArgs() == nbArgs) {
+                server.editAccount(client,
+                        commandWithArgs[1],
+                        commandWithArgs[2]
+                );
+            } else {
+                client.sendMessage(BAD_COMMAND);
+            }
+        } else if (nameOfCommand.equals(CommandFromClient.REQUESTMAPLIST.name())) {
+            if (CommandFromClient.REQUESTMAPLIST.numberOfArgs() == nbArgs) {
+                server.requestMapNames(client);
+            } else {
+                client.sendMessage(BAD_COMMAND);
+            }
         } else {
-
             client.sendMessage(BAD_COMMAND);
         }
 

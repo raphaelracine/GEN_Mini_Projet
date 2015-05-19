@@ -1,7 +1,9 @@
 package scotlandyardclient;
 
+import java.io.IOException;
 import scotlandyardclient.clientstate.ClientState;
 import scotlandyardclient.clientstate.DisconnectedState;
+import scotlandyardclient.json.MapNames;
 
 
 public class Client {
@@ -58,8 +60,7 @@ public class Client {
         state.sendCommand(command);
     }
     
-    public <T> T receiveJSon(Class<T> type){
-        return state.receiveJSon(type);
+    public MapNames getMapNames() {
+        return state.getMapNames();
     }
-
 }
