@@ -78,13 +78,39 @@ public class GUIGameRoom extends JFrame {
 
     class GamePanel extends JPanel {
 
+        private JButton refresh = new JButton("Rafraîchir");
         private JButton createGame = new JButton("Créer une partie");
         private JButton joinGame = new JButton("Rejoindre partie");
 
         GamePanel() {
+            add(refresh);
             add(createGame);
             add(joinGame);
 
+            refresh.addMouseListener(new MouseListener() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                   // envoyer message au serveur
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                }
+            });
+            
             createGame.addMouseListener(new MouseListener() {
 
                 @Override
