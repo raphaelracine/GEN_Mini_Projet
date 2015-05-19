@@ -22,7 +22,7 @@ public class GUICreateGame extends JFrame {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    new GUICreateGame(gameRom);
+                    GUICreateGame.this.dispose();
                 }
 
                 @Override
