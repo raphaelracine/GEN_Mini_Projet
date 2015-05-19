@@ -30,7 +30,7 @@ public class Game implements Runnable {
     
     @Override
     public void run() {
-        System.out.println("Nouvelle partie créee...");
+        // TODO
     }
 
     public String getName() {
