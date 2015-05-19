@@ -2,6 +2,7 @@
 package scotlandyardserver.games.state;
 
 import scotlandyardserver.client.Client;
+import scotlandyardserver.client.state.ClientLoggedIn;
 import scotlandyardserver.games.Game;
 
 public class WaitingPlayersState extends GameState {
@@ -33,6 +34,7 @@ public class WaitingPlayersState extends GameState {
     @Override
     public void leaveGame(Client client) {
         game().removePlayer(client);
+        client.setState(new ClientLoggedIn(client, client.username()));
         
         for(Client cl : game().players())
             if(cl != client)
