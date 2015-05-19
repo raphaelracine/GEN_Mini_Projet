@@ -2,9 +2,14 @@ package scotlandyardclient.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import scotlandyardclient.Client;
 import scotlandyardclient.Utils;
+
 
 public class GUICreateGame extends JFrame {
 
@@ -114,9 +119,17 @@ public class GUICreateGame extends JFrame {
                 comboMap.addItem(s);
             }
             // en attente pour lundi
-//            Client.getInstance().sendCommand("REQUESTMAPLIST");
-//            String response = null;
-//            
+            Client.getInstance().sendCommand("REQUESTMAPLIST");
+            LinkedList<String> list = null;
+            
+            try {
+                list = Client.getInstance().receiveJSon(list.getClass());
+                for(String s: list)
+                    System.out.println(s);
+            } catch (IOException ex) {
+                Logger.getLogger(GUICreateGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
 //            int begin = response.indexOf("[");
 //            int end = response.lastIndexOf("]");
 //            String maps = response.substring(begin + 1, end);

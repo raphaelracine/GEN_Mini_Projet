@@ -1,5 +1,7 @@
 package scotlandyardclient.clientstate;
 
+import java.io.IOException;
+import scotlandyardclient.JSon.JsonObjectMapper;
 import java.net.Socket;
 import scotlandyardclient.Client;
 
@@ -54,6 +56,11 @@ public class LoggedInState extends ConnectedState {
             return false;
         }
         return false;
+    }
+
+    @Override
+    public <T> T receiveJSon(Class<T> type) throws IOException {
+       return JsonObjectMapper.parseJson(receiveCommand(), type);
     }
 
 }

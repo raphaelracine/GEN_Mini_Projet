@@ -1,5 +1,6 @@
 package scotlandyardclient.clientstate;
 
+import java.io.IOException;
 import java.net.Socket;
 import scotlandyardclient.Client;
 
@@ -49,5 +50,10 @@ class LoggedOutState extends ConnectedState {
       @Override
     public boolean createGame(String partyName, int playersNb, String map){
         return false;
+    }
+
+    @Override
+    public <T> T receiveJSon(Class<T> type) throws IOException {
+        return null;
     }
 }
