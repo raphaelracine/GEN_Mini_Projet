@@ -12,6 +12,8 @@ import scotlandyardserver.games.GamesManager;
 import scotlandyardserver.json.MapNames;
 
 import com.google.gson.*;
+import scotlandyardserver.games.Game;
+import scotlandyardserver.json.GameList;
 
 public class Server {
 
@@ -120,5 +122,21 @@ public class Server {
         } catch (SQLException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void requestGameList(Client client) {
+        GameList gameList = new GameList();
+        
+        for(Game game : gamesManager.games()) {
+            gameList.add(new scotlandyardserver.json.Game(
+                    game.getName(),
+                    game.getHost(),
+                    game.getMap(),
+                    game.currentNumberOfPlayers(),
+                    game.numberOfPlayers()                    
+            ));
+        }
+        
+        client.sendMessage(new Gson().toJson(gameList));
     }
 }

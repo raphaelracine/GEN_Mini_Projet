@@ -26,4 +26,8 @@ public class GamesManager {
         games.add(new Game(host, name, numberOfPlayers, map));
         return true;
     }
+    
+    public LinkedList<Game> games() {
+        return games;
+    }
 }

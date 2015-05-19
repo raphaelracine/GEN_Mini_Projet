@@ -17,6 +17,7 @@ public class CommandManager {
         UNAUTHENTICATE(0),
         CREATEACCOUNT(2),
         REQUESTMAPLIST(0),
+        REQUESTGAMELIST(0),
         EDITACCOUNT(2);
 
         private int numberOfArgs;
@@ -123,6 +124,12 @@ public class CommandManager {
         } else if (nameOfCommand.equals(CommandFromClient.REQUESTMAPLIST.name())) {
             if (CommandFromClient.REQUESTMAPLIST.numberOfArgs() == nbArgs) {
                 server.requestMapNames(client);
+            } else {
+                client.sendMessage(BAD_COMMAND);
+            }
+        } else if (nameOfCommand.equals(CommandFromClient.REQUESTGAMELIST.name())) {
+            if (CommandFromClient.REQUESTGAMELIST.numberOfArgs() == nbArgs) {
+                server.requestGameList(client);
             } else {
                 client.sendMessage(BAD_COMMAND);
             }

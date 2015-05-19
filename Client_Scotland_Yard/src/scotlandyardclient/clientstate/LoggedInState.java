@@ -80,7 +80,7 @@ public class LoggedInState extends ConnectedState {
     
     @Override
     public GameList getGameList() {
-        sendCommand("REQUESTGAMELIST#");
+        sendCommand("REQUESTGAMELIST");
         return new Gson().fromJson(receiveCommand(), GameList.class);
     }
 }
