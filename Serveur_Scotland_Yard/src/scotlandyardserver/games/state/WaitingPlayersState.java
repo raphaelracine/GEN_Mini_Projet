@@ -20,6 +20,10 @@ public class WaitingPlayersState extends GameState {
         game().addPlayer(client);
         client.sendMessage("JOINGAMEACCEPTED");
         
+        for(Client cl : game().players())
+            if(cl != client)
+                cl.sendMessage("PLAYERJOINEDGAME#" + cl.username());
+        
         if(game().currentNumberOfPlayers() == game().numberOfPlayers())
             game().setState(new InitializingGameState(game()));
         
