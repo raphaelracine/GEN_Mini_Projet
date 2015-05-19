@@ -29,5 +29,13 @@ public class WaitingPlayersState extends GameState {
         
         return true;
     }
-    
+
+    @Override
+    public void leaveGame(Client client) {
+        game().removePlayer(client);
+        
+        for(Client cl : game().players())
+            if(cl != client)
+                cl.sendMessage("PLAYERLEAVEDGAME#" + cl.username());
+    }    
 }

@@ -23,5 +23,7 @@ public class InitializingGameState extends GameState {
         client.sendMessage("JOINGAMEREFUSED");
         return false;
     }
-    
+
+    @Override
+    public void leaveGame(Client client) {}    
 }

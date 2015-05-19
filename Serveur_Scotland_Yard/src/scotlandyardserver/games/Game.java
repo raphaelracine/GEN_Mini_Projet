@@ -6,8 +6,7 @@ import scotlandyardserver.client.Client;
 import scotlandyardserver.games.state.GameState;
 import scotlandyardserver.games.state.WaitingPlayersState;
 
-public class Game implements Runnable {
-    private final Thread thread;
+public class Game {
     
     private GameState state;
     private final Client host;
@@ -31,16 +30,8 @@ public class Game implements Runnable {
         this.map = map;
         
         setState(new WaitingPlayersState(this));
-        
-        thread = new Thread(this);
-        thread.start();
     }
     
-    @Override
-    public void run() {
-        // TODO
-    }
-
     public String getName() {
         return name;
     }
@@ -68,6 +59,10 @@ public class Game implements Runnable {
     public boolean joinGame(Client client) {        
         return state.joinGame(client);
     }
+    
+    public void leaveGame(Client client) {
+        state.leaveGame(client);
+    }
 
     public void setState(GameState newState) {
         this.state = newState;
@@ -75,5 +70,9 @@ public class Game implements Runnable {
 
     public void addPlayer(Client client) {
         players.add(client);
+    }
+    
+    public void removePlayer(Client client) {
+        players.remove(client);
     }
 }
