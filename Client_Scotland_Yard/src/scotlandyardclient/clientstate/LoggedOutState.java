@@ -67,4 +67,14 @@ class LoggedOutState extends ConnectedState {
     public GameList getGameList() {
         return null;
     }
+    
+    @Override
+    public PlayerList getPlayerList(String game) {
+        return null;
+    }
+    
+    @Override
+    public String username() {
+        return null;
+    }
 }

@@ -83,4 +83,15 @@ public class LoggedInState extends ConnectedState {
         sendCommand("REQUESTGAMELIST");
         return new Gson().fromJson(receiveCommand(), GameList.class);
     }
+    
+    @Override
+    public PlayerList getPlayerList(String game) {
+        sendCommand("REQUESTPLAYERLIST#" + game);
+        return new Gson().fromJson(receiveCommand(), PlayerList.class);
+    }
+    
+    @Override
+    public String username() {
+        return username;
+    }
 }

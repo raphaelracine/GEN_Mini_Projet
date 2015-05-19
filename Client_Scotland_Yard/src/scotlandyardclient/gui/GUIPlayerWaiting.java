@@ -16,8 +16,9 @@ import scotlandyardclient.json.Game;
  *
  * @author Yassin
  */
-public class GUIPlayerWaiting extends JFrame {
+public class GUIPlayerWaiting extends JFrame implements Runnable {
     private GUIGameRoom gameRoom;
+    private Thread activity;
     
     private JLabel lblPlayers = new JLabel("Joueurs");
     
@@ -34,7 +35,7 @@ public class GUIPlayerWaiting extends JFrame {
         "Joueur"
     };
     
-    public GUIPlayerWaiting(GUIGameRoom gameRoom) {
+    public GUIPlayerWaiting(GUIGameRoom gameRoom, String game) {
         this.gameRoom = gameRoom;
         
         quit.addMouseListener(new MouseListener() {
@@ -64,7 +65,9 @@ public class GUIPlayerWaiting extends JFrame {
         northPanel.add(lblPlayers);
         southPanel.add(quit);
         
-        players.setModel(playersModel);
+        players.setModel(playersModel);        
+        for (String player : Client.getInstance().getPlayerList(game).players())
+            playersModel.addElement(player);
         
         getContentPane().add(northPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPlayers);
@@ -74,10 +77,11 @@ public class GUIPlayerWaiting extends JFrame {
         pack();
         setVisible(true);
         
-        waiting();
+        activity = new Thread(this);
+        activity.start();
     }
     
-    private void waiting() {
+    public void run() {      
         while (true) {
             String[] args = parseCommand(Client.getInstance().receiveCommand());
             String cmd = args[0];

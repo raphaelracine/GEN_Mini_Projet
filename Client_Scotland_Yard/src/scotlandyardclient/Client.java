@@ -75,4 +75,12 @@ public class Client {
     public GameList getGameList() {
         return state.getGameList();
     }
+    
+    public PlayerList getPlayerList(String game) {
+        return state.getPlayerList(game);
+    }
+    
+    public String username() {
+        return state.username();
+    } 
 }

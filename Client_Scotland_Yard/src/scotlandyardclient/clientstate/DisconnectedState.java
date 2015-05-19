@@ -76,7 +76,17 @@ public class DisconnectedState extends ClientState {
     }
 
     @Override
+    public PlayerList getPlayerList(String game) {
+        return null;
+    }
+    
+    @Override
     public String receiveCommand() {
         return "";
+    }
+    
+    @Override
+    public String username() {
+        return null;
     }
 }

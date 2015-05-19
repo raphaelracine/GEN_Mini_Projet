@@ -29,4 +29,8 @@ public abstract class ClientState {
     public abstract MapNames getMapNames();
     
     public abstract GameList getGameList();
+    
+    public abstract PlayerList getPlayerList(String game);
+    
+    public abstract String username();
 }

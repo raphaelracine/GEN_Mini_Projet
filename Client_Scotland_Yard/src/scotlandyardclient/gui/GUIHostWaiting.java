@@ -14,8 +14,9 @@ import scotlandyardclient.Client;
  *
  * @author Yassin
  */
-public class GUIHostWaiting extends JFrame {
+public class GUIHostWaiting extends JFrame implements Runnable {
     private GUIGameRoom gameRoom;
+    private Thread activity;
     
     private JLabel lblPlayers = new JLabel("Joueurs");
     
@@ -86,6 +87,8 @@ public class GUIHostWaiting extends JFrame {
         southPanel.add(start);
         southPanel.add(quit);
         
+        players.setModel(playersModel);
+        
         getContentPane().add(northPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPlayers);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
@@ -94,10 +97,12 @@ public class GUIHostWaiting extends JFrame {
         pack();
         setVisible(true);
         
-        waiting();
+        activity = new Thread(this);
+        activity.start();
     }
     
-    private void waiting() {
+    @Override
+    public void run() {
         while (true) {
             String[] args = parseCommand(Client.getInstance().receiveCommand());
             String cmd = args[0];

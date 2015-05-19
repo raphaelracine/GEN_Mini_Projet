@@ -12,6 +12,7 @@ import scotlandyardserver.games.GamesManager;
 import scotlandyardserver.json.MapNames;
 
 import com.google.gson.*;
+import scotlandyardclient.json.PlayerList;
 import scotlandyardserver.games.Game;
 import scotlandyardserver.json.GameList;
 
@@ -138,5 +139,19 @@ public class Server {
         }
         
         client.sendMessage(new Gson().toJson(gameList));
+    }
+
+    public void requestPlayerList(Client client, String game) {
+        for(Game g : gamesManager.games()) {
+            if(g.getName().equals(game)) {
+                PlayerList playerList = new PlayerList();
+                for(Client cl : g.players())
+                    playerList.add(cl.username()); 
+                client.sendMessage(new Gson().toJson(playerList));
+                return;
+            }
+        }
+        
+        client.sendMessage(new Gson().toJson(new PlayerList()));
     }
 }
