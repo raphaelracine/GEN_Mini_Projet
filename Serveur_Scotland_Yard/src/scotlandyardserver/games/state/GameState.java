@@ -17,4 +17,6 @@ public abstract class GameState {
     }
     
     public abstract boolean joinGame(Client client);
+
+    public abstract void leaveGame(Client client);
 }
