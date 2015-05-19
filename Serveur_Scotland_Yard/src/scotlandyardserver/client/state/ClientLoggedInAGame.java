@@ -11,6 +11,10 @@ public class ClientLoggedInAGame extends ClientLoggedIn {
     @Override
     public void createGame(String name, int numberOfPlayers, String map) {
         // Un client ne peut pas créer de jeu s'il est déjà dans un jeu
-    }
+    } 
     
+    @Override
+    public void joinGame(String name) {
+        // Un client qui se trouve dans une partie ne peut pas la rejoindre
+    }
 }

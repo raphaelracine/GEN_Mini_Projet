@@ -58,4 +58,9 @@ public class ClientLoggedIn extends ClientState {
             client().sendMessage("CREATEGAMEREFUSED");
     }
 
+    @Override
+    public void joinGame(String name) {
+        // Code pour rejoindre une partie à faire ici
+    }
+
 }

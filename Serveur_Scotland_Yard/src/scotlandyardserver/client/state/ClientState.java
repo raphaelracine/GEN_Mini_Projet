@@ -23,4 +23,6 @@ public abstract class ClientState {
     public abstract void setUsername(String newUsername);
 
     public abstract void createGame(String name, int numberOfPlayers, String map);
+
+    public abstract void joinGame(String name);
 }

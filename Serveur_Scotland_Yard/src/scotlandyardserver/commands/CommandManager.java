@@ -12,6 +12,7 @@ public class CommandManager {
         PLAY_DETECTIVE_TURN(3),
         PLAY_MISTER_X_TURN(4),
         CREATEGAME(3),
+        JOINGAME(1),
         AUTHENTICATE(2),
         UNAUTHENTICATE(0),
         CREATEACCOUNT(2),
@@ -60,6 +61,7 @@ public class CommandManager {
             } else {
                 client.sendMessage(BAD_COMMAND);
             }
+            
         } else if (nameOfCommand.equals(CommandFromClient.CREATEGAME.name())) {
             if (CommandFromClient.CREATEGAME.numberOfArgs() == nbArgs) {
                 client.createGame(commandWithArgs[1],
@@ -99,6 +101,12 @@ public class CommandManager {
                         commandWithArgs[1],
                         commandWithArgs[2]
                 );
+            } else {
+                client.sendMessage(BAD_COMMAND);
+            }
+            } else if (nameOfCommand.equals(CommandFromClient.JOINGAME.name())) {
+            if (CommandFromClient.JOINGAME.numberOfArgs() == nbArgs) {
+                client.joinGame(commandWithArgs[1]);
             } else {
                 client.sendMessage(BAD_COMMAND);
             }

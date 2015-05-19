@@ -111,4 +111,8 @@ public class Client implements Runnable {
     public void createGame(String name, int numberOfPlayers, String map) {
         state.createGame(name, numberOfPlayers, map);
     }
+    
+    public void joinGame(String name) {
+        state.joinGame(name);
+    }
 }
