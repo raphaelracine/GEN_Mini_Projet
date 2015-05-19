@@ -3,6 +3,7 @@ package scotlandyardclient;
 import scotlandyardclient.clientstate.ClientState;
 import scotlandyardclient.clientstate.DisconnectedState;
 
+
 public class Client {
 
     private static Client client;
@@ -55,6 +56,10 @@ public class Client {
 
     public void sendCommand(String command) {
         state.sendCommand(command);
+    }
+    
+    public <T> T receiveJSon(Class<T> type){
+        return state.receiveJSon(type);
     }
 
 }

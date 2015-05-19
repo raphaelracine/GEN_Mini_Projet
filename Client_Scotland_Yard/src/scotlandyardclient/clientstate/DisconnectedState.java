@@ -57,4 +57,9 @@ public class DisconnectedState extends ClientState {
     public boolean createGame(String partyName, int playersNb, String map) {
         return false;
     }
+
+    @Override
+    public <T> T receiveJSon(Class<T> type) throws IOException {
+        return null;
+    }
 }
