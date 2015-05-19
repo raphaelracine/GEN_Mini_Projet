@@ -1,6 +1,5 @@
 package scotlandyardclient;
 
-import java.io.IOException;
 import scotlandyardclient.clientstate.ClientState;
 import scotlandyardclient.clientstate.DisconnectedState;
 import scotlandyardclient.json.*;
@@ -61,6 +60,10 @@ public class Client {
         state.logOut();
     }
 
+    public String receiveCommand() {
+        return state.receiveCommand();
+    }
+    
     public void sendCommand(String command) {
         state.sendCommand(command);
     }

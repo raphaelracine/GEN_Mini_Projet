@@ -1,6 +1,5 @@
 package scotlandyardclient.clientstate;
 
-import java.io.IOException;
 import scotlandyardclient.json.*;
 
 public abstract class ClientState {
@@ -9,6 +8,8 @@ public abstract class ClientState {
 
     public abstract void disconnect();
 
+    public abstract String receiveCommand();
+    
     public abstract void sendCommand(String command);
 
     public abstract boolean isConnected();

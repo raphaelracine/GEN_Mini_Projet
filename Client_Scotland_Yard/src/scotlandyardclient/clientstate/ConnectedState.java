@@ -47,8 +47,6 @@ public abstract class ConnectedState extends ClientState {
         return str;
     }
     
-    
-
     public boolean isConnected() {
         return !socket.isClosed() && socket.isConnected();
     }

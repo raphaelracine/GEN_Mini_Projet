@@ -26,7 +26,7 @@ public class DisconnectedState extends ClientState {
 
     public void disconnect() {
     }
-
+    
     public void sendCommand(String command) {
     }
 
@@ -73,5 +73,10 @@ public class DisconnectedState extends ClientState {
     @Override
     public GameList getGameList() {
         return null;
+    }
+
+    @Override
+    public String receiveCommand() {
+        return "";
     }
 }
