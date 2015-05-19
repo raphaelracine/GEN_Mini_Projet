@@ -3,8 +3,7 @@ package scotlandyardclient;
 import java.io.IOException;
 import scotlandyardclient.clientstate.ClientState;
 import scotlandyardclient.clientstate.DisconnectedState;
-import scotlandyardclient.json.MapNames;
-
+import scotlandyardclient.json.*;
 
 public class Client {
 
@@ -45,9 +44,15 @@ public class Client {
     public boolean editAccount(String newUsername, String newPassword) {
         return state.editAccount(newUsername, newPassword);
     }
+    
+    public boolean joinGame(String gameName) {
+        return state.joinGame(gameName);
+    }
+    
     public boolean createGame(String partyName, int playersNb, String map){
        return state.createGame(partyName, playersNb, map);
     }
+    
     public boolean logIn(String username, String password) {
         return state.logIn(username, password);
     }
@@ -62,5 +67,9 @@ public class Client {
     
     public MapNames getMapNames() {
         return state.getMapNames();
+    }
+    
+    public GameList getGameList() {
+        return state.getGameList();
     }
 }

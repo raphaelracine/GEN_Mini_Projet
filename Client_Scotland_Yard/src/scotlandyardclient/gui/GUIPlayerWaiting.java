@@ -14,6 +14,8 @@ import javax.swing.*;
  * @author Yassin
  */
 public class GUIPlayerWaiting extends JFrame {
+    private GUIGameRoom gameRoom;
+    
     private JLabel lblPlayers = new JLabel("Joueurs");
     
     private JButton quit = new JButton("Quitter");
@@ -24,8 +26,10 @@ public class GUIPlayerWaiting extends JFrame {
     private JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     private JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     
-    public GUIPlayerWaiting() {
-            quit.addMouseListener(new MouseListener() {
+    public GUIPlayerWaiting(GUIGameRoom gameRoom) {
+        this.gameRoom = gameRoom;
+        
+        quit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // envoyer message au serveur

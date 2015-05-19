@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.Socket;
 import scotlandyardclient.Client;
-import scotlandyardclient.json.MapNames;
+import scotlandyardclient.json.*;
 
 public class LoggedInState extends ConnectedState {
 
@@ -45,6 +45,20 @@ public class LoggedInState extends ConnectedState {
         }
         return false;
     }
+    
+    @Override
+    public boolean joinGame(String gameName) {
+        sendCommand("JOINGAME#" + gameName);
+        String response = receiveCommand();
+
+        if (response.equals("JOINGAMEACCEPTED")) {
+            return true;
+        } else if (response.equals("JOINGAMEREFUSED")) {
+            return false;
+        }
+        return false;
+    }
+    
     @Override
     public boolean createGame(String partyName, int playersNb, String map){
         sendCommand("CREATEGAME#" + partyName + "#" + playersNb + "#"+ map);
@@ -62,5 +76,11 @@ public class LoggedInState extends ConnectedState {
     @Override
     public MapNames getMapNames() {
         return new Gson().fromJson(receiveCommand(), MapNames.class);
+    }
+    
+    @Override
+    public GameList getGameList() {
+        sendCommand("REQUESTGAMELIST#");
+        return new Gson().fromJson(receiveCommand(), GameList.class);
     }
 }

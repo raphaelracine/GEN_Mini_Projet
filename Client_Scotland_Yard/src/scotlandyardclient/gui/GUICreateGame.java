@@ -141,12 +141,12 @@ public class GUICreateGame extends JFrame {
         }
 
     }
-    private final GUIGameRoom gameRom;
+    private final GUIGameRoom gameRoom;
     private final GamePanel gamePanel;
     private final UserPanel userpanel;
 
-    public GUICreateGame(GUIGameRoom gameRom) {
-        this.gameRom = gameRom;
+    public GUICreateGame(GUIGameRoom gameRoom) {
+        this.gameRoom = gameRoom;
         gamePanel = new GamePanel();
         userpanel = new UserPanel();
 

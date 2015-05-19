@@ -3,7 +3,7 @@ package scotlandyardclient.clientstate;
 import java.io.IOException;
 import java.net.Socket;
 import scotlandyardclient.Client;
-import scotlandyardclient.json.MapNames;
+import scotlandyardclient.json.*;
 
 class LoggedOutState extends ConnectedState {
 
@@ -48,13 +48,23 @@ class LoggedOutState extends ConnectedState {
     public boolean editAccount(String newUsername, String newPassword) {
         return false;
     }
-      @Override
+    
+    public boolean joinGame(String gameName) {
+        return false;
+    }
+    
+    @Override
     public boolean createGame(String partyName, int playersNb, String map){
         return false;
     }
 
     @Override
     public MapNames getMapNames() {
+        return null;
+    }
+    
+    @Override
+    public GameList getGameList() {
         return null;
     }
 }

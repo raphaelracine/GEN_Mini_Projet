@@ -1,7 +1,7 @@
 package scotlandyardclient.clientstate;
 
 import java.io.IOException;
-import scotlandyardclient.json.MapNames;
+import scotlandyardclient.json.*;
 
 public abstract class ClientState {
 
@@ -21,8 +21,11 @@ public abstract class ClientState {
 
     public abstract boolean editAccount(String newUsername, String newPassword);
     
+    public abstract boolean joinGame(String gameName);
+    
     public abstract boolean createGame(String partyName, int playersNb, String map);
 
     public abstract MapNames getMapNames();
-
+    
+    public abstract GameList getGameList();
 }

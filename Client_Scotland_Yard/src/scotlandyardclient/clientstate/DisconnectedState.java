@@ -5,7 +5,7 @@ import java.net.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import scotlandyardclient.Client;
-import scotlandyardclient.json.MapNames;
+import scotlandyardclient.json.*;
 
 public class DisconnectedState extends ClientState {
 
@@ -54,13 +54,24 @@ public class DisconnectedState extends ClientState {
     public boolean editAccount(String newUsername, String newPassword) {
         return false;
     }
-      @Override
+    
+    @Override
+    public boolean joinGame(String gameName) {
+        return false;
+    }
+    
+    @Override
     public boolean createGame(String partyName, int playersNb, String map) {
         return false;
     }
 
     @Override
     public MapNames getMapNames() {
+        return null;
+    }
+    
+    @Override
+    public GameList getGameList() {
         return null;
     }
 }

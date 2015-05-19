@@ -3,7 +3,9 @@ package scotlandyardclient.gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import scotlandyardclient.Client;
+import scotlandyardclient.json.*;
 
 public class GUIGameRoom extends JFrame {
 
@@ -91,7 +93,7 @@ public class GUIGameRoom extends JFrame {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                   // envoyer message au serveur
+                   GUIGameRoom.this.refreshGameList();
                 }
 
                 @Override
@@ -139,7 +141,15 @@ public class GUIGameRoom extends JFrame {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    if (games.getSelectedRow() >= 0) {
+                        if (Client.getInstance().joinGame((String) games.getValueAt(games.getSelectedRow(), 0))) {
+                            new GUIPlayerWaiting(GUIGameRoom.this);
+                        } else {
+                            JOptionPane.showMessageDialog(rootPane, "Impossible de rejoindre la partie", "Erreur", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Selectionner une partie", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
 
                 @Override
@@ -171,6 +181,10 @@ public class GUIGameRoom extends JFrame {
     private JTable games = new JTable();
     private JScrollPane scrollGames = new JScrollPane(games);
 
+    private static final Object[] columnsNames = {
+        "Partie", "Hôte", "Carte", "Joueurs"
+    };
+    
     private String username;
 
     public GUIGameRoom(String username) {
@@ -186,6 +200,8 @@ public class GUIGameRoom extends JFrame {
         getContentPane().add(scrollGames);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
 
+        refreshGameList();
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Salle de jeu");
         pack();
@@ -195,5 +211,31 @@ public class GUIGameRoom extends JFrame {
     public void setUsername(String username) {
         this.username = username;
         userPanel.setUsername(username);
+    }
+    
+    public void refreshGameList() {
+        GameList gameList = Client.getInstance().getGameList();
+        
+        DefaultTableModel model = new DefaultTableModel(columnsNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        for (Game game : gameList.games()) {
+            model.addRow(new Object[] {
+                game.name(), 
+                game.host(), 
+                game.map(), 
+                (
+                        new Integer(game.getCurrentPlayers()).toString() 
+                        + "/" 
+                        + new Integer(game.getNumberPlayers()).toString()
+                        )
+            });
+        }
+        
+        games.setModel(model);
     }
 }

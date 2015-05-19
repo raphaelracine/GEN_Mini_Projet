@@ -14,6 +14,8 @@ import javax.swing.*;
  * @author Yassin
  */
 public class GUIHostWaiting extends JFrame {
+    private GUIGameRoom gameRoom;
+    
     private JLabel lblPlayers = new JLabel("Joueurs");
     
     private JButton start = new JButton("Lancer");
@@ -25,7 +27,9 @@ public class GUIHostWaiting extends JFrame {
     private JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     private JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     
-    public GUIHostWaiting() {
+    public GUIHostWaiting(GUIGameRoom gameRoom) {
+        this.gameRoom = gameRoom;
+        
         start.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
