@@ -56,10 +56,10 @@ public class GUICreateGame extends JFrame {
                                gamePanel.txtParty.getText(),gamePanel.playersNumber()
                                 , gamePanel.mapName());
                         if (result) {
-                            JOptionPane.showMessageDialog(rootPane, "la partie a été créee",
-                                    "Erreur", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(rootPane, "La partie a été créee.",
+                                    "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                         } else {
-                            JOptionPane.showMessageDialog(rootPane, "la partie ne peut être créee",
+                            JOptionPane.showMessageDialog(rootPane, "Impossible de créer la partie",
                                     "Erreur", JOptionPane.ERROR_MESSAGE);
                         }
                     }
