@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import scotlandyardserver.client.Client;
+import scotlandyardserver.games.Game;
 
 public class ClientLoggedIn extends ClientState {
 
@@ -24,7 +25,7 @@ public class ClientLoggedIn extends ClientState {
 
     @Override
     public void logIn(String username, String password) {
-        // On ne fait rien, le client est déjà authentifié
+        client().sendMessage("AUTHENTICATEREFUSED");
     }
 
     @Override
@@ -60,7 +61,13 @@ public class ClientLoggedIn extends ClientState {
 
     @Override
     public void joinGame(String name) {
-        // Code pour rejoindre une partie à faire ici
+        for(Game game : client().server().getGamesManager().games()) {
+            if(game.getName().equals(name)) {
+                game.joinGame(client());
+                return;
+            }
+        }
+        client().sendMessage("JOINGAMEREFUSED");
     }
 
 }

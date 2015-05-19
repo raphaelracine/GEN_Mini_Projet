@@ -10,7 +10,6 @@ import javax.swing.*;
 import scotlandyardclient.Client;
 import scotlandyardclient.Utils;
 
-
 public class GUICreateGame extends JFrame {
 
     class UserPanel extends JPanel {
@@ -58,11 +57,13 @@ public class GUICreateGame extends JFrame {
                         return;
                     } else {
                         boolean result = Client.getInstance().createGame(
-                               gamePanel.txtParty.getText(),gamePanel.playersNumber()
-                                , gamePanel.mapName());
+                                gamePanel.txtParty.getText(), gamePanel.playersNumber(), gamePanel.mapName());
                         if (result) {
                             JOptionPane.showMessageDialog(rootPane, "La partie a été créee.",
                                     "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                            GUICreateGame.this.dispose();
+                            new GUIHostWaiting(gameRoom);
+
                         } else {
                             JOptionPane.showMessageDialog(rootPane, "Impossible de créer la partie",
                                     "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -91,13 +92,13 @@ public class GUICreateGame extends JFrame {
 
     class GamePanel extends JPanel {
 
-        private JLabel lblParty;
-        private JLabel lblPlayersNunmber;
-        private JLabel lblMap;
+        private final JLabel lblParty;
+        private final JLabel lblPlayersNunmber;
+        private final JLabel lblMap;
 
         private JTextField txtParty;
-        private JComboBox comboPlayersNumber;
-        private JComboBox comboMap;
+        private final JComboBox comboPlayersNumber;
+        private final JComboBox comboMap;
 
         public GamePanel() {
 
@@ -114,11 +115,12 @@ public class GUICreateGame extends JFrame {
             }
 
             comboMap = new JComboBox();
-            
+
             Client.getInstance().sendCommand("REQUESTMAPLIST");
-            
-            for(String map : Client.getInstance().getMapNames().names())
+
+            for (String map : Client.getInstance().getMapNames().names()) {
                 comboMap.addItem(map);
+            }
 
             add(lblParty);
             add(txtParty);

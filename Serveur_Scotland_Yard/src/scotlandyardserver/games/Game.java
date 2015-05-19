@@ -3,10 +3,13 @@ package scotlandyardserver.games;
 
 import java.util.LinkedList;
 import scotlandyardserver.client.Client;
+import scotlandyardserver.games.state.GameState;
+import scotlandyardserver.games.state.WaitingPlayersState;
 
 public class Game implements Runnable {
     private final Thread thread;
     
+    private GameState state;
     private final Client host;
     private final String name;
     private final int numberOfPlayers;
@@ -26,6 +29,8 @@ public class Game implements Runnable {
         this.name = name;
         this.numberOfPlayers = numberOfPlayers;
         this.map = map;
+        
+        setState(new WaitingPlayersState(this));
         
         thread = new Thread(this);
         thread.start();
@@ -52,10 +57,22 @@ public class Game implements Runnable {
         return numberOfPlayers;
     }
     
+    public LinkedList<Client> players() {
+        return players;
+    }
+    
     public int currentNumberOfPlayers() {
         return players.size();
     }
     
+    public boolean joinGame(Client client) {        
+        return state.joinGame(client);
+    }
+
+    public void setState(GameState newState) {
+        this.state = newState;
+    }
+
     public void addPlayer(Client client) {
         players.add(client);
     }

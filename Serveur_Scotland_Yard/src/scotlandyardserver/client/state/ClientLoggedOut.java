@@ -58,11 +58,11 @@ public class ClientLoggedOut extends ClientState {
 
     @Override
     public void createGame(String name, int numberOfPlayers, String map) {
-        // Un client ne peut pas créer de jeu s'il n'est pas loggué
+        client().sendMessage("CREATEGAMEREFUSED");
     }
 
     @Override
     public void joinGame(String name) {
-        // Un client ne peut pas rejoindre une partie s'il n'est pas connecté
+        client().sendMessage("JOINGAMEREFUSED");
     }
 }
