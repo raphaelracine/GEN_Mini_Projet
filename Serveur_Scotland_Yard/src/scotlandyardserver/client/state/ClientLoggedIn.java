@@ -48,7 +48,7 @@ public class ClientLoggedIn extends ClientState {
     public void setUsername(String newUsername) {
         this.username = newUsername;
     }
-
+    
     @Override
     public void createGame(String name, int numberOfPlayers, String map) {
         if(client().server().getGamesManager().createGame(client(), name, numberOfPlayers, map)) {
@@ -58,7 +58,17 @@ public class ClientLoggedIn extends ClientState {
         else
             client().sendMessage("CREATEGAMEREFUSED");
     }
-
+    
+    @Override
+    public void leaveGame(String name) {
+        for(Game game : client().server().getGamesManager().games()) {
+            if(game.getName().equals(name)) {
+                game.leaveGame(client());
+                return;
+            }
+        }
+    }
+    
     @Override
     public void joinGame(String name) {
         for(Game game : client().server().getGamesManager().games()) {

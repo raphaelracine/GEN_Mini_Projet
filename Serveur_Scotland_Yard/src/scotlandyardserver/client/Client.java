@@ -108,6 +108,10 @@ public class Client implements Runnable {
         state.setUsername(newUsername);
     }
 
+    public void leaveGame(String name) {
+        state.leaveGame(name);
+    }
+    
     public void createGame(String name, int numberOfPlayers, String map) {
         state.createGame(name, numberOfPlayers, map);
     }

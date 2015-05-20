@@ -36,8 +36,8 @@ public class Game {
         return name;
     }
     
-    public String getHost() {
-        return host.username();
+    public Client getHost() {
+        return host;
     }
     
     public String getMap() {

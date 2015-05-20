@@ -18,26 +18,41 @@ public class WaitingPlayersState extends GameState {
             return false;
         }
         
-        game().addPlayer(client);
         client.sendMessage("JOINGAMEACCEPTED");
+        game().addPlayer(client);
+        game().getHost().sendMessage("PLAYERJOINEDGAME#" + client.username());
         
-        for(Client cl : game().players())
-            if(cl != client)
-                cl.sendMessage("PLAYERJOINEDGAME#" + cl.username());
-        
-        if(game().currentNumberOfPlayers() == game().numberOfPlayers())
+        if(game().currentNumberOfPlayers() == game().numberOfPlayers()) {
+            game().getHost().sendMessage("GAMEREADY");
             game().setState(new InitializingGameState(game()));
+        }
         
         return true;
     }
-
+    
     @Override
     public void leaveGame(Client client) {
-        game().removePlayer(client);
-        client.setState(new ClientLoggedIn(client, client.username()));
-        
-        for(Client cl : game().players())
-            if(cl != client)
-                cl.sendMessage("PLAYERLEAVEDGAME#" + cl.username());
+        // si le client correspond à l'hôte
+        // destruction de la partie
+        //      message départ hôte aux joueurs
+        //      vidage de la liste
+        //      suppression de la partie
+        // si le client est un simple joueur
+        //      suppression du client de la liste
+        //      message à l'hôte signalant le départ du client.
+        if (client == game().getHost()) {
+            game().removePlayer(client);
+            for (Client c : game().players()) {
+                
+                c.sendMessage("HOSTLEFTGAME");
+                c.setState(new ClientLoggedIn(client, client.username()));
+            }
+            game().players().clear();
+        } else {
+            game().removePlayer(client);
+            
+            game().getHost().sendMessage("PLAYERLEFTGAME#" + client.username());
+            client.setState(new ClientLoggedIn(client, client.username()));
+        }
     }    
 }

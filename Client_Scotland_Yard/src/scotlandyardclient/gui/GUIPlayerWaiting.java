@@ -20,20 +20,14 @@ public class GUIPlayerWaiting extends JFrame implements Runnable {
     private GUIGameRoom gameRoom;
     private Thread activity;
     
-    private JLabel lblPlayers = new JLabel("Joueurs");
+    JLabel label = new JLabel("En attente de joueurs...");
     
     private JButton quit = new JButton("Quitter");
     
-    private JList<String> players = new JList<>();
-    private JScrollPane scrollPlayers = new JScrollPane(players);
-    private DefaultListModel playersModel = new DefaultListModel();
-    
-    private JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    private JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     private JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     
-    private static final Object[] columnsNames = {
-        "Joueur"
-    };
+    private boolean isQuit = false;
     
     public GUIPlayerWaiting(GUIGameRoom gameRoom, String game) {
         this.gameRoom = gameRoom;
@@ -41,8 +35,10 @@ public class GUIPlayerWaiting extends JFrame implements Runnable {
         quit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // envoyer message au serveur
-                //GUIPlayerWaiting.this.dispose();
+                isQuit = true;
+                Client.getInstance().sendCommand("PLAYERLEAVEGAME#" + game);
+                GUIPlayerWaiting.this.dispose();
+                new GUIGameRoom(Client.getInstance().username());
             }
 
             @Override
@@ -62,15 +58,10 @@ public class GUIPlayerWaiting extends JFrame implements Runnable {
             }
         });
         
-        northPanel.add(lblPlayers);
+        centerPanel.add(label);
         southPanel.add(quit);
-        
-        players.setModel(playersModel);        
-        for (String player : Client.getInstance().getPlayerList(game).players())
-            playersModel.addElement(player);
-        
-        getContentPane().add(northPanel, BorderLayout.NORTH);
-        getContentPane().add(scrollPlayers);
+ 
+        getContentPane().add(centerPanel, BorderLayout.CENTER);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
         
         setTitle("Attente de joueurs");
@@ -82,20 +73,20 @@ public class GUIPlayerWaiting extends JFrame implements Runnable {
     }
     
     public void run() {      
-        while (true) {
+        while (!isQuit) {
             String[] args = parseCommand(Client.getInstance().receiveCommand());
             String cmd = args[0];
+            System.out.println("args:" + args[0]);
             switch (cmd) {
-                case "PLAYERJOINEDGAME": 
-                    if (args.length  == 2)
-                        playersModel.addElement(args[1]);
-                    break;
-                case "PLAYERQUITGAME": 
-                    if (args.length  == 2)
-                        playersModel.removeElement(args[1]);
-                    break;
-                // case préparation jeu ou game start
-            }
+                case "HOSTLEFTGAME":
+                    new GUIGameRoom(Client.getInstance().username());
+                    GUIPlayerWaiting.this.dispose();
+                    return;
+                case "GAMESTART":                     
+                    new GUIGame();
+                    GUIPlayerWaiting.this.dispose();
+                    return;
+            }          
         }
     }
     

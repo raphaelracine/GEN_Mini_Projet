@@ -131,7 +131,7 @@ public class Server {
         for(Game game : gamesManager.games()) {
             gameList.add(new scotlandyardserver.json.Game(
                     game.getName(),
-                    game.getHost(),
+                    game.getHost().username(),
                     game.getMap(),
                     game.currentNumberOfPlayers(),
                     game.numberOfPlayers()                    

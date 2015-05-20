@@ -2,6 +2,7 @@ package scotlandyardserver.commands;
 
 import scotlandyardserver.Server;
 import scotlandyardserver.client.Client;
+import scotlandyardserver.games.Game;
 
 public class CommandManager {
 
@@ -11,8 +12,10 @@ public class CommandManager {
 
         PLAY_DETECTIVE_TURN(3),
         PLAY_MISTER_X_TURN(4),
+        PLAYERLEAVEGAME(1),
         CREATEGAME(3),
         JOINGAME(1),
+        STARTGAME(1),
         AUTHENTICATE(2),
         UNAUTHENTICATE(0),
         CREATEACCOUNT(2),
@@ -107,9 +110,31 @@ public class CommandManager {
             } else {
                 client.sendMessage(BAD_COMMAND);
             }
+        } else if (nameOfCommand.equals(CommandFromClient.PLAYERLEAVEGAME.name())) {
+            if (CommandFromClient.PLAYERLEAVEGAME.numberOfArgs() == nbArgs) {
+                System.out.println("player:"+commandWithArgs[1]);
+                client.leaveGame(commandWithArgs[1]);
+            } else {
+                client.sendMessage(BAD_COMMAND);
+            }
         } else if (nameOfCommand.equals(CommandFromClient.JOINGAME.name())) {
             if (CommandFromClient.JOINGAME.numberOfArgs() == nbArgs) {
                 client.joinGame(commandWithArgs[1]);
+            } else {
+                client.sendMessage(BAD_COMMAND);
+            }
+        } else if (nameOfCommand.equals(CommandFromClient.STARTGAME.name())) {
+            if (CommandFromClient.STARTGAME.numberOfArgs() == nbArgs) {
+                //client.joinGame(commandWithArgs[1]);
+              for (Game game : server.getGamesManager().games()) {
+                  if (game.getName().equals(commandWithArgs[1])) {
+                      for (Client c : game.players()) {
+                          if (c != game.getHost())
+                              c.sendMessage("GAMESTART");
+                      }
+                  }
+                      
+              }
             } else {
                 client.sendMessage(BAD_COMMAND);
             }

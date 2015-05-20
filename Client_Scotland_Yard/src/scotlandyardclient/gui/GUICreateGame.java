@@ -62,7 +62,7 @@ public class GUICreateGame extends JFrame {
                             JOptionPane.showMessageDialog(rootPane, "La partie a été créee.",
                                     "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                             GUICreateGame.this.dispose();
-                            new GUIHostWaiting(gameRoom);
+                            new GUIHostWaiting(gameRoom, gamePanel.getTxtParty().getText());
 
                         } else {
                             JOptionPane.showMessageDialog(rootPane, "Impossible de créer la partie",

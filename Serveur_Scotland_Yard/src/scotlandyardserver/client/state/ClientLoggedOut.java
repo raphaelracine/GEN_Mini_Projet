@@ -55,7 +55,12 @@ public class ClientLoggedOut extends ClientState {
     @Override
     public void setUsername(String newUsername) {
     }
-
+    
+    @Override
+    public void leaveGame(String name) {
+        
+    }
+    
     @Override
     public void createGame(String name, int numberOfPlayers, String map) {
         client().sendMessage("CREATEGAMEREFUSED");

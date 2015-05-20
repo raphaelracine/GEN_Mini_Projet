@@ -30,15 +30,19 @@ public class GUIHostWaiting extends JFrame implements Runnable {
     private JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     private JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     
-    public GUIHostWaiting(GUIGameRoom gameRoom) {
+    private boolean isStart = false;
+    private boolean isQuit = false;
+    
+    public GUIHostWaiting(GUIGameRoom gameRoom, String game) {
         this.gameRoom = gameRoom;
         
         start.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // envoyer message au serveur
-                // changement d'état
-                // ouverture fenêtre jeu
+                isStart = true;
+                Client.getInstance().sendCommand("STARTGAME#" + game);
+                GUIHostWaiting.this.dispose();
+                new GUIGame();
             }
 
             @Override
@@ -62,8 +66,10 @@ public class GUIHostWaiting extends JFrame implements Runnable {
         quit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // envoyer message au serveur
-                //GUIHostWaiting.this.dispose();
+                isQuit = true;
+                Client.getInstance().sendCommand("PLAYERLEAVEGAME#" + game);
+                GUIHostWaiting.this.dispose();
+                new GUIGameRoom(Client.getInstance().username());
             }
 
             @Override
@@ -88,6 +94,7 @@ public class GUIHostWaiting extends JFrame implements Runnable {
         southPanel.add(quit);
         
         players.setModel(playersModel);
+        playersModel.addElement(Client.getInstance().username());
         
         getContentPane().add(northPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPlayers);
@@ -103,7 +110,7 @@ public class GUIHostWaiting extends JFrame implements Runnable {
     
     @Override
     public void run() {
-        while (true) {
+        while (!isQuit && !isStart) {
             String[] args = parseCommand(Client.getInstance().receiveCommand());
             String cmd = args[0];
             switch (cmd) {
@@ -111,17 +118,15 @@ public class GUIHostWaiting extends JFrame implements Runnable {
                     if (args.length  == 2)
                         playersModel.addElement(args[1]);
                     break;
-                case "PLAYERQUITGAME": 
+                case "PLAYERLEFTGAME": 
                     if (args.length  == 2) {
                         playersModel.removeElement(args[1]);
                         start.setEnabled(false);
                     }
-                    
                     break;
                 case "GAMEREADY":
                     start.setEnabled(true);
                     break;
-                // case préparation jeu ou game start
             }
         }
     }
