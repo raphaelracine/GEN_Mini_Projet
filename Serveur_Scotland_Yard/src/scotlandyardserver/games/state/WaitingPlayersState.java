@@ -13,12 +13,9 @@ public class WaitingPlayersState extends GameState {
 
     @Override
     public synchronized boolean joinGame(Client client) {        
-        if(game().players().contains(client)) {
-            client.sendMessage("JOINGAMEREFUSED");
+        if(game().players().contains(client))
             return false;
-        }
-        
-        client.sendMessage("JOINGAMEACCEPTED");
+
         game().addPlayer(client);
         game().getHost().sendMessage("PLAYERJOINEDGAME#" + client.username());
         
@@ -43,7 +40,6 @@ public class WaitingPlayersState extends GameState {
             game().removePlayer(client);
             client.sendMessage("PLAYERLEFTGAME#" + client.username());
             game().getHost().sendMessage("PLAYERLEFTGAME#" + client.username());
-            client.setState(new ClientLoggedIn(client, client.username()));
         }
     }    
 }

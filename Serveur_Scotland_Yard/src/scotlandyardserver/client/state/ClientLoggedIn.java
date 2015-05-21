@@ -61,20 +61,17 @@ public class ClientLoggedIn extends ClientState {
     
     @Override
     public void leaveGame(String name) {
-        for(Game game : client().server().getGamesManager().games()) {
-            if(game.getName().equals(name)) {
-                game.leaveGame(client());
-                return;
-            }
-        }
+        // Le client ne peut pas quitter un jeu s'il n'est pas dedans
     }
     
     @Override
     public void joinGame(String name) {
         for(Game game : client().server().getGamesManager().games()) {
             if(game.getName().equals(name)) {
-                game.joinGame(client());
-                return;
+                if(game.joinGame(client())) {
+                    client().sendMessage("JOINGAMEACCEPTED");
+                    client().setState(new ClientLoggedInAGame(client(), username));
+                }
             }
         }
         client().sendMessage("JOINGAMEREFUSED");
