@@ -11,12 +11,12 @@ public class ClientLoggedInAGame extends ClientLoggedIn {
 
     @Override
     public void createGame(String name, int numberOfPlayers, String map) {
-        client().sendMessage("CREATEGAMEREFUSED");
+        //client().sendMessage("CREATEGAMEREFUSED");
     }
 
     @Override
     public void joinGame(String name) {
-        client().sendMessage("JOINGAMEREFUSED");
+        //client().sendMessage("JOINGAMEREFUSED");
     }
 
     @Override
@@ -27,7 +27,5 @@ public class ClientLoggedInAGame extends ClientLoggedIn {
                 return;
             }
         }
-        
-        client().setState(new ClientLoggedIn(client(), client().username()));
     }
 }

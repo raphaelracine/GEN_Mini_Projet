@@ -3,6 +3,8 @@ package scotlandyardserver.games;
 
 import java.util.LinkedList;
 import scotlandyardserver.client.Client;
+import scotlandyardserver.client.state.ClientLoggedIn;
+import scotlandyardserver.client.state.ClientLoggedInAGame;
 import scotlandyardserver.games.state.GameState;
 import scotlandyardserver.games.state.WaitingPlayersState;
 
@@ -24,7 +26,7 @@ public class Game {
      */
     public Game(Client host, String name, int numberOfPlayers, String map) {
         this.host = host;
-        players.add(host);
+        addPlayer(host);
         this.name = name;
         this.numberOfPlayers = numberOfPlayers;
         this.map = map;
@@ -70,9 +72,11 @@ public class Game {
 
     public void addPlayer(Client client) {
         players.add(client);
+        client.setState(new ClientLoggedInAGame(client, client.username()));
     }
     
     public void removePlayer(Client client) {
         players.remove(client);
+        client.setState(new ClientLoggedIn(client, client.username()));
     }
 }

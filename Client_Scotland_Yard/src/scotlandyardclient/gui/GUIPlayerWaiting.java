@@ -18,8 +18,8 @@ import scotlandyardclient.json.Game;
  */
 public class GUIPlayerWaiting extends JFrame implements Runnable {
 
-    private GUIGameRoom gameRoom;
-    private Thread activity;
+    private final GUIGameRoom gameRoom;
+    private final Thread activity;
 
     JLabel label = new JLabel("En attente de joueurs...");
 
@@ -28,18 +28,13 @@ public class GUIPlayerWaiting extends JFrame implements Runnable {
     private JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     private JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-    private boolean isQuit = false;
-
     public GUIPlayerWaiting(GUIGameRoom gameRoom, String game) {
         this.gameRoom = gameRoom;
 
         quit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                isQuit = true;
-                Client.getInstance().sendCommand("PLAYERLEAVEGAME#" + game);
-                new GUIGameRoom(Client.getInstance().username());
-                GUIPlayerWaiting.this.dispose();
+                Client.getInstance().leaveGame(game);
             }
 
             @Override
@@ -73,27 +68,24 @@ public class GUIPlayerWaiting extends JFrame implements Runnable {
         activity.start();
     }
 
+    @Override
     public void run() {
-        while (!isQuit) {
-            String[] args = parseCommand(Client.getInstance().receiveCommand());
-            String cmd = args[0];
-            System.out.println("PlayerWaiting:cmd:" + cmd);
-            switch (cmd) {
-                case "HOSTLEFTGAME":
-                    GUIPlayerWaiting.this.dispose();
-                    new GUIGameRoom(Client.getInstance().username());
-                    return;
+        while(true) {
+            String cmd = Client.getInstance().receiveCommand();
+            
+            System.out.println(cmd);
+            
+            switch(cmd) {
                 case "GAMESTART":
                     new GUIGame();
-                    GUIPlayerWaiting.this.dispose();
+                    dispose();
                     return;
-                /*case "PLAYERLEFTGAME":
-                    if (args[1].equals(Client.getInstance().username())) {
-                        new GUIGameRoom(Client.getInstance().username());
-                        GUIPlayerWaiting.this.dispose();
-                        return;
-                    }*/
-
+                case "PLAYERLEFTGAME":
+                case "HOSTLEFTGAME":
+                    new GUIGameRoom(Client.getInstance().username());
+                    dispose();
+                    return;
+                    
             }
         }
     }

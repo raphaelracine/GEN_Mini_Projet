@@ -31,19 +31,13 @@ public class GUIHostWaiting extends JFrame implements Runnable {
     private JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     private JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-    private boolean isStart = false;
-    private boolean isQuit = false;
-
     public GUIHostWaiting(GUIGameRoom gameRoom, String game) {
         this.gameRoom = gameRoom;
 
         start.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                isStart = true;
                 Client.getInstance().sendCommand("STARTGAME#" + game);
-                GUIHostWaiting.this.dispose();
-                new GUIGame();
             }
 
             @Override
@@ -67,10 +61,7 @@ public class GUIHostWaiting extends JFrame implements Runnable {
         quit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                isQuit = true;
-                Client.getInstance().sendCommand("PLAYERLEAVEGAME#" + game);
-                new GUIGameRoom(Client.getInstance().username());
-                    GUIHostWaiting.this.dispose();
+                Client.getInstance().leaveGame(game);
             }
 
             @Override
@@ -111,31 +102,30 @@ public class GUIHostWaiting extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        while (!isQuit && !isStart) {
-            String[] args = parseCommand(Client.getInstance().receiveCommand());
-            String cmd = args[0];
-            System.out.println("HostWaiting:cmd:" + cmd);
+        while (true) {
+            String[] cmd = parseCommand(Client.getInstance().receiveCommand());
+            
+            System.out.println(cmd[0]);
 
-            switch (cmd) {
-                case "PLAYERJOINEDGAME":
-                    if (args.length == 2) {
-                        playersModel.addElement(args[1]);
-                    }
-                    break;
-                case "PLAYERLEFTGAME":
-                    if (args.length == 2) {
-                        playersModel.removeElement(args[1]);
-                        start.setEnabled(false);
-                    }
-                    break;
-
-                /*case "HOSTLEFTGAME":
-                    new GUIGameRoom(Client.getInstance().username());
-                    GUIHostWaiting.this.dispose();
-                    return*/
+            switch (cmd[0]) {
+                case "GAMESTART":
+                    new GUIGame();
+                    dispose();
+                    return;
                 case "GAMEREADY":
                     start.setEnabled(true);
                     break;
+                case "PLAYERJOINEDGAME":
+                    playersModel.addElement(cmd[1]);
+                    break;
+                case "PLAYERLEFTGAME":
+                    playersModel.removeElement(cmd[1]);
+                    start.setEnabled(false);
+                    break;
+                case "HOSTLEFTGAME":
+                    new GUIGameRoom(Client.getInstance().username());
+                    dispose();
+                    return;
             }
         }
     }

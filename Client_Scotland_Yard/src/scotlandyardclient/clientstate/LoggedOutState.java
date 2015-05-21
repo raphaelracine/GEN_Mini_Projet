@@ -77,4 +77,7 @@ class LoggedOutState extends ConnectedState {
     public String username() {
         return null;
     }
+    
+    @Override
+    public void leaveGame(String name) {}
 }

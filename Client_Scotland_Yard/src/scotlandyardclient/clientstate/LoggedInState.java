@@ -52,6 +52,7 @@ public class LoggedInState extends ConnectedState {
         String response = receiveCommand();
 
         if (response.equals("JOINGAMEACCEPTED")) {
+            Client.getInstance().setState(new LoggedInGameState(getSocket(), username()));
             return true;
         } else if (response.equals("JOINGAMEREFUSED")) {
             return false;
@@ -64,11 +65,13 @@ public class LoggedInState extends ConnectedState {
         sendCommand("CREATEGAME#" + partyName + "#" + playersNb + "#"+ map);
         String response = receiveCommand();
 
-        if (response.equals("CREATEGAMEACCEPTED")) {     
+        if (response.equals("CREATEGAMEACCEPTED")) { 
+            Client.getInstance().setState(new LoggedInGameState(getSocket(), username()));
             return true;
         } else if (response.equals("CREATEGAMEREFUSED")) {
             return false;
         }
+        
         return false;
     }
     
@@ -76,6 +79,8 @@ public class LoggedInState extends ConnectedState {
     public MapNames getMapNames() {
         return new Gson().fromJson(receiveCommand(), MapNames.class);
     }
+    
+    public void leaveGame(String name) {}
     
     @Override
     public GameList getGameList() {

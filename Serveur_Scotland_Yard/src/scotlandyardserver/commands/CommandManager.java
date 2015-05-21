@@ -112,7 +112,6 @@ public class CommandManager {
             }
         } else if (nameOfCommand.equals(CommandFromClient.PLAYERLEAVEGAME.name())) {
             if (CommandFromClient.PLAYERLEAVEGAME.numberOfArgs() == nbArgs) {
-                System.out.println("player:"+commandWithArgs[1]);
                 client.leaveGame(commandWithArgs[1]);
             } else {
                 client.sendMessage(BAD_COMMAND);
@@ -125,16 +124,7 @@ public class CommandManager {
             }
         } else if (nameOfCommand.equals(CommandFromClient.STARTGAME.name())) {
             if (CommandFromClient.STARTGAME.numberOfArgs() == nbArgs) {
-                //client.joinGame(commandWithArgs[1]);
-              for (Game game : server.getGamesManager().games()) {
-                  if (game.getName().equals(commandWithArgs[1])) {
-                      for (Client c : game.players()) {
-                          if (c != game.getHost())
-                              c.sendMessage("GAMESTART");
-                      }
-                  }
-                      
-              }
+                client.server().getGamesManager().startGame(commandWithArgs[1]);
             } else {
                 client.sendMessage(BAD_COMMAND);
             }

@@ -20,7 +20,6 @@ public class InitializingGameState extends GameState {
 
     @Override
     public boolean joinGame(Client client) {
-        client.sendMessage("JOINGAMEREFUSED");
         return false;
     }
 

@@ -83,4 +83,8 @@ public class Client {
     public String username() {
         return state.username();
     } 
+    
+    public void leaveGame(String game) {
+        state.leaveGame(game);
+    }
 }

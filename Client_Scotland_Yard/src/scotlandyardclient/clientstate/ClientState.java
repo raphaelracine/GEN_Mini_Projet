@@ -33,4 +33,6 @@ public abstract class ClientState {
     public abstract PlayerList getPlayerList(String game);
     
     public abstract String username();
+
+    public abstract void leaveGame(String game);
 }

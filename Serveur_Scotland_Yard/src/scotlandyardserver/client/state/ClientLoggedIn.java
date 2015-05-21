@@ -53,7 +53,6 @@ public class ClientLoggedIn extends ClientState {
     public void createGame(String name, int numberOfPlayers, String map) {
         if(client().server().getGamesManager().createGame(client(), name, numberOfPlayers, map)) {
             client().sendMessage("CREATEGAMEACCEPTED");
-            client().setState(new ClientLoggedInAGame(client(), username));
         }
         else
             client().sendMessage("CREATEGAMEREFUSED");
@@ -69,11 +68,12 @@ public class ClientLoggedIn extends ClientState {
         for(Game game : client().server().getGamesManager().games()) {
             if(game.getName().equals(name)) {
                 if(game.joinGame(client())) {
-                    client().sendMessage("JOINGAMEACCEPTED");
-                    client().setState(new ClientLoggedInAGame(client(), username));
+                    client().sendMessage("JOINGAMEACCEPTED");                 
+                    return;
                 }
             }
         }
+        
         client().sendMessage("JOINGAMEREFUSED");
     }
 

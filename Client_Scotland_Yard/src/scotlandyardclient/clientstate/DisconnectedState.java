@@ -89,4 +89,8 @@ public class DisconnectedState extends ClientState {
     public String username() {
         return null;
     }
+
+    @Override
+    public void leaveGame(String game) {
+    }
 }

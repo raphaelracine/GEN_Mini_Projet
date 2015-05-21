@@ -3,6 +3,7 @@ package scotlandyardserver.games.state;
 
 import scotlandyardserver.client.Client;
 import scotlandyardserver.client.state.ClientLoggedIn;
+import scotlandyardserver.client.state.ClientLoggedInAGame;
 import scotlandyardserver.games.Game;
 
 public class WaitingPlayersState extends GameState {
@@ -18,11 +19,10 @@ public class WaitingPlayersState extends GameState {
 
         game().addPlayer(client);
         game().getHost().sendMessage("PLAYERJOINEDGAME#" + client.username());
+        client.setState(new ClientLoggedInAGame(client, client.username()));
         
-        if(game().currentNumberOfPlayers() == game().numberOfPlayers()) {
+        if(game().currentNumberOfPlayers() == game().numberOfPlayers())
             game().getHost().sendMessage("GAMEREADY");
-            game().setState(new InitializingGameState(game()));
-        }
         
         return true;
     }
@@ -33,13 +33,12 @@ public class WaitingPlayersState extends GameState {
             client.server().getGamesManager().finishGame(game());
             for (Client c : game().players()) {                
                 c.sendMessage("HOSTLEFTGAME");
-                c.setState(new ClientLoggedIn(client, client.username()));
+                game().removePlayer(client);                
             }
-            game().players().clear();
-        } else {
-            game().removePlayer(client);
+        } else {            
             client.sendMessage("PLAYERLEFTGAME#" + client.username());
             game().getHost().sendMessage("PLAYERLEFTGAME#" + client.username());
+            game().removePlayer(client);
         }
     }    
 }
