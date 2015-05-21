@@ -17,28 +17,29 @@ import scotlandyardclient.json.Game;
  * @author Yassin
  */
 public class GUIPlayerWaiting extends JFrame implements Runnable {
+
     private GUIGameRoom gameRoom;
     private Thread activity;
-    
+
     JLabel label = new JLabel("En attente de joueurs...");
-    
+
     private JButton quit = new JButton("Quitter");
-    
+
     private JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     private JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    
+
     private boolean isQuit = false;
-    
+
     public GUIPlayerWaiting(GUIGameRoom gameRoom, String game) {
         this.gameRoom = gameRoom;
-        
+
         quit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 isQuit = true;
                 Client.getInstance().sendCommand("PLAYERLEAVEGAME#" + game);
-                GUIPlayerWaiting.this.dispose();
                 new GUIGameRoom(Client.getInstance().username());
+                GUIPlayerWaiting.this.dispose();
             }
 
             @Override
@@ -57,39 +58,46 @@ public class GUIPlayerWaiting extends JFrame implements Runnable {
             public void mouseReleased(MouseEvent e) {
             }
         });
-        
+
         centerPanel.add(label);
         southPanel.add(quit);
- 
+
         getContentPane().add(centerPanel, BorderLayout.CENTER);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
-        
+
         setTitle("Attente de joueurs");
         pack();
         setVisible(true);
-        
+
         activity = new Thread(this);
         activity.start();
     }
-    
-    public void run() {      
+
+    public void run() {
         while (!isQuit) {
             String[] args = parseCommand(Client.getInstance().receiveCommand());
             String cmd = args[0];
-            System.out.println("args:" + args[0]);
+            System.out.println("PlayerWaiting:cmd:" + cmd);
             switch (cmd) {
                 case "HOSTLEFTGAME":
-                    new GUIGameRoom(Client.getInstance().username());
                     GUIPlayerWaiting.this.dispose();
+                    new GUIGameRoom(Client.getInstance().username());
                     return;
-                case "GAMESTART":                     
+                case "GAMESTART":
                     new GUIGame();
                     GUIPlayerWaiting.this.dispose();
                     return;
-            }          
+                /*case "PLAYERLEFTGAME":
+                    if (args[1].equals(Client.getInstance().username())) {
+                        new GUIGameRoom(Client.getInstance().username());
+                        GUIPlayerWaiting.this.dispose();
+                        return;
+                    }*/
+
+            }
         }
     }
-    
+
     private String[] parseCommand(String command) {
         return command.split("#");
     }

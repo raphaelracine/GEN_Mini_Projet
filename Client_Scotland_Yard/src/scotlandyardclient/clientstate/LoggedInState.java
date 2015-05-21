@@ -64,8 +64,7 @@ public class LoggedInState extends ConnectedState {
         sendCommand("CREATEGAME#" + partyName + "#" + playersNb + "#"+ map);
         String response = receiveCommand();
 
-        if (response.equals("CREATEGAMEACCEPTED")) {
-     
+        if (response.equals("CREATEGAMEACCEPTED")) {     
             return true;
         } else if (response.equals("CREATEGAMEREFUSED")) {
             return false;

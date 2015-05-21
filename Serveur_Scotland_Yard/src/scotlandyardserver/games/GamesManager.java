@@ -30,4 +30,8 @@ public class GamesManager {
     public LinkedList<Game> games() {
         return games;
     }
+    
+    public void finishGame(Game game) {
+        games.remove(game);
+    }
 }

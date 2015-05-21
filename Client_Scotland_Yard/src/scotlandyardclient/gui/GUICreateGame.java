@@ -2,10 +2,6 @@ package scotlandyardclient.gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import scotlandyardclient.Client;
 import scotlandyardclient.Utils;

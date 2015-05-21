@@ -130,6 +130,10 @@ public class GUIConnectServer extends JFrame {
         buttons.add(close);
         buttons.add(connect);
         buttons.add(createAccount);
+        
+        txtIPAdress.setText("localhost");
+        txtPortNumber.setText("3000");
+        txtPassword.setText("Goldorak%1");
 
         getContentPane().add(formArea, BorderLayout.CENTER);
         getContentPane().add(buttons, BorderLayout.SOUTH);

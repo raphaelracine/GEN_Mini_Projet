@@ -15,27 +15,28 @@ import scotlandyardclient.Client;
  * @author Yassin
  */
 public class GUIHostWaiting extends JFrame implements Runnable {
+
     private GUIGameRoom gameRoom;
     private Thread activity;
-    
+
     private JLabel lblPlayers = new JLabel("Joueurs");
-    
+
     private JButton start = new JButton("Lancer");
     private JButton quit = new JButton("Quitter");
-    
+
     private JList players = new JList();
     private JScrollPane scrollPlayers = new JScrollPane(players);
     private DefaultListModel playersModel = new DefaultListModel();
-    
+
     private JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     private JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    
+
     private boolean isStart = false;
     private boolean isQuit = false;
-    
+
     public GUIHostWaiting(GUIGameRoom gameRoom, String game) {
         this.gameRoom = gameRoom;
-        
+
         start.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -62,14 +63,14 @@ public class GUIHostWaiting extends JFrame implements Runnable {
             }
         });
         start.setEnabled(false);
-        
+
         quit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 isQuit = true;
                 Client.getInstance().sendCommand("PLAYERLEAVEGAME#" + game);
-                GUIHostWaiting.this.dispose();
                 new GUIGameRoom(Client.getInstance().username());
+                    GUIHostWaiting.this.dispose();
             }
 
             @Override
@@ -88,49 +89,57 @@ public class GUIHostWaiting extends JFrame implements Runnable {
             public void mouseReleased(MouseEvent e) {
             }
         });
-        
+
         northPanel.add(lblPlayers);
         southPanel.add(start);
         southPanel.add(quit);
-        
+
         players.setModel(playersModel);
         playersModel.addElement(Client.getInstance().username());
-        
+
         getContentPane().add(northPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPlayers);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
-        
+
         setTitle("Attente de joueurs");
         pack();
         setVisible(true);
-        
+
         activity = new Thread(this);
         activity.start();
     }
-    
+
     @Override
     public void run() {
         while (!isQuit && !isStart) {
             String[] args = parseCommand(Client.getInstance().receiveCommand());
             String cmd = args[0];
+            System.out.println("HostWaiting:cmd:" + cmd);
+
             switch (cmd) {
-                case "PLAYERJOINEDGAME": 
-                    if (args.length  == 2)
+                case "PLAYERJOINEDGAME":
+                    if (args.length == 2) {
                         playersModel.addElement(args[1]);
+                    }
                     break;
-                case "PLAYERLEFTGAME": 
-                    if (args.length  == 2) {
+                case "PLAYERLEFTGAME":
+                    if (args.length == 2) {
                         playersModel.removeElement(args[1]);
                         start.setEnabled(false);
                     }
                     break;
+
+                /*case "HOSTLEFTGAME":
+                    new GUIGameRoom(Client.getInstance().username());
+                    GUIHostWaiting.this.dispose();
+                    return*/
                 case "GAMEREADY":
                     start.setEnabled(true);
                     break;
             }
         }
     }
-    
+
     private String[] parseCommand(String command) {
         return command.split("#");
     }
