@@ -144,7 +144,7 @@ public class GUIGameRoom extends JFrame {
                 public void mouseClicked(MouseEvent e) {
                     if (games.getSelectedRow() >= 0) {
                         if (Client.getInstance().joinGame((String) games.getValueAt(games.getSelectedRow(), 0))) {
-                            new GUIPlayerWaiting(GUIGameRoom.this, (String) games.getValueAt(games.getSelectedRow(), 1));
+                            new GUIPlayerWaiting(GUIGameRoom.this, (String) games.getValueAt(games.getSelectedRow(), 0));
                             GUIGameRoom.this.dispose();
                         } else {
                             JOptionPane.showMessageDialog(rootPane, "Impossible de rejoindre la partie", "Erreur", JOptionPane.ERROR_MESSAGE);
