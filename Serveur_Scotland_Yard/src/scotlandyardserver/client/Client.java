@@ -81,7 +81,9 @@ public class Client implements Runnable {
     }
 
     public void sendMessage(String message) {
+        System.out.println("Username : " + username() + " Message : " + message);
         out.println(message);
+        //out.flush();
     }
 
     public void setState(ClientState state) {
@@ -108,8 +110,8 @@ public class Client implements Runnable {
         state.setUsername(newUsername);
     }
 
-    public void leaveGame(String name) {
-        state.leaveGame(name);
+    public void leaveGame() {
+        state.leaveGame();
     }
     
     public void createGame(String name, int numberOfPlayers, String map) {

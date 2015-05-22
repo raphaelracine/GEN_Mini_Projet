@@ -24,8 +24,8 @@ public class LoggedInGameState extends LoggedInState {
     }
     
     @Override
-    public void leaveGame(String name) {
-        Client.getInstance().sendCommand("PLAYERLEAVEGAME#" + name);
+    public void leaveGame() {
+        Client.getInstance().sendCommand("PLAYERLEAVEGAME");
         Client.getInstance().setState(new LoggedInState(getSocket(), username()));
     }
     

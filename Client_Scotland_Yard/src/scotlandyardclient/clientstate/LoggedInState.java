@@ -80,7 +80,7 @@ public class LoggedInState extends ConnectedState {
         return new Gson().fromJson(receiveCommand(), MapNames.class);
     }
     
-    public void leaveGame(String name) {}
+    public void leaveGame() {}
     
     @Override
     public GameList getGameList() {

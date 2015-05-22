@@ -59,7 +59,7 @@ public class ClientLoggedIn extends ClientState {
     }
     
     @Override
-    public void leaveGame(String name) {
+    public void leaveGame() {
         // Le client ne peut pas quitter un jeu s'il n'est pas dedans
     }
     

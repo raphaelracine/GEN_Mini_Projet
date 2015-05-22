@@ -57,7 +57,7 @@ public class ClientLoggedOut extends ClientState {
     }
     
     @Override
-    public void leaveGame(String name) {
+    public void leaveGame() {
         
     }
     

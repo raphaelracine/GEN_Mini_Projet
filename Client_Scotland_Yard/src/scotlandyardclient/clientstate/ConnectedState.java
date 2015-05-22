@@ -35,18 +35,22 @@ public abstract class ConnectedState extends ClientState {
         }
     }
 
+    @Override
     public String receiveCommand() {
         String str = null;
 
         try {
             BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            System.out.println("Attend un message");
             str = is.readLine();
+            System.out.println("Reçu : " + str);
         } catch (IOException ex) {
             Logger.getLogger(ConnectedState.class.getName()).log(Level.SEVERE, null, ex);
         }
         return str;
     }
     
+    @Override
     public boolean isConnected() {
         return !socket.isClosed() && socket.isConnected();
     }

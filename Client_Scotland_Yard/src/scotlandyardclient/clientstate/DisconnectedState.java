@@ -91,6 +91,6 @@ public class DisconnectedState extends ClientState {
     }
 
     @Override
-    public void leaveGame(String game) {
+    public void leaveGame() {
     }
 }

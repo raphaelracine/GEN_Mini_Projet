@@ -61,7 +61,7 @@ public class GUIHostWaiting extends JFrame implements Runnable {
         quit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Client.getInstance().leaveGame(game);
+                Client.getInstance().leaveGame();
             }
 
             @Override
@@ -104,9 +104,11 @@ public class GUIHostWaiting extends JFrame implements Runnable {
     public void run() {
         while (true) {
             String[] cmd = parseCommand(Client.getInstance().receiveCommand());
-            
-            System.out.println(cmd[0]);
 
+            for(int i = 0; i < cmd.length; i++)
+                System.out.println("Cmd[" + i + "]" + cmd[i]);
+                
+            
             switch (cmd[0]) {
                 case "GAMESTART":
                     new GUIGame();

@@ -34,7 +34,7 @@ public class GUIPlayerWaiting extends JFrame implements Runnable {
         quit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {                
-                Client.getInstance().leaveGame(game);
+                Client.getInstance().leaveGame();
             }
 
             @Override
@@ -77,13 +77,14 @@ public class GUIPlayerWaiting extends JFrame implements Runnable {
                 case "GAMESTART":
                     new GUIGame();
                     dispose();
-                    return;
-                case "PLAYERLEFTGAME":
+                    return;                  
                 case "HOSTLEFTGAME":
+                    Client.getInstance().leaveGame();
+                    break;
+                case "PLAYERLEFTGAME":
                     new GUIGameRoom(Client.getInstance().username());
                     dispose();
-                    return;
-                    
+                    return;   
             }
         }
     }

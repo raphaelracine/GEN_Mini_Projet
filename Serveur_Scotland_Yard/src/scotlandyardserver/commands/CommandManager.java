@@ -12,7 +12,7 @@ public class CommandManager {
 
         PLAY_DETECTIVE_TURN(3),
         PLAY_MISTER_X_TURN(4),
-        PLAYERLEAVEGAME(1),
+        PLAYERLEAVEGAME(0),
         CREATEGAME(3),
         JOINGAME(1),
         STARTGAME(1),
@@ -112,7 +112,7 @@ public class CommandManager {
             }
         } else if (nameOfCommand.equals(CommandFromClient.PLAYERLEAVEGAME.name())) {
             if (CommandFromClient.PLAYERLEAVEGAME.numberOfArgs() == nbArgs) {
-                client.leaveGame(commandWithArgs[1]);
+                client.leaveGame();
             } else {
                 client.sendMessage(BAD_COMMAND);
             }

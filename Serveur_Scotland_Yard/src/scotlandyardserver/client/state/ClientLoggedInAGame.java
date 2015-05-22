@@ -5,27 +5,22 @@ import scotlandyardserver.games.Game;
 
 public class ClientLoggedInAGame extends ClientLoggedIn {
 
-    public ClientLoggedInAGame(Client client, String username) {
+    private final Game game;
+    
+    public ClientLoggedInAGame(Client client, String username, Game game) {
         super(client, username);
+        this.game = game;
     }
 
     @Override
     public void createGame(String name, int numberOfPlayers, String map) {
-        //client().sendMessage("CREATEGAMEREFUSED");
     }
 
     @Override
     public void joinGame(String name) {
-        //client().sendMessage("JOINGAMEREFUSED");
     }
 
-    @Override
-    public void leaveGame(String name) {
-        for (Game game : client().server().getGamesManager().games()) {
-            if (game.getName().equals(name)) {
-                game.leaveGame(client());
-                return;
-            }
-        }
+    public void leaveGame() {
+        game.leaveGame(client());
     }
 }

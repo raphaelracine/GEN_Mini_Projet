@@ -72,7 +72,7 @@ public class Game {
 
     public void addPlayer(Client client) {
         players.add(client);
-        client.setState(new ClientLoggedInAGame(client, client.username()));
+        client.setState(new ClientLoggedInAGame(client, client.username(), this));
     }
     
     public void removePlayer(Client client) {
