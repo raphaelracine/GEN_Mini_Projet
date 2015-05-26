@@ -36,8 +36,8 @@ CREATE TABLE station (
 CREATE TABLE link (
 	first_station_fk INT UNSIGNED NOT NULL,
 	second_station_fk INT UNSIGNED NOT NULL,
-	type ENUM('taxi', 'bus', 'subway'),
-	PRIMARY KEY(first_station_fk, second_station_fk),
+	type ENUM('taxi', 'bus', 'subway') NOT NULL,
+	PRIMARY KEY(first_station_fk, second_station_fk, type),
 	CONSTRAINT `fk_link_first_station` FOREIGN KEY (first_station_fk) REFERENCES station (station_id),
 	CONSTRAINT `fk_link_second_station` FOREIGN KEY (second_station_fk) REFERENCES station (station_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

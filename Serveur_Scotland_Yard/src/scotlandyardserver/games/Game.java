@@ -18,6 +18,12 @@ public class Game {
     private final LinkedList<Client> players = new LinkedList<>();
     
     /**
+     * Pions des joueurs
+     */
+    private final LinkedList<DetectivePone> detectives = new LinkedList<DetectivePone>();
+    private MisterXPone misterX;
+    
+    /**
      * Constructeur
      * @param host L'hôte de la partie
      * @param name Le nom de la partie
@@ -78,5 +84,21 @@ public class Game {
     public void removePlayer(Client client) {
         players.remove(client);
         client.setState(new ClientLoggedIn(client, client.username()));
+    }
+    
+    public void setMisterXPone(MisterXPone pone) {
+        misterX = pone;
+    }
+    
+    public void addDetectivePone(DetectivePone pone) {
+        detectives.add(pone);
+    }
+    
+    public LinkedList<DetectivePone> getDetectives() {
+        return detectives;
+    }
+    
+    public MisterXPone getMisterX() {
+        return misterX;
     }
 }

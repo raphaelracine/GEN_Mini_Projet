@@ -3,7 +3,11 @@
  */
 package scotlandyardserver.games;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import scotlandyardserver.client.Client;
 import scotlandyardserver.games.state.InitializingGameState;
 
@@ -25,6 +29,17 @@ public class GamesManager {
                 return false;
             }
         }
+        
+        try {
+            // On regarde que la carte existe dans la base de données
+            ResultSet rs = host.server().getSQLSelection(
+                    "SELECT name FROM map WHERE name='" + map + "'");
+            
+            if(!rs.next())
+                return false;
+        } catch (SQLException ex) {
+            return false;
+        }       
 
         games.add(new Game(host, name, numberOfPlayers, map));
         return true;
