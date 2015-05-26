@@ -1,6 +1,7 @@
 package scotlandyardserver.client;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -83,7 +84,19 @@ public class Client implements Runnable {
     public void sendMessage(String message) {
         System.out.println("Username : " + username() + " Message : " + message);
         out.println(message);
-        //out.flush();
+    }
+    
+    public void sendImageFile(String fileName) throws IOException {
+        byte buffer[] = new byte[1024];
+        
+        FileInputStream file = new FileInputStream(fileName);
+        
+        int n;
+        
+        while((n = file.read(buffer)) != -1)
+            socket.getOutputStream().write(buffer, 0, n);
+        
+        file.close();       
     }
 
     public void setState(ClientState state) {

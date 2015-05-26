@@ -10,14 +10,19 @@ import scotlandyardserver.json.GameMap;
 import com.google.gson.Gson;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import scotlandyardserver.Server;
 import scotlandyardserver.client.Client;
 import scotlandyardserver.games.Game;
 import scotlandyardserver.games.MisterXPone;
+import scotlandyardserver.json.Link;
 
 /**
  *
@@ -46,24 +51,55 @@ public class InitializingGameState extends GameState {
         // Récupération des informations de la carte dans la base de données
         Server s = Server.getInstance(0);
         
-        try {                         
+        try {             
+            ResultSet rs = s.getSQLSelection("SELECT picture FROM map WHERE name='" + game().getMap() + "'");
+            
+            rs.next();
+            String filePicture = rs.getString("picture");            
+            
             GameMap gameMap = new GameMap();
             
             /** Récupération des stations de la carte **/
-            ResultSet rs = s.getSQLSelection(
+            rs = s.getSQLSelection(
                     "SELECT * FROM station WHERE map_fk='" + game().getMap() + "'"
             );
             
             while(rs.next())
-                gameMap.addStation(new Station(rs.getInt("numero"), rs.getString("type")));
+                gameMap.addStation(new Station(rs.getInt("station_id"), 
+                        rs.getInt("numero"), 
+                        rs.getString("type")));
             
-            /** VOIR POUR LES LIENS ENTRE LES STATIONS **/
-            /****************/
+            rs = s.getSQLSelection("SELECT * FROM link WHERE first_station_fk IN"
+                    + "(SELECT station_id FROM station WHERE map_fk='" + game().getMap() + "')");
             
-            /** VOIR POUR L'ENVOI DE L'iMAGE */
+            HashMap<Pair<Station, Station>, Link> map = new HashMap<>();
             
-            /** Envoi des informations de la carte en JSon */
+            while(rs.next()) {
+                Station s1 = gameMap.getStation(rs.getInt("first_station_fk"));
+                Station s2 = gameMap.getStation(rs.getInt("second_station_fk"));
+                
+                if(s1.getNumero() > s2.getNumero()) {
+                    Station tmp = s1;
+                    s1 = s2;
+                    s2 = tmp;
+                }     
+                
+                Pair<Station, Station> pair = new Pair(s1, s2);
+                
+                if (!map.containsKey(pair)) {
+                    Link link = new Link(s1, s2);
+                    map.put(pair, link);
+                    gameMap.addLink(link);
+                }
+                map.get(pair).addLocomotion(rs.getString("type"));      
+            }
+            
             for(Client c : game().players()) {
+                try {
+                    c.sendImageFile(filePicture);
+                } catch (IOException ex) {
+                    Logger.getLogger(InitializingGameState.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 c.sendMessage(new Gson().toJson(gameMap));
                 
                 if(c == game().getHost())
