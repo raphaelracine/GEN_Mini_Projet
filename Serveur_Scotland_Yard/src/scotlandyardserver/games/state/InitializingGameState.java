@@ -46,15 +46,16 @@ public class InitializingGameState extends GameState {
         // Récupération des informations de la carte dans la base de données
         Server s = Server.getInstance(0);
         
-        try {            
+        try {                         
+            GameMap gameMap = new GameMap();
+            
+            /** Récupération des stations de la carte **/
             ResultSet rs = s.getSQLSelection(
                     "SELECT * FROM station WHERE map_fk='" + game().getMap() + "'"
             );
             
-            GameMap gameMap = new GameMap();
-            
             while(rs.next())
-                gameMap.addStation(new Station(rs.getInt("number"), rs.getString("type")));
+                gameMap.addStation(new Station(rs.getInt("numero"), rs.getString("type")));
             
             /** VOIR POUR LES LIENS ENTRE LES STATIONS **/
             /****************/
@@ -71,8 +72,8 @@ public class InitializingGameState extends GameState {
                     /*game().addDetectivePone(new DetectivePone())*/;
                 
                 /** Envoi des informations des pions **/
-                c.sendMessage(new Gson().toJson(game().getDetectives()));
-                c.sendMessage(new Gson().toJson(game().getMisterX()));
+                //c.sendMessage(new Gson().toJson(game().getDetectives()));
+                //c.sendMessage(new Gson().toJson(game().getMisterX()));
             }
             
         } catch (SQLException ex) {

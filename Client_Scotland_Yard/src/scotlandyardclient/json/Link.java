@@ -1,4 +1,4 @@
-package scotlandyardserver.json;
+package scotlandyardclient.json;
 
 import java.util.LinkedList;
 

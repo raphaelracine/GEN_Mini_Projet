@@ -1,4 +1,4 @@
-package scotlandyardserver.json;
+package scotlandyardclient.json;
 
 public class Station {
     private final int numero;
