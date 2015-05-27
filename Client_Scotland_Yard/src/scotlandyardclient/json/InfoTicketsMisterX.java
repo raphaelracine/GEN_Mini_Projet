@@ -9,4 +9,12 @@ public class InfoTicketsMisterX extends InfoTickets {
         this.doubleTurn = doubleTurn;
         this.black = black;
     }
+    
+    public int getDoubleTurn() {
+        return doubleTurn;
+    }
+    
+    public int getBlack() {
+        return black;
+    }
 }

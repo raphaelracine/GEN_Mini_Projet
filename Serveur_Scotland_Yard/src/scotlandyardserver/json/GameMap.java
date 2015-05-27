@@ -23,4 +23,8 @@ public class GameMap {
                 return s;
         return null;
     }
+    
+    public LinkedList<Station> getStations() {
+        return stations;
+    }
 }

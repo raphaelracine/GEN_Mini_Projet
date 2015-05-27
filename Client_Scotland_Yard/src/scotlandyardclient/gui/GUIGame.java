@@ -21,7 +21,11 @@ import com.google.gson.*;
 import java.awt.FlowLayout;
 import java.util.Vector;
 import javax.swing.JButton;
+import scotlandyardclient.json.GameData;
 import scotlandyardclient.json.GameMap;
+import scotlandyardclient.json.InfoTickets;
+import scotlandyardclient.json.InfoTicketsList;
+import scotlandyardclient.json.InfoTicketsMisterX;
 
 class TicketsPanel extends JPanel {
     private final JLabel lblBusTickets;
@@ -87,7 +91,7 @@ public class GUIGame extends JFrame{
         southPanel.add(tabbedPane);        
         eastPanel.add(eventsList);
         
-        /*InputStream in = new ByteArrayInputStream(Client.getInstance().receiveImage());
+        InputStream in = new ByteArrayInputStream(Client.getInstance().receiveImage());
         
         BufferedImage background = null;
         
@@ -97,17 +101,37 @@ public class GUIGame extends JFrame{
             Logger.getLogger(GUIGame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        GameMap gameMap = new Gson().fromJson(Client.getInstance().receiveCommand(), GameMap.class);
+        //GameMap gameMap = new Gson().fromJson(Client.getInstance().receiveCommand(), GameMap.class);
         
-        mapPanel = new GUIMap(gameMap, background);
+        GameData gameData = new Gson().fromJson(Client.getInstance().receiveCommand(), GameData.class);
+        
+        mapPanel = new GUIMap(gameData.gameMap(), background);
         JScrollPane js = new JScrollPane(mapPanel);
-        add(js, BorderLayout.CENTER);*/
-        add(southPanel, BorderLayout.SOUTH);
+        getContentPane().add(js, BorderLayout.CENTER);
+        
+        getContentPane().add(southPanel, BorderLayout.SOUTH);
         initSouthPanel();
-        add(eastPanel, BorderLayout.EAST);
+        getContentPane().add(eastPanel, BorderLayout.EAST);
+        
+        // récupérer les tickets de tous les détectives
+        InfoTicketsList ticketsList = gameData.ticketsList();
+        for (InfoTickets t : ticketsList.infoTickets()) {
+            tabbedPane.addTab(t.getPlayerName(), new TicketsPanel(t.getTaxi(), t.getBus(), t.getSubway()));
+        }
+        
+        // récupérer les tickets de Mister X
+        InfoTicketsMisterX misterXTickets = gameData.misterXTickets();
+        tabbedPane.addTab(misterXTickets.getPlayerName(), new TicketsPanelMisterX(
+                misterXTickets.getTaxi(), 
+                misterXTickets.getBus(), 
+                misterXTickets.getSubway(),
+                misterXTickets.getDoubleTurn(),
+                misterXTickets.getBlack()));
+        
         
         setTitle("Partie de Scotland Yard");
         pack();
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }  

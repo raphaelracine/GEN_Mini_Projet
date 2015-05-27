@@ -10,8 +10,8 @@ import scotlandyardclient.json.InfoTicketsMisterX;
 public class Client_Scotland_Yard {
 
     public static void main(String... args) {
-        //new GUIGame();
-        InfoTicketsMisterX i = new InfoTicketsMisterX("Salut", 50, 50, 50, 10, 20);        
-        System.out.println(new Gson().fromJson(new Gson().toJson(i), InfoTickets.class).getClass().getSimpleName());
+        new GUIConnectServer();
+        //InfoTicketsMisterX i = new InfoTicketsMisterX("Salut", 50, 50, 50, 10, 20);        
+        //System.out.println(new Gson().fromJson(new Gson().toJson(i), InfoTickets.class).getClass().getSimpleName());
     }
 }

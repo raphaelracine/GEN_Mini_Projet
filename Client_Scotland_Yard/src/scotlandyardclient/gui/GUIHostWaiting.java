@@ -108,7 +108,6 @@ public class GUIHostWaiting extends JFrame implements Runnable {
             for(int i = 0; i < cmd.length; i++)
                 System.out.println("Cmd[" + i + "]" + cmd[i]);
                 
-            
             switch (cmd[0]) {
                 case "GAMESTART":
                     new GUIGameMisterX();
