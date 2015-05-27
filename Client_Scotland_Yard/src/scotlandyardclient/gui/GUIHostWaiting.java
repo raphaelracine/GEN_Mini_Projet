@@ -111,7 +111,7 @@ public class GUIHostWaiting extends JFrame implements Runnable {
             
             switch (cmd[0]) {
                 case "GAMESTART":
-                    new GUIGame();
+                    new GUIGameMisterX();
                     dispose();
                     return;
                 case "GAMEREADY":

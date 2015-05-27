@@ -8,12 +8,13 @@ import scotlandyardclient.Client;
 
 public abstract class ConnectedState extends ClientState {
 
-    private Socket socket;
+    private final Socket socket;
 
     public ConnectedState(Socket socket) {
         this.socket = socket;
     }
 
+    @Override
     public void connect(String ipAddress, int port) {
     }
 
@@ -48,6 +49,34 @@ public abstract class ConnectedState extends ClientState {
             Logger.getLogger(ConnectedState.class.getName()).log(Level.SEVERE, null, ex);
         }
         return str;
+    }
+    
+    @Override
+    public byte[] receiveImage() {
+        
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            InputStream is = socket.getInputStream();
+            ;
+            
+            String fileSize = receiveCommand();
+            int size = Integer.parseInt(fileSize.split("#")[1]);
+            
+            int n;
+            byte buf[] = new byte[size];
+            
+            while (size > 0) {
+                n = is.read(buf);
+                size -= n;
+                os.write(buf,0,n);
+            }
+            
+            return os.toByteArray();
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectedState.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
     
     @Override

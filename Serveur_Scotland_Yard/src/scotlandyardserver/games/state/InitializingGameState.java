@@ -20,8 +20,11 @@ import java.util.logging.Logger;
 import javafx.util.Pair;
 import scotlandyardserver.Server;
 import scotlandyardserver.client.Client;
+import scotlandyardserver.games.DetectivePone;
 import scotlandyardserver.games.Game;
 import scotlandyardserver.games.MisterXPone;
+import scotlandyardserver.json.InfoTickets;
+import scotlandyardserver.json.InfoTicketsMisterX;
 import scotlandyardserver.json.Link;
 
 /**
@@ -50,6 +53,7 @@ public class InitializingGameState extends GameState {
     private void initGame() {
         // Récupération des informations de la carte dans la base de données
         Server s = Server.getInstance(0);
+        LinkedList<InfoTickets> infosTickets = new LinkedList<>();
         
         try {             
             ResultSet rs = s.getSQLSelection("SELECT picture FROM map WHERE name='" + game().getMap() + "'");
@@ -66,8 +70,11 @@ public class InitializingGameState extends GameState {
             
             while(rs.next())
                 gameMap.addStation(new Station(rs.getInt("station_id"), 
-                        rs.getInt("numero"), 
-                        rs.getString("type")));
+                        rs.getInt("number"), 
+                        rs.getString("type"),
+                        rs.getInt("x"),
+                        rs.getInt("y")
+                ));
             
             rs = s.getSQLSelection("SELECT * FROM link WHERE first_station_fk IN"
                     + "(SELECT station_id FROM station WHERE map_fk='" + game().getMap() + "')");
@@ -100,16 +107,22 @@ public class InitializingGameState extends GameState {
                 } catch (IOException ex) {
                     Logger.getLogger(InitializingGameState.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 c.sendMessage(new Gson().toJson(gameMap));
                 
-                if(c == game().getHost())
-                    /*game().setMisterXPone(new MisterXPone);*/;
-                else
-                    /*game().addDetectivePone(new DetectivePone())*/;
-                
-                /** Envoi des informations des pions **/
-                //c.sendMessage(new Gson().toJson(game().getDetectives()));
-                //c.sendMessage(new Gson().toJson(game().getMisterX()));
+                if(c == game().getHost()) {
+                    game().setMisterXPone(new MisterXPone(c, null, 4, 3, 3, game().numberOfPlayers() - 1, 2));
+                    infosTickets.add(new InfoTicketsMisterX(c.username(), 4, 3, 3, game().numberOfPlayers() - 1, 2));
+                } else {
+                    game().addDetectivePone(new DetectivePone(c, null, 10, 8, 4));
+                    infosTickets.add(new InfoTickets(c.username(), 10, 8, 4));
+                }
+            }
+            
+            // Informations sur les tickets
+            for(Client c : game().players()) {
+                for(InfoTickets i : infosTickets)
+                    c.sendMessage(new Gson().toJson(i));
             }
             
         } catch (SQLException ex) {

@@ -35,4 +35,6 @@ public abstract class ClientState {
     public abstract String username();
 
     public abstract void leaveGame();
+
+    public abstract byte[] receiveImage();
 }

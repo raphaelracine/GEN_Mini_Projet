@@ -9,6 +9,7 @@ import scotlandyardclient.json.*;
 
 public class DisconnectedState extends ClientState {
 
+    @Override
     public void connect(String ipAddress, int port) {
         Client.getInstance().setState(this);
         Socket socket;
@@ -92,5 +93,10 @@ public class DisconnectedState extends ClientState {
 
     @Override
     public void leaveGame() {
+    }
+
+    @Override
+    public byte[] receiveImage() {
+        return null;
     }
 }

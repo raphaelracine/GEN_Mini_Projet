@@ -16,4 +16,15 @@ public class GameMap {
     public void addLink(Link link) {
         links.add(link);
     }
+    
+    public Station getStation(int id) {
+        for(Station s : stations)
+            if(s.getId() == id)
+                return s;
+        return null;
+    }
+    
+    public LinkedList<Station> getStations() {
+        return stations;
+    }
 }

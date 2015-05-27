@@ -1,9 +1,11 @@
 package scotlandyardserver.client;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -90,13 +92,18 @@ public class Client implements Runnable {
         byte buffer[] = new byte[1024];
         
         FileInputStream file = new FileInputStream(fileName);
-        
+        OutputStream os = socket.getOutputStream();
         int n;
         
-        while((n = file.read(buffer)) != -1)
-            socket.getOutputStream().write(buffer, 0, n);
+        sendMessage("IMAGESIZE#" + new File(fileName).length());
         
-        file.close();       
+        while((n = file.read(buffer)) != -1) {
+            System.out.println(n);
+            os.write(buffer, 0, n);
+        }
+
+        os.flush();
+        file.close();
     }
 
     public void setState(ClientState state) {

@@ -64,6 +64,10 @@ public class Client {
         return state.receiveCommand();
     }
     
+    public byte[] receiveImage() {
+        return state.receiveImage();
+    }
+    
     public void sendCommand(String command) {
         state.sendCommand(command);
     }
