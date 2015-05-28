@@ -1,5 +1,6 @@
 package scotlandyardclient.gui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,6 +21,8 @@ public class GUIMap extends JPanel {
     public GUIMap(GameMap map, BufferedImage background) {
         this.background = background;
         this.map = map;  
+        
+        setPreferredSize(new Dimension(background.getWidth(), background.getHeight()));
         
         for(Station s : map.getStations())
             stationViews.add(new StationView(s));
