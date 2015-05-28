@@ -1,5 +1,5 @@
 
-package scotlandyardclient.gui;
+package scotlandyardclient.gui.ingame;
 
 import javax.swing.JCheckBox;
 

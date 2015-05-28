@@ -1,5 +1,6 @@
 package scotlandyardclient.gui;
 
+import scotlandyardclient.gui.waitinggame.GUIHostWaiting;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

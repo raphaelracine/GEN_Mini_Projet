@@ -1,4 +1,4 @@
-package scotlandyardclient.gui;
+package scotlandyardclient.gui.ingame;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -21,6 +21,7 @@ import java.awt.FlowLayout;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import scotlandyardclient.gui.GUIMap;
 import scotlandyardclient.json.GameData;
 import scotlandyardclient.json.InfoTickets;
 import scotlandyardclient.json.InfoTicketsList;
@@ -99,8 +100,6 @@ public class GUIGame extends JFrame{
         } catch (IOException ex) {
             Logger.getLogger(GUIGame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        //GameMap gameMap = new Gson().fromJson(Client.getInstance().receiveCommand(), GameMap.class);
         
         GameData gameData = new Gson().fromJson(Client.getInstance().receiveCommand(), GameData.class);
         
