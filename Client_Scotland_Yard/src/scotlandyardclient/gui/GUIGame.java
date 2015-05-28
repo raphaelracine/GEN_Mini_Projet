@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 import scotlandyardclient.Client;
@@ -21,8 +20,8 @@ import com.google.gson.*;
 import java.awt.FlowLayout;
 import java.util.Vector;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 import scotlandyardclient.json.GameData;
-import scotlandyardclient.json.GameMap;
 import scotlandyardclient.json.InfoTickets;
 import scotlandyardclient.json.InfoTicketsList;
 import scotlandyardclient.json.InfoTicketsMisterX;
@@ -61,8 +60,8 @@ class TicketsPanelMisterX extends TicketsPanel {
     
     public TicketsPanelMisterX(int nbTaxiTickets, int nbBusTickets, int nbSubwayTickets, int nbBlackTickets, int nbDoubleTickets) {
        super(nbTaxiTickets, nbBusTickets, nbSubwayTickets);
-       lblDoubleTickets = new JLabel("Nombre de tickets noirs");
-       lblBlackTickets = new JLabel("nombre de cartes coup double");
+       lblBlackTickets = new JLabel("Nombre de tickets noirs");
+       lblDoubleTickets = new JLabel("nombre de cartes coup double");
        
        blackTickets = new JLabel(String.valueOf(nbBlackTickets));
        doubleTickets = new JLabel(String.valueOf(nbDoubleTickets));
@@ -76,7 +75,7 @@ class TicketsPanelMisterX extends TicketsPanel {
 
 public class GUIGame extends JFrame{
     
-    private GUIMap mapPanel;
+    private final GUIMap mapPanel;
     private JPanel southPanel = new JPanel(new GridLayout(1, 2));
     private JPanel eastPanel = new JPanel(new BorderLayout()); 
     private JTabbedPane tabbedPane = new JTabbedPane();
