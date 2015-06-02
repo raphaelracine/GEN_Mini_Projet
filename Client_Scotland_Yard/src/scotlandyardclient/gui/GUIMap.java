@@ -2,6 +2,7 @@ package scotlandyardclient.gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -64,11 +65,11 @@ public class GUIMap extends JPanel implements Observer {
         g.drawImage(background, 0, 0, this);
         
         for(StationView sv : stationViews)
-            sv.draw(g);            
+            sv.draw((Graphics2D)g);            
     }
 
     @Override
-    public void update(Observable pone, Object arg) {
-        // TODO (à chaque fois qu'un pions se déplace, il faut redessiner les pions
+    public void update(Observable o, Object arg) {
+        repaint();
     }
 }

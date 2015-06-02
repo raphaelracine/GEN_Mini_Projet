@@ -47,9 +47,9 @@ public class Pone extends Observable {
         return color;
     }
     
-    public void moveToStation(Station s) {
+    public void moveToStation(Station destination) {
         currentStation.setPone(null);        
-        currentStation = s;
+        currentStation = destination;
         currentStation.setPone(this);
         
         setChanged();

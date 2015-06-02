@@ -1,9 +1,11 @@
 package scotlandyardclient.gui.stationviews;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import scotlandyardclient.json.Station;
+import scotlandyardclient.pone.Pone;
 
 public class StationView {
     
@@ -19,7 +21,10 @@ public class StationView {
         return clickZone.contains(x, y);
     }
     
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {        
+        g.setColor(Color.BLACK);
+        g.setStroke(new BasicStroke());
+        
         g.drawOval(model.getX(), model.getY(), 50, 50);  
         
         g.setColor(Color.white);
@@ -43,6 +48,16 @@ public class StationView {
         
         g.setColor(Color.black);
         g.drawString(String.valueOf(model.getNumero()), model.getX() + 15, model.getY() + 30);
+        
+        // Si il y a un pion sur la station, on le dessine
+        Pone p = model.getPone();
+        
+        if(p != null)
+        {
+            g.setStroke(new BasicStroke(3));
+            g.setColor(p.getColor());
+            g.drawOval(model.getX() -1, model.getY() - 1, 53, 52);
+        }
     }
     
     public Station getStation() {
