@@ -11,26 +11,26 @@ package scotlandyardserver.json;
  */
 public class GameData {
     private GameMap gameMap;
-    private InfoTicketsList ticketsList;
-    private InfoTicketsMisterX misterXTickets;
+    private PlayerDataList playerDataList;
+    private MisterXData misterXData;
     
     public GameData(GameMap gameMap, 
-            InfoTicketsList ticketsList, 
-            InfoTicketsMisterX misterXTickets) {
+            PlayerDataList playerDataList, 
+            MisterXData misterXData) {
         this.gameMap = gameMap;
-        this.ticketsList = ticketsList;
-        this.misterXTickets = misterXTickets;
+        this.playerDataList = playerDataList;
+        this.misterXData = misterXData;
     }
     
     public GameMap gameMap() {
         return gameMap;
     }
     
-    public InfoTicketsList ticketsList() {
-        return ticketsList;
+    public PlayerDataList playerDataList() {
+        return playerDataList;
     }
     
-    public InfoTicketsMisterX misterXTickets() {
-        return misterXTickets;
+    public MisterXData misterXData() {
+        return misterXData;
     }
 }

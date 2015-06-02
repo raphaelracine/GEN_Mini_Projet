@@ -25,9 +25,9 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import scotlandyardclient.gui.GUIMap;
 import scotlandyardclient.json.GameData;
-import scotlandyardclient.json.InfoTickets;
-import scotlandyardclient.json.InfoTicketsList;
-import scotlandyardclient.json.InfoTicketsMisterX;
+import scotlandyardclient.json.PlayerData;
+import scotlandyardclient.json.PlayerDataList;
+import scotlandyardclient.json.MisterXData;
 import scotlandyardclient.pone.Pone;
 import scotlandyardclient.pone.PoneMisterX;
 
@@ -140,20 +140,18 @@ public class GUIGame extends JFrame {
         initSouthPanel();
         getContentPane().add(eastPanel, BorderLayout.EAST);
 
-        // récupérer les tickets de tous les détectives
-        InfoTicketsList ticketsList = gameData.ticketsList();
-        for (InfoTickets t : ticketsList.infoTickets()) {
-            tabbedPane.addTab(t.getPlayerName(), new TicketsPanel(t.getTaxi(), t.getBus(), t.getSubway()));
+        // récupérer les informations de début de partie de tous les détectives
+        PlayerDataList playerDataList = gameData.playerDataList();
+        for (PlayerData pdata : playerDataList.playersData()) {
+            Pone playerPone = new Pone(pdata.getColor(), pdata.getPlayerName(), gameData.gameMap().getStation(pdata.getStation()), pdata.getTaxi(), pdata.getBus(), pdata.getSubway());
+            playerPone.addObserver(mapPanel);
+            tabbedPane.addTab(pdata.getPlayerName(), new TicketsPanel(playerPone));
         }
 
         // récupérer les tickets de Mister X
-        InfoTicketsMisterX misterXTickets = gameData.misterXTickets();
-        tabbedPane.addTab(misterXTickets.getPlayerName(), new TicketsPanelMisterX(
-                misterXTickets.getTaxi(),
-                misterXTickets.getBus(),
-                misterXTickets.getSubway(),
-                misterXTickets.getDoubleTurn(),
-                misterXTickets.getBlack()));
+        MisterXData misterXData = gameData.misterXData();
+        PoneMisterX poneMisterX = new PoneMisterX(misterXData.getColor(), misterXData.getPlayerName(), gameData.gameMap().getStation(misterXData.getStation()), misterXData.getBlack(), misterXData.getDoubleTurn(), misterXData.getTaxi(), misterXData.getBus(), misterXData.getSubway());
+        tabbedPane.addTab(misterXData.getPlayerName(), new TicketsPanelMisterX(poneMisterX));
 
         setTitle("Partie de Scotland Yard");
         pack();

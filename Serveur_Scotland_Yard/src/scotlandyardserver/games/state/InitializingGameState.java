@@ -8,10 +8,13 @@ package scotlandyardserver.games.state;
 import scotlandyardserver.json.Station;
 import scotlandyardserver.json.GameMap;
 import com.google.gson.Gson;
+import java.awt.Color;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
@@ -21,9 +24,9 @@ import scotlandyardserver.games.DetectivePone;
 import scotlandyardserver.games.Game;
 import scotlandyardserver.games.MisterXPone;
 import scotlandyardserver.json.GameData;
-import scotlandyardserver.json.InfoTickets;
-import scotlandyardserver.json.InfoTicketsList;
-import scotlandyardserver.json.InfoTicketsMisterX;
+import scotlandyardserver.json.PlayerData;
+import scotlandyardserver.json.PlayerDataList;
+import scotlandyardserver.json.MisterXData;
 import scotlandyardserver.json.Link;
 
 /**
@@ -31,6 +34,8 @@ import scotlandyardserver.json.Link;
  * @author Raphaël Racine
  */
 public class InitializingGameState extends GameState {
+    
+    static private Random random = new Random();
     
     public InitializingGameState(Game game) {
         super(game);
@@ -99,19 +104,31 @@ public class InitializingGameState extends GameState {
                 map.get(pair).addLocomotion(rs.getString("type"));      
             }
             
-            InfoTicketsList ticketsList = new InfoTicketsList();
-            InfoTicketsMisterX ticketsMisterX = null;
+            PlayerDataList playerDataList = new PlayerDataList();
+            MisterXData misterXData = null;
             
+            LinkedList<Station> stations = (LinkedList<Station>)gameMap.getStations().clone();
+            Color[] colors = {Color.BLACK, Color.BLUE, Color.GREEN, Color.YELLOW, Color.RED};
+            int counterColor = 0;
+                    
             for(Client c : game().players()) {
+                int posStation = random.nextInt(stations.size() -1);
+                int idStation = stations.get(posStation).getId();
                 if(c == game().getHost()) {
-                    game().setMisterXPone(new MisterXPone(c, null, 4, 3, 3, game().numberOfPlayers() - 1, 2));  
-                    ticketsMisterX = new InfoTicketsMisterX(c.username(), 4, 3, 3, game().numberOfPlayers() - 1, 2);
+                    // transmettre au constructeur de MisterXPone la station de départ peut s'avérer inutile
+                    // ne pas hésiter à supprimer si l'attribut n'est pas utilisé par la suite.
+                    game().setMisterXPone(new MisterXPone(c, stations.get(posStation), 4, 3, 3, game().numberOfPlayers() - 1, 2));  
+                    misterXData = new MisterXData(c.username(), 4, 3, 3, idStation, Color.MAGENTA, game().numberOfPlayers() - 1, 2);
                 } else {
-                    game().addDetectivePone(new DetectivePone(c, null, 10, 8, 4));
-                    ticketsList.add(new InfoTickets(c.username(), 10, 8, 4));
+                    // transmettre au constructeur de MisterXPone la station de départ peut s'avérer inutile
+                    // ne pas hésiter à supprimer si l'attribut n'est pas utilisé par la suite.
+                    game().addDetectivePone(new DetectivePone(c, stations.get(posStation), 10, 8, 4));
+                    playerDataList.add(new PlayerData(c.username(), 10, 8, 4, idStation, colors[counterColor]));
                 }
+                counterColor++;
+                stations.remove(posStation);
             }
-
+            
             // Envoi des données de jeu
             for (Client c : game().players()) {
                 // Envoi de l'image
@@ -121,7 +138,7 @@ public class InitializingGameState extends GameState {
                     Logger.getLogger(InitializingGameState.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 // Envoi des tickets et des données de la carte
-                c.sendMessage(new Gson().toJson(new GameData(gameMap, ticketsList, ticketsMisterX)));
+                c.sendMessage(new Gson().toJson(new GameData(gameMap, playerDataList, misterXData)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(InitializingGameState.class.getName()).log(Level.SEVERE, null, ex);
