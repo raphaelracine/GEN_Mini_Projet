@@ -30,4 +30,12 @@ public class PoneMisterX extends Pone {
     public boolean isMisterX() {
         return true;
     }
+    
+    public int getNbBlackTickets() {
+        return nbBlackTickets;
+    }
+    
+    public int getNbDoubleTickets() {
+        return nbDoubleTickets;
+    }
 }
