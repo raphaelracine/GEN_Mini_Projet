@@ -11,8 +11,8 @@ package scotlandyardclient.json;
  */
 public class GameData {
     private GameMap gameMap;
-    private InfoTicketsList ticketsList;
-    private InfoTicketsMisterX misterXTickets;
+    private InfoTicketsList ticketsList; //changer avec liste de pions des détectives
+    private InfoTicketsMisterX misterXTickets; // changer avec LE pion de mister X
     
     public GameData(GameMap gameMap, 
             InfoTicketsList ticketsList, 

@@ -6,12 +6,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JPanel;
 import scotlandyardclient.gui.stationviews.StationView;
 import scotlandyardclient.json.GameMap;
 import scotlandyardclient.json.Station;
 
-public class GUIMap extends JPanel {
+public class GUIMap extends JPanel implements Observer {
     
     private final BufferedImage background;
     private final GameMap map;
@@ -33,7 +35,9 @@ public class GUIMap extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 for(StationView sv : stationViews)
                     if(sv.contains(e.getX(), e.getY()))
+                {
                         System.out.println(sv.getStation().getNumero());
+                }
             }
 
             @Override
@@ -61,5 +65,10 @@ public class GUIMap extends JPanel {
         
         for(StationView sv : stationViews)
             sv.draw(g);            
+    }
+
+    @Override
+    public void update(Observable pone, Object arg) {
+        // TODO (à chaque fois qu'un pions se déplace, il faut redessiner les pions
     }
 }

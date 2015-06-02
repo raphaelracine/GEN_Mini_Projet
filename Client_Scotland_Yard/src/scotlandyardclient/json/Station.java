@@ -1,11 +1,15 @@
 package scotlandyardclient.json;
 
+import scotlandyardclient.pone.Pone;
+
 public class Station {
     private final int numero;
     private final String type;
     private final int id;
     private final int x;
     private final int y;
+    
+    private Pone pone; // Pion qui se trouve sur la station, s'il y en a un
     
     public Station(int id, int numero, String type, int x, int y) {
         this.numero = numero;
@@ -33,5 +37,13 @@ public class Station {
     
     public int getY() {
         return y;
+    }
+    
+    public void setPone(Pone p) {
+        this.pone = p;
+    }
+    
+    public Pone getPone() {
+        return pone;
     }
 }
