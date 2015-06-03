@@ -45,7 +45,7 @@ public class GUIMap extends JPanel implements Observer {
             for (String locomotion : l.getLocomotions()) {
                 newLink.addLocomotion(locomotion);
             }
-            
+
             linkViews.add(new LinkView(newLink));
         }
 
@@ -64,15 +64,17 @@ public class GUIMap extends JPanel implements Observer {
 
                         /* Problèmes ici !!! */
                         for (Station s : map.getStations()) {
-                            if (map.getLinkBetweenTwoStations(s, destination) != null) {
-                                if (s.getPone() == Client.getInstance().getPone()) {
-                                    if (s.getPone().isMisterX()) {
-                                        new GUIMoveMisterX(map, destination);
-                                    } else {
-                                        new GUIMove(map, destination);
+                            for (LinkView lv : linkViews) {
+                                if (lv.model().connectStations(s, destination)) {
+                                    if (s.getPone() == Client.getInstance().getPone()) {
+                                        if (s.getPone().isMisterX()) {
+                                            new GUIMoveMisterX(map, destination);
+                                        } else {
+                                            new GUIMove(map, destination);
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
                             }
                         }
                     }
