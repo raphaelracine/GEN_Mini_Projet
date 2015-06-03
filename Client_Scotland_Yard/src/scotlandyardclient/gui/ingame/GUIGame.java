@@ -46,6 +46,7 @@ class TicketsPanel extends JPanel implements Observer {
         this.pone = pone;
         pone.addObserver(this);
 
+        setBackground(pone.getColor());
         setLayout(new GridLayout(3, 2, 5, 5));
         lblBusTickets = new JLabel("Nombre de tickets de bus");
         lblSubwayTickets = new JLabel("Nombre de tickets de métro");

@@ -108,11 +108,11 @@ public class InitializingGameState extends GameState {
             MisterXData misterXData = null;
             
             LinkedList<Station> stations = (LinkedList<Station>)gameMap.getStations().clone();
-            Color[] colors = {Color.BLACK, Color.BLUE, Color.GREEN, Color.YELLOW, Color.RED};
+            Color[] colors = {Color.BLACK, Color.CYAN, Color.GREEN, Color.YELLOW, Color.RED};
             int counterColor = 0;
                     
             for(Client c : game().players()) {
-                int posStation = random.nextInt(stations.size() - 1);
+                int posStation = random.nextInt(stations.size());
                 int idStation = stations.get(posStation).getId();
                 
                 if(c == game().getHost()) {
