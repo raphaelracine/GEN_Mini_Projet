@@ -68,9 +68,9 @@ public class GUIMap extends JPanel implements Observer {
                                 if (lv.model().connectStations(s, destination)) {
                                     if (s.getPone() == Client.getInstance().getPone()) {
                                         if (s.getPone().isMisterX()) {
-                                            new GUIMoveMisterX(map, destination);
+                                            new GUIMoveMisterX(lv.model(), destination);
                                         } else {
-                                            new GUIMove(map, destination);
+                                            new GUIMove(lv.model(), destination);
                                         }
                                     }
                                     break;

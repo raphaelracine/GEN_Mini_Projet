@@ -112,8 +112,9 @@ public class InitializingGameState extends GameState {
             int counterColor = 0;
                     
             for(Client c : game().players()) {
-                int posStation = random.nextInt(stations.size() -1);
+                int posStation = random.nextInt(stations.size() - 1);
                 int idStation = stations.get(posStation).getId();
+                
                 if(c == game().getHost()) {
                     // transmettre au constructeur de MisterXPone la station de départ peut s'avérer inutile
                     // ne pas hésiter à supprimer si l'attribut n'est pas utilisé par la suite.

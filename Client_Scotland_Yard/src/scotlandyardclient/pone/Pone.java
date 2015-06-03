@@ -19,7 +19,6 @@ public class Pone extends Observable {
         Client c = Client.getInstance();
         
         if(playerName.equals(c.username())) {
-            //System.out.print("Je suis Mister X connard");
             c.setPone(this);
         }
         
@@ -67,8 +66,7 @@ public class Pone extends Observable {
         notifyObservers();
     }
     
-    public void useTaxiTicket() {
-        // tester si le nombre n'est pas égale à 0, sinon lever une exception
+    public void useTaxiTicket() {        
         nbTaxiTickets--;
     }
     
