@@ -1,5 +1,6 @@
 package scotlandyardclient.json;
 
+import java.util.LinkedList;
 import scotlandyardclient.pone.Pone;
 
 public class Station {
@@ -10,6 +11,8 @@ public class Station {
     private final int y;
     
     private Pone pone; // Pion qui se trouve sur la station, s'il y en a un
+    
+    private final LinkedList<Station> neighbors = new LinkedList<>(); // Stations voisines
     
     public Station(int id, int numero, String type, int x, int y) {
         this.numero = numero;
@@ -45,5 +48,13 @@ public class Station {
     
     public Pone getPone() {
         return pone;
+    }
+    
+    public void addNeighborStation(Station s) {
+        neighbors.add(s);
+    }
+    
+    public LinkedList<Station> getNeighborStations() {
+        return neighbors;
     }
 }

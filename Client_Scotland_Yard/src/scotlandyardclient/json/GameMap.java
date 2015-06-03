@@ -31,4 +31,17 @@ public class GameMap {
     public LinkedList<Link> getLinks() {
         return links;
     }
+    
+    public Link getLinkBetweenTwoStations(Station s1, Station s2) {
+        Link l = null;
+        
+        for(Link link : links) {
+            if(link.connectStations(s1, s2)) {
+                l = link;
+                break;
+            }
+        }
+        
+        return l;
+    }
 }
