@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.Socket;
 import scotlandyardclient.Client;
 import scotlandyardclient.json.*;
+import scotlandyardclient.pone.Pone;
 
 public class LoggedInState extends ConnectedState {
 
@@ -98,4 +99,12 @@ public class LoggedInState extends ConnectedState {
     public String username() {
         return username;
     }
+    
+    @Override
+    public Pone getPone() {
+        return null;
+    }
+    
+    @Override
+    public void setPone(Pone p) {}
 }

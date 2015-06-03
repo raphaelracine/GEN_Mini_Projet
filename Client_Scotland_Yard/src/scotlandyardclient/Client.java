@@ -3,6 +3,7 @@ package scotlandyardclient;
 import scotlandyardclient.clientstate.ClientState;
 import scotlandyardclient.clientstate.DisconnectedState;
 import scotlandyardclient.json.*;
+import scotlandyardclient.pone.Pone;
 
 public class Client {
 
@@ -90,5 +91,13 @@ public class Client {
     
     public void leaveGame() {
         state.leaveGame();
+    }
+    
+    public Pone getPone() {
+        return state.getPone();
+    }
+    
+    public void setPone(Pone p) {
+        state.setPone(p);
     }
 }

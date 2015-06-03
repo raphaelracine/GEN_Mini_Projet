@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import scotlandyardclient.Client;
 import scotlandyardclient.json.*;
+import scotlandyardclient.pone.Pone;
 
 public class DisconnectedState extends ClientState {
 
@@ -99,4 +100,12 @@ public class DisconnectedState extends ClientState {
     public byte[] receiveImage() {
         return null;
     }
+    
+    @Override
+    public Pone getPone() {
+        return null;
+    }
+    
+    @Override
+        public void setPone(Pone p) {}
 }

@@ -3,8 +3,8 @@ package scotlandyardclient.json;
 import java.util.LinkedList;
 
 public class Link {
-    private final Station first;
-    private final Station second;
+    private Station first;
+    private Station second;
     private final LinkedList<String> locomotions = new LinkedList<>();
     
     public Link(Station first, Station second) {

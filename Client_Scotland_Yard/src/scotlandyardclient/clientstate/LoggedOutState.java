@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import scotlandyardclient.Client;
 import scotlandyardclient.json.*;
+import scotlandyardclient.pone.Pone;
 
 class LoggedOutState extends ConnectedState {
 
@@ -80,4 +81,12 @@ class LoggedOutState extends ConnectedState {
     
     @Override
     public void leaveGame() {}
+    
+    @Override
+    public Pone getPone() {
+        return null;
+    }
+    
+    @Override
+     public void setPone(Pone p) {}
 }

@@ -1,4 +1,4 @@
-package scotlandyardclient.gui.stationviews;
+package scotlandyardclient.gui.views;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

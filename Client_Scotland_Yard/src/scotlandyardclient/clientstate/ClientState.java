@@ -1,6 +1,7 @@
 package scotlandyardclient.clientstate;
 
 import scotlandyardclient.json.*;
+import scotlandyardclient.pone.Pone;
 
 public abstract class ClientState {
 
@@ -37,4 +38,8 @@ public abstract class ClientState {
     public abstract void leaveGame();
 
     public abstract byte[] receiveImage();
+    
+    public abstract Pone getPone();
+    
+    public abstract void setPone(Pone p);
 }

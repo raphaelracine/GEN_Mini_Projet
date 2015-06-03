@@ -10,8 +10,11 @@ import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JPanel;
-import scotlandyardclient.gui.stationviews.StationView;
+import scotlandyardclient.Client;
+import scotlandyardclient.gui.views.LinkView;
+import scotlandyardclient.gui.views.StationView;
 import scotlandyardclient.json.GameMap;
+import scotlandyardclient.json.Link;
 import scotlandyardclient.json.Station;
 
 public class GUIMap extends JPanel implements Observer {
@@ -20,6 +23,7 @@ public class GUIMap extends JPanel implements Observer {
     private final GameMap map;
     
     private final LinkedList<StationView> stationViews = new LinkedList<>();
+    private final LinkedList<LinkView> linkViews = new LinkedList<>();
     
     public GUIMap(GameMap map, BufferedImage background) {
         this.background = background;
@@ -30,6 +34,15 @@ public class GUIMap extends JPanel implements Observer {
         for(Station s : map.getStations())
             stationViews.add(new StationView(s));
         
+        for(Link l : map.getLinks()) {
+            Link newLink = new Link(map.getStation(l.getFirst().getId()), map.getStation(l.getSecond().getId()));
+            
+            for(String locomotion : l.getLocomotions())
+                newLink.addLocomotion(locomotion);
+            
+            linkViews.add(new LinkView(newLink));
+        }
+        
         addMouseListener(new MouseListener() {
 
             @Override
@@ -37,7 +50,7 @@ public class GUIMap extends JPanel implements Observer {
                 for(StationView sv : stationViews)
                     if(sv.contains(e.getX(), e.getY()))
                 {
-                        System.out.println(sv.getStation().getNumero());
+                    Client.getInstance().getPone().moveToStation(sv.getStation());
                 }
             }
 
@@ -63,6 +76,9 @@ public class GUIMap extends JPanel implements Observer {
     public void paint(Graphics g) {
         super.paint(g);
         g.drawImage(background, 0, 0, this);
+        
+        for(LinkView lv : linkViews)
+            lv.draw((Graphics2D)g);
         
         for(StationView sv : stationViews)
             sv.draw((Graphics2D)g);            

@@ -151,6 +151,7 @@ public class GUIGame extends JFrame {
         // récupérer les tickets de Mister X
         MisterXData misterXData = gameData.misterXData();
         PoneMisterX poneMisterX = new PoneMisterX(misterXData.getColor(), misterXData.getPlayerName(), gameData.gameMap().getStation(misterXData.getStation()), misterXData.getBlack(), misterXData.getDoubleTurn(), misterXData.getTaxi(), misterXData.getBus(), misterXData.getSubway());
+        poneMisterX.addObserver(mapPanel);
         tabbedPane.addTab(misterXData.getPlayerName(), new TicketsPanelMisterX(poneMisterX));
 
         setTitle("Partie de Scotland Yard");
@@ -180,5 +181,9 @@ public class GUIGame extends JFrame {
 
     void addTab(String name, TicketsPanel ticketsPanel) {
         tabbedPane.add(name, ticketsPanel);
+    }
+    
+    public void addEvent(String event) {
+        events.add(event);
     }
 }

@@ -7,8 +7,6 @@ public class GameMap {
     private final LinkedList<Station> stations = new LinkedList<>();
     private final LinkedList<Link> links = new LinkedList<>();
     
-    // liste des pions
-    
     public GameMap() {}
     
     public void addStation(Station station) {
@@ -28,5 +26,9 @@ public class GameMap {
     
     public LinkedList<Station> getStations() {
         return stations;
+    }
+    
+    public LinkedList<Link> getLinks() {
+        return links;
     }
 }

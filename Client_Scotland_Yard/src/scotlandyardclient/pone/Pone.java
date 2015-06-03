@@ -2,6 +2,7 @@ package scotlandyardclient.pone;
 
 import java.awt.Color;
 import java.util.Observable;
+import scotlandyardclient.Client;
 import scotlandyardclient.json.Station;
 
 public class Pone extends Observable {
@@ -15,12 +16,22 @@ public class Pone extends Observable {
     private Station currentStation;
 
     public Pone(Color color, String playerName, Station currentStation, int nbTaxiTickets, int nbBusTickets, int nbMetroTickets) {
+        Client c = Client.getInstance();
+        
+        if(playerName.equals(c.username())) {
+            //System.out.print("Je suis Mister X connard");
+            c.setPone(this);
+        }
+        
         this.color = color;
         this.playerName = playerName;
         this.currentStation = currentStation;
+        currentStation.setPone(this);
         this.nbTaxiTickets = nbTaxiTickets;
         this.nbBusTickets = nbBusTickets;
         this.nbMetroTickets = nbMetroTickets;
+        setChanged();
+        notifyObservers();
     }
 
     public String getPlayerName() {

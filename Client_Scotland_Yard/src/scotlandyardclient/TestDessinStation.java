@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import scotlandyardclient.gui.stationviews.StationView;
+import scotlandyardclient.gui.views.StationView;
 import scotlandyardclient.json.Station;
 import scotlandyardclient.pone.Pone;
 
