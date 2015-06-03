@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package scotlandyardclient.gui.ingame;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ButtonGroup;
@@ -14,8 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import scotlandyardclient.gui.views.StationView;
-import scotlandyardclient.pone.PoneMisterX;
+import scotlandyardclient.json.GameMap;
+import scotlandyardclient.json.Station;
 
 public class GUIMoveMisterX extends JFrame {
 
@@ -23,70 +20,34 @@ public class GUIMoveMisterX extends JFrame {
     private final JRadioButton radBus = new JRadioButton("Bus");
     private final JRadioButton radSubway = new JRadioButton("Metro");
     private final JRadioButton radBlackTicket = new JRadioButton("Ticket noir");
-
-    private PoneMisterX pone;
-    private StationView stationView;
+    
+    private final Station destination;
+    private final GameMap map;
     
     private final JButton move = new JButton("Se déplacer");
     private final JButton cancel = new JButton("Annuler");
     
-    public GUIMoveMisterX(PoneMisterX pone, StationView stationView) {
-        this.pone = pone;
-        this.stationView = stationView;
+    public GUIMoveMisterX(GameMap map, Station destination) {
+        this.destination = destination;
+        this.map = map;
         
-        move.addMouseListener(new MouseListener() {
+        move.addActionListener(new ActionListener() {
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 // Tester si assez de ticket
+                // Tester aussi qu'il est possible de se déplacer
+                // avec le moyen de déplacement sélectionné entre les 
                 // Si ok
                 //  procéder au déplacement
             }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
         });
         
-        cancel.addMouseListener(new MouseListener() {
+        cancel.addActionListener(new ActionListener() {
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 GUIMoveMisterX.this.dispose();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
             }
         });
         
@@ -94,6 +55,7 @@ public class GUIMoveMisterX extends JFrame {
         mainGroup.add(radTaxi);
         mainGroup.add(radBus);
         mainGroup.add(radSubway);
+        mainGroup.add(radBlackTicket);
         
         JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
