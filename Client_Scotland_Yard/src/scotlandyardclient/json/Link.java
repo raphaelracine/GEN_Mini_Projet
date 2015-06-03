@@ -10,9 +10,6 @@ public class Link {
     public Link(Station first, Station second) {
         this.first = first;
         this.second = second;
-        
-        first.addNeighborStation(second);
-        second.addNeighborStation(first);
     }
     
     public void addLocomotion(String locomotion) {

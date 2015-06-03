@@ -118,7 +118,7 @@ public class InitializingGameState extends GameState {
                     // transmettre au constructeur de MisterXPone la station de départ peut s'avérer inutile
                     // ne pas hésiter à supprimer si l'attribut n'est pas utilisé par la suite.
                     game().setMisterXPone(new MisterXPone(c, stations.get(posStation), 4, 3, 3, game().numberOfPlayers() - 1, 2));  
-                    misterXData = new MisterXData(c.username(), 4, 3, 3, idStation, Color.MAGENTA, game().numberOfPlayers() - 1, 2);
+                    misterXData = new MisterXData(c.username(), 4, 3, 3, idStation, Color.MAGENTA, 2, game().numberOfPlayers() - 1);
                 } else {
                     // transmettre au constructeur de MisterXPone la station de départ peut s'avérer inutile
                     // ne pas hésiter à supprimer si l'attribut n'est pas utilisé par la suite.

@@ -12,8 +12,6 @@ public class Station {
     
     private Pone pone; // Pion qui se trouve sur la station, s'il y en a un
     
-    private final LinkedList<Station> neighbors = new LinkedList<>(); // Stations voisines
-    
     public Station(int id, int numero, String type, int x, int y) {
         this.numero = numero;
         this.type = type;
@@ -48,13 +46,5 @@ public class Station {
     
     public Pone getPone() {
         return pone;
-    }
-    
-    public void addNeighborStation(Station s) {
-        neighbors.add(s);
-    }
-    
-    public LinkedList<Station> getNeighborStations() {
-        return neighbors;
     }
 }

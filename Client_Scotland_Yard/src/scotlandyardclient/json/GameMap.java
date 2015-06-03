@@ -37,6 +37,7 @@ public class GameMap {
         
         for(Link link : links) {
             if(link.connectStations(s1, s2)) {
+                System.out.println("Stations connectées");
                 l = link;
                 break;
             }
