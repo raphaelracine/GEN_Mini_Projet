@@ -37,9 +37,7 @@ public class LinkView {
     }
 
     public void draw(Graphics2D g) {
-        for (String locomotion : model.getLocomotions()) {
-            drawLine(Locomotion.valueOf(locomotion), g);
-        }
+        
     }
 
     private void drawLine(Locomotion l, Graphics2D g) {

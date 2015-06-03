@@ -50,6 +50,11 @@ public class GUIMap extends JPanel implements Observer {
                 for(StationView sv : stationViews)
                     if(sv.contains(e.getX(), e.getY()))
                 {
+                    if (Client.getInstance().getPone().isMisterX()) {
+                        
+                    } else {
+                        
+                    }
                     Client.getInstance().getPone().moveToStation(sv.getStation());
                 }
             }
