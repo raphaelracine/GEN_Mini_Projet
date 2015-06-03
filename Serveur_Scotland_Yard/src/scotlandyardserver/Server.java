@@ -12,7 +12,7 @@ import scotlandyardserver.games.GamesManager;
 import scotlandyardserver.json.MapNames;
 
 import com.google.gson.*;
-import scotlandyardclient.json.PlayerList;
+import scotlandyardserver.json.PlayerList;
 import scotlandyardserver.games.Game;
 import scotlandyardserver.json.GameList;
 
