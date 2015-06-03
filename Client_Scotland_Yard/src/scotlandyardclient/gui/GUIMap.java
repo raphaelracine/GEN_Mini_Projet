@@ -9,8 +9,15 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
 import scotlandyardclient.Client;
+import scotlandyardclient.gui.ingame.GUIMove;
+import scotlandyardclient.gui.ingame.GUIMoveMisterX;
 import scotlandyardclient.gui.views.LinkView;
 import scotlandyardclient.gui.views.StationView;
 import scotlandyardclient.json.GameMap;
@@ -24,6 +31,8 @@ public class GUIMap extends JPanel implements Observer {
     
     private final LinkedList<StationView> stationViews = new LinkedList<>();
     private final LinkedList<LinkView> linkViews = new LinkedList<>();
+    
+   
     
     public GUIMap(GameMap map, BufferedImage background) {
         this.background = background;
@@ -50,15 +59,24 @@ public class GUIMap extends JPanel implements Observer {
                 for(StationView sv : stationViews)
                     if(sv.contains(e.getX(), e.getY()))
                 {
-                    if (Client.getInstance().getPone().isMisterX()) {
-                        
-                    } else {
-                        
-                    }
-                    Client.getInstance().getPone().moveToStation(sv.getStation());
+                   // Client.getInstance().getPone().moveToStation(sv.getStation());
+                    	Station destStation = sv.getStation();
+                    	if(destStation.getPone().isMisterX()== false){
+                    		return;
+                    	}
+                    	for(Station v : destStation.getNeighborStations()){
+                    		if(v.getPone() == Client.getInstance().getPone()){
+                    			if(v.getPone().isMisterX())
+                    				new GUIMoveMisterX(map, sv.getStation());
+                    			else{
+                    				new GUIMove(map, sv.getStation());
+                    			}
+                    		}
+                    		break;
+                    	}
                 }
             }
-
+    
             @Override
             public void mousePressed(MouseEvent e) {
             }
@@ -75,7 +93,9 @@ public class GUIMap extends JPanel implements Observer {
             public void mouseExited(MouseEvent e) {
             }
         });
+        
     }
+   
     
     @Override
     public void paint(Graphics g) {

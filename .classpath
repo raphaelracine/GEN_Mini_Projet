@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Client_Scotland_Yard/src"/>
+	<classpathentry kind="src" path="Serveur_Scotland_Yard/src"/>
+	<classpathentry kind="lib" path="Client_Scotland_Yard/com.fasterxml.jackson.core.jar"/>
+	<classpathentry kind="lib" path="Client_Scotland_Yard/com.fasterxml.jackson.databind.jar"/>
+	<classpathentry kind="lib" path="Client_Scotland_Yard/gson-2.3.jar"/>
+	<classpathentry kind="lib" path="Serveur_Scotland_Yard/com.fasterxml.jackson.core.jar"/>
+	<classpathentry kind="lib" path="Serveur_Scotland_Yard/com.fasterxml.jackson.databind.jar"/>
+	<classpathentry kind="lib" path="Serveur_Scotland_Yard/gson-2.3.jar"/>
+	<classpathentry kind="lib" path="Serveur_Scotland_Yard/java-json.jar"/>
+	<classpathentry kind="lib" path="Serveur_Scotland_Yard/mysql-connector-java-5.1.34.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
