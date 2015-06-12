@@ -36,7 +36,7 @@ public class GUIPlayerWaiting extends GUIWaitingGame {
                     return;                  
                 case "HOSTLEFTGAME":
                     Client.getInstance().leaveGame();
-                    break;
+                    return;
                 case "PLAYERLEFTGAME":
                     new GUIGameRoom(Client.getInstance().username());
                     dispose();

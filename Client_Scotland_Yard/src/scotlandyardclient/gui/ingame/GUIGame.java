@@ -191,7 +191,6 @@ public class GUIGame extends JFrame implements Runnable {
     @Override
     public void run() {
         while (!gameFinished) {
-            System.out.println("Salut connard");
             String[] cmd = Client.getInstance().receiveCommand().split("#");
 
             switch (cmd[0]) {
@@ -205,6 +204,7 @@ public class GUIGame extends JFrame implements Runnable {
                     }
                     break;
                 case "NOT_YOUR_TURN":
+                    System.out.println("C'est pas mon tour");
                     myTurn = false;
                     break;
             }

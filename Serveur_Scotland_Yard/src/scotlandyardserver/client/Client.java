@@ -83,7 +83,7 @@ public class Client implements Runnable {
         }
     }
 
-    public void sendMessage(String message) {
+    public synchronized void sendMessage(String message) {
         System.out.println("Username : " + username() + " Message : " + message);
         out.println(message);
     }

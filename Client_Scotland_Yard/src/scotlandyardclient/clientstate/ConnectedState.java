@@ -37,12 +37,13 @@ public abstract class ConnectedState extends ClientState {
     }
 
     @Override
-    public String receiveCommand() {
+    public synchronized String receiveCommand() {
         String str = null;
 
         try {
             BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             System.out.println("Attend un message");
+            System.out.println("Socket active : " + socket.isConnected());
             str = is.readLine();
             System.out.println("Reçu : " + str);
         } catch (IOException ex) {
@@ -52,12 +53,11 @@ public abstract class ConnectedState extends ClientState {
     }
     
     @Override
-    public byte[] receiveImage() {
+    public synchronized byte[] receiveImage() {
         
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             InputStream is = socket.getInputStream();
-            ;
             
             String fileSize = receiveCommand();
             int size = Integer.parseInt(fileSize.split("#")[1]);
