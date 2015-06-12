@@ -42,7 +42,7 @@ public abstract class ConnectedState extends ClientState {
     }
 
     @Override
-    public synchronized String receiveCommand() {
+    public String receiveCommand() {
         String str = null;
 
         try {
@@ -57,7 +57,7 @@ public abstract class ConnectedState extends ClientState {
     }
 
     @Override
-    public synchronized byte[] receiveImage() {
+    public byte[] receiveImage() {
 
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();

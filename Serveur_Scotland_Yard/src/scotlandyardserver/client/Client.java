@@ -85,7 +85,9 @@ public class Client implements Runnable {
 
     public void sendMessage(String message) {
         out.println(message);
-        out.flush();
+        
+        // POURQUOI COMPORTEMENT DIFFERENT QUAND ON ENVOI CETTE MERDE ?????????????????????? POURQUOI ?????????????
+        System.out.println("Envoi de " + message);
     }
 
     public void sendImageFile(String fileName) throws IOException {
