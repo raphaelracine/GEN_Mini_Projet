@@ -23,27 +23,31 @@ import scotlandyardclient.pone.Pone;
 import scotlandyardclient.pone.PoneMisterX;
 
 public class GUIMove extends JFrame {
+
     private final JRadioButton radTaxi = new JRadioButton("Taxi", true);
     private final JRadioButton radBus = new JRadioButton("Bus");
     private final JRadioButton radSubway = new JRadioButton("Metro");
     private final Station destination;
-    
+
     private final JButton move = new JButton("Se déplacer");
     private final JButton cancel = new JButton("Annuler");
     private final Link link;
-    
-    public GUIMove(Link link, Station destination) {
+    private final GUIGame parent;
+
+    public GUIMove(GUIGame parent, Link link, Station destination) {
+        this.parent = parent;
         this.link = link;
         this.destination = destination;
-        
-                move.addActionListener(new ActionListener() {
+
+        move.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 String locomotionUsed;
-                
+
                 Pone pone = Client.getInstance().getPone();
-                
+
                 if (radTaxi.isSelected()) {
                     locomotionUsed = "taxi";
                     if (!link.getLocomotions().contains(locomotionUsed)) {
@@ -63,12 +67,12 @@ public class GUIMove extends JFrame {
                         return;
                     }
                 }
-                
+
                 pone.moveToStation(destination);
                 GUIMove.this.dispose();
             }
         });
-        
+
         cancel.addActionListener(new ActionListener() {
 
             @Override
@@ -76,25 +80,25 @@ public class GUIMove extends JFrame {
                 GUIMove.this.dispose();
             }
         });
-        
+
         ButtonGroup group = new ButtonGroup();
         group.add(radTaxi);
         group.add(radBus);
         group.add(radSubway);
-        
+
         JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        
+
         northPanel.add(radTaxi);
         northPanel.add(radBus);
         northPanel.add(radSubway);
-         
+
         southPanel.add(move);
         southPanel.add(cancel);
-        
+
         getContentPane().add(northPanel, BorderLayout.NORTH);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
-        
+
         setTitle("Choisir un moyen de déplacement");
         pack();
         setVisible(true);

@@ -5,8 +5,13 @@
  */
 package scotlandyardserver.games.state;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import scotlandyardserver.client.Client;
 import scotlandyardserver.games.Game;
+
+import java.util.Queue;
+import scotlandyardserver.games.DetectivePone;
 
 /**
  *
@@ -14,21 +19,55 @@ import scotlandyardserver.games.Game;
  */
 public class PlayingGameState extends GameState {
 
-    // ICI IL Y AURA LA GESTION DES TOURS !!!    
+    private final Queue<Client> turns = new LinkedList<>();
+    private int turnNumber;
+
+    private static final HashMap<Integer, Boolean> turnsToShowMisterX = new HashMap<>();
+
     public PlayingGameState(Game game) {
         super(game);
+
+        // Mister X joue en premier
+        turns.add(game.getMisterX().getPlayer());
+
+        // Ensuite les détectives dans l'ordre
+        for (DetectivePone p : game.getDetectives()) {
+            turns.add(p.getPlayer());
+        }
+
+        turnsToShowMisterX.put(3, true);
+        turnsToShowMisterX.put(8, true);
+        turnsToShowMisterX.put(13, true);
+        turnsToShowMisterX.put(18, true);
+
+        requestNextPlayerToPlay();
     }
 
     @Override
     public boolean joinGame(Client client) {
-        /* TODO */
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
 
     @Override
     public void leaveGame(Client client) {
         /* TODO */
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    private void requestNextPlayerToPlay() {
+        Client next = turns.remove();
+
+        // Si c'est Mister X, on passe au prochain tour
+        if (game().getMisterX().getPlayer() == next) {
+            turnNumber++;
+        }
+
+        for (Client c : game().players()) {
+            if (c == next)
+                c.sendMessage("YOUR_TURN#");
+            else
+                c.sendMessage("NOT_YOUR_TURN#" + next.username());
+        }
+        
+        turns.add(next);
+    }
 }

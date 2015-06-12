@@ -18,10 +18,14 @@ import javax.swing.WindowConstants;
 import scotlandyardclient.Client;
 import com.google.gson.*;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import scotlandyardclient.gui.GUIMap;
 import scotlandyardclient.json.GameData;
@@ -69,7 +73,7 @@ class TicketsPanel extends JPanel implements Observer {
         busTickets.setText(String.valueOf(pone.getNbBusTickets()));
         subwayTickets.setText(String.valueOf(pone.getNbMetroTickets()));
     }
-    
+
     protected Pone getPone() {
         return pone;
     }
@@ -104,7 +108,7 @@ class TicketsPanelMisterX extends TicketsPanel {
     }
 }
 
-public class GUIGame extends JFrame {
+public class GUIGame extends JFrame implements Runnable {
 
     private final GUIMap mapPanel;
     private JPanel southPanel = new JPanel(new GridLayout(1, 2));
@@ -113,6 +117,15 @@ public class GUIGame extends JFrame {
 
     private Vector<String> events = new Vector<>();
     private JList eventsList = new JList(events);
+
+    private final HashMap<String, Pone> playersPones = new HashMap<>();
+
+    private boolean myTurn; // Dit si c'est au tour du joueur ou pas
+    private boolean gameFinished; // Dit si c'est la fin du jeu ou pas
+
+    private final Object waitClientPlay = new Object(); // Permet d'attendre que le client joue
+
+    private Thread gamePlaying;
 
     public GUIGame() {
         events.add("Début de la partie");
@@ -133,7 +146,7 @@ public class GUIGame extends JFrame {
 
         GameData gameData = new Gson().fromJson(Client.getInstance().receiveCommand(), GameData.class);
 
-        mapPanel = new GUIMap(gameData.gameMap(), background);
+        mapPanel = new GUIMap(this, gameData.gameMap(), background);
         JScrollPane js = new JScrollPane(mapPanel);
         getContentPane().add(js, BorderLayout.CENTER);
 
@@ -146,12 +159,14 @@ public class GUIGame extends JFrame {
         for (PlayerData pdata : playerDataList.playersData()) {
             Pone playerPone = new Pone(pdata.getColor(), pdata.getPlayerName(), gameData.gameMap().getStation(pdata.getStation()), pdata.getTaxi(), pdata.getBus(), pdata.getSubway());
             playerPone.addObserver(mapPanel);
+            playersPones.put(pdata.getPlayerName(), playerPone);
             tabbedPane.addTab(pdata.getPlayerName(), new TicketsPanel(playerPone));
         }
 
         // récupérer les tickets de Mister X
         MisterXData misterXData = gameData.misterXData();
         PoneMisterX poneMisterX = new PoneMisterX(misterXData.getColor(), misterXData.getPlayerName(), gameData.gameMap().getStation(misterXData.getStation()), misterXData.getBlack(), misterXData.getDoubleTurn(), misterXData.getTaxi(), misterXData.getBus(), misterXData.getSubway());
+        playersPones.put(misterXData.getPlayerName(), poneMisterX);
         poneMisterX.addObserver(mapPanel);
         tabbedPane.addTab(misterXData.getPlayerName(), new TicketsPanelMisterX(poneMisterX));
 
@@ -160,6 +175,9 @@ public class GUIGame extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+
+        gamePlaying = new Thread(this);
+        gamePlaying.start();
     }
 
     JPanel southPanel() {
@@ -170,11 +188,52 @@ public class GUIGame extends JFrame {
         southPanel.add(new ControlPanel());
     }
 
+    @Override
+    public void run() {
+        while (!gameFinished) {
+            System.out.println("Salut connard");
+            String[] cmd = Client.getInstance().receiveCommand().split("#");
+
+            switch (cmd[0]) {
+                case "YOUR_TURN":
+                    myTurn = true;
+                    try {
+                        System.out.println("C'est mon tour");
+                        waitClientPlay.wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GUIGame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+                case "NOT_YOUR_TURN":
+                    myTurn = false;
+                    break;
+            }
+        }
+    }
+
+    public boolean isMyTurn() {
+        return myTurn;
+    }
+
     public class ControlPanel extends JPanel {
 
         private final JButton play = new JButton("Jouer");
 
         public ControlPanel() {
+
+            play.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!GUIGame.this.isMyTurn()) {
+                        JOptionPane.showMessageDialog(rootPane, "Ce n'est pas votre tour de jouer", "Erreur", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // Envoyer un message au serveur pour dire qu'on a joué
+                    GUIGame.this.waitClientPlay.notify();
+                }
+            });
+
             setLayout(new FlowLayout(FlowLayout.CENTER));
             add(play);
         }
@@ -183,7 +242,7 @@ public class GUIGame extends JFrame {
     void addTab(String name, TicketsPanel ticketsPanel) {
         tabbedPane.add(name, ticketsPanel);
     }
-    
+
     public void addEvent(String event) {
         events.add(event);
     }

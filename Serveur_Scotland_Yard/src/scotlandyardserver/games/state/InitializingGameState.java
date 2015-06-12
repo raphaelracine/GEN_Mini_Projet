@@ -141,6 +141,9 @@ public class InitializingGameState extends GameState {
                 // Envoi des tickets et des données de la carte
                 c.sendMessage(new Gson().toJson(new GameData(gameMap, playerDataList, misterXData)));
             }
+            
+            // On passe à l'état de jeu
+            game().setState(new PlayingGameState(game()));
         } catch (SQLException ex) {
             Logger.getLogger(InitializingGameState.class.getName()).log(Level.SEVERE, null, ex);
         }

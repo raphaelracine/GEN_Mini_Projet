@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import scotlandyardclient.Client;
+import scotlandyardclient.gui.ingame.GUIGame;
 import scotlandyardclient.gui.ingame.GUIMove;
 import scotlandyardclient.gui.ingame.GUIMoveMisterX;
 import scotlandyardclient.gui.views.LinkView;
@@ -25,13 +26,15 @@ public class GUIMap extends JPanel implements Observer {
 
     private final BufferedImage background;
     private final GameMap map;
+    private final GUIGame parent;
 
     private final LinkedList<StationView> stationViews = new LinkedList<>();
     private final LinkedList<LinkView> linkViews = new LinkedList<>();
 
-    public GUIMap(GameMap map, BufferedImage background) {
+    public GUIMap(GUIGame parent, GameMap map, BufferedImage background) {
         this.background = background;
         this.map = map;
+        this.parent = parent;
 
         setPreferredSize(new Dimension(background.getWidth(), background.getHeight()));
 
@@ -53,6 +56,12 @@ public class GUIMap extends JPanel implements Observer {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                // On vérifie que c'est bien au joueur de jouer
+                if(!parent.isMyTurn()) {
+                    JOptionPane.showMessageDialog(GUIMap.this, "Ce n'est pas votre tour !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
                 for (StationView sv : stationViews) {
                     if (sv.contains(e.getX(), e.getY())) {
                         Station destination = sv.getStation();
@@ -62,7 +71,6 @@ public class GUIMap extends JPanel implements Observer {
                             return;
                         }
 
-                        /* Problèmes ici !!! */
                         for (Station s : map.getStations()) {
                             for (LinkView lv : linkViews) {
                                 if (lv.model().connectStations(s, destination)) {
@@ -70,7 +78,7 @@ public class GUIMap extends JPanel implements Observer {
                                         if (s.getPone().isMisterX()) {
                                             new GUIMoveMisterX(lv.model(), destination);
                                         } else {
-                                            new GUIMove(lv.model(), destination);
+                                            new GUIMove(parent, lv.model(), destination);
                                         }
                                     }
                                     break;

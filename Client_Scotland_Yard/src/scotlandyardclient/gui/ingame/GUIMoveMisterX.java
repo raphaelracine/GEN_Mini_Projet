@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,10 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import scotlandyardclient.Client;
-import scotlandyardclient.json.GameMap;
 import scotlandyardclient.json.Link;
 import scotlandyardclient.json.Station;
-import scotlandyardclient.pone.Pone;
 import scotlandyardclient.pone.PoneMisterX;
 
 public class GUIMoveMisterX extends JFrame {
