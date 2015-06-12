@@ -16,7 +16,7 @@ public abstract class GUIWaitingGame extends JFrame implements Runnable {
     private final GUIGameRoom room;
     private final String game;    
         
-    private final Thread activity;
+    private Thread activity;
     
     private final JButton quit = new JButton("Quitter");
     private final JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -38,10 +38,12 @@ public abstract class GUIWaitingGame extends JFrame implements Runnable {
 
         southPanel.add(quit);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
-        
-        activity = new Thread(this);
-        activity.start();
-    }    
+    }  
+    
+    public void startWaiting() {
+         activity = new Thread(this);
+         activity.start();
+    }
         
     protected JPanel southPanel() {
         return southPanel;

@@ -3,6 +3,7 @@ package scotlandyardserver.client;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -56,7 +57,7 @@ public class Client implements Runnable {
                     server.interpreteReceivedCommand(command, this);
                 }
             }
-            
+
             logOut();
             socket.close();
             in.close();
@@ -86,23 +87,32 @@ public class Client implements Runnable {
         out.println(message);
         out.flush();
     }
-    
-    public void sendImageFile(String fileName) throws IOException {
-        byte buffer[] = new byte[1024];
-        
-        FileInputStream file = new FileInputStream(fileName);
-        OutputStream os = socket.getOutputStream();
-        int n;
-        
-        sendMessage("IMAGESIZE#" + new File(fileName).length());
-        
-        while((n = file.read(buffer)) != -1) {
-            System.out.println(n);
-            os.write(buffer, 0, n);
-        }
 
-        os.flush();
-        file.close();
+    public void sendImageFile(String fileName) throws IOException {
+        FileInputStream file = null;
+        try {
+            byte buffer[] = new byte[1024];
+            file = new FileInputStream(fileName);
+            OutputStream os = socket.getOutputStream();
+            int n;
+            sendMessage("IMAGESIZE#" + new File(fileName).length());
+            while ((n = file.read(buffer)) != -1) {
+                System.out.println(n);
+                os.write(buffer, 0, n);
+            }
+            os.flush();
+            file.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                file.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void setState(ClientState state) {
@@ -132,11 +142,11 @@ public class Client implements Runnable {
     public void leaveGame() {
         state.leaveGame();
     }
-    
+
     public void createGame(String name, int numberOfPlayers, String map) {
         state.createGame(name, numberOfPlayers, map);
     }
-    
+
     public void joinGame(String name) {
         state.joinGame(name);
     }

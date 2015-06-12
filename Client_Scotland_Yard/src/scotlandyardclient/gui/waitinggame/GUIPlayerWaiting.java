@@ -32,15 +32,15 @@ public class GUIPlayerWaiting extends GUIWaitingGame {
 
             switch (cmd[0]) {
                 case "GAMESTART":
-                    dispose();
                     new GUIGame().startGame();
+                    dispose();
                     return;
                 case "HOSTLEFTGAME":
                     Client.getInstance().leaveGame();
                     return;
                 case "PLAYERLEFTGAME":
-                    dispose();
                     new GUIGameRoom(Client.getInstance().username());
+                    dispose();
                     return;
             }
         }

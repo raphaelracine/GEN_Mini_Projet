@@ -61,15 +61,15 @@ public class Client {
         state.logOut();
     }
 
-    public synchronized String receiveCommand() {
+    public String receiveCommand() {
         return state.receiveCommand();
     }
     
-    public synchronized byte[] receiveImage() {
+    public byte[] receiveImage() {
         return state.receiveImage();
     }
     
-    public synchronized void sendCommand(String command) {
+    public void sendCommand(String command) {
         state.sendCommand(command);
     }
     

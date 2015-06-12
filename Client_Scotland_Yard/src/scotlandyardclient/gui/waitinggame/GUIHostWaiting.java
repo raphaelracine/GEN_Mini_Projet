@@ -50,8 +50,8 @@ public class GUIHostWaiting extends GUIWaitingGame {
 
             switch (cmd[0]) {
                 case "GAMESTART":
-                    dispose();
                     new GUIGameMisterX().startGame();
+                    dispose();
                     return;
                 case "GAMEREADY":
                     start.setEnabled(true);
@@ -64,8 +64,8 @@ public class GUIHostWaiting extends GUIWaitingGame {
                     start.setEnabled(false);
                     break;
                 case "HOSTLEFTGAME":
-                    dispose();
                     new GUIGameRoom(Client.getInstance().username());
+                    dispose();
                     return;
             }
         }
