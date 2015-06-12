@@ -13,34 +13,35 @@ import scotlandyardclient.Utils;
 import scotlandyardclient.gui.GUIGameRoom;
 
 public class GUIPlayerWaiting extends GUIWaitingGame {
+
     JLabel label = new JLabel("En attente de joueurs...");
     private final JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-    public GUIPlayerWaiting(GUIGameRoom room, String game) {        
+    public GUIPlayerWaiting(GUIGameRoom room, String game) {
         super(room, game);
         centerPanel.add(label);
         getContentPane().add(centerPanel, BorderLayout.CENTER);
-        
+
         pack();
     }
 
     @Override
     public void run() {
-        while(true) {
+        while (true) {
             String[] cmd = Utils.parseCommand(Client.getInstance().receiveCommand());
-            
-            switch(cmd[0]) {
+
+            switch (cmd[0]) {
                 case "GAMESTART":
-                    new GUIGame();
                     dispose();
-                    return;                  
+                    new GUIGame().startGame();
+                    return;
                 case "HOSTLEFTGAME":
                     Client.getInstance().leaveGame();
                     return;
                 case "PLAYERLEFTGAME":
-                    new GUIGameRoom(Client.getInstance().username());
                     dispose();
-                    return;   
+                    new GUIGameRoom(Client.getInstance().username());
+                    return;
             }
         }
     }

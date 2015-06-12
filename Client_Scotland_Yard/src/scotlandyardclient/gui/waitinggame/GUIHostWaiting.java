@@ -39,7 +39,7 @@ public class GUIHostWaiting extends GUIWaitingGame {
 
         getContentPane().add(northPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPlayers);
-        
+
         pack();
     }
 
@@ -50,8 +50,8 @@ public class GUIHostWaiting extends GUIWaitingGame {
 
             switch (cmd[0]) {
                 case "GAMESTART":
-                    new GUIGameMisterX();
                     dispose();
+                    new GUIGameMisterX().startGame();
                     return;
                 case "GAMEREADY":
                     start.setEnabled(true);
@@ -64,8 +64,8 @@ public class GUIHostWaiting extends GUIWaitingGame {
                     start.setEnabled(false);
                     break;
                 case "HOSTLEFTGAME":
-                    new GUIGameRoom(Client.getInstance().username());
                     dispose();
+                    new GUIGameRoom(Client.getInstance().username());
                     return;
             }
         }

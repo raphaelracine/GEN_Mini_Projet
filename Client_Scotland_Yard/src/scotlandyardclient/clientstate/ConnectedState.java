@@ -18,6 +18,7 @@ public abstract class ConnectedState extends ClientState {
     public void connect(String ipAddress, int port) {
     }
 
+    @Override
     public void disconnect() {
         try {
             socket.close();
@@ -27,6 +28,7 @@ public abstract class ConnectedState extends ClientState {
         }
     }
 
+    @Override
     public void sendCommand(String command) {
         try {
             PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);

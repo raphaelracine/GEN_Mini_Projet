@@ -75,7 +75,6 @@ public class Client implements Runnable {
 
             if (socket != null) {
                 try {
-
                     socket.close();
                 } catch (IOException ex1) {
                 }
@@ -83,9 +82,9 @@ public class Client implements Runnable {
         }
     }
 
-    public synchronized void sendMessage(String message) {
-        System.out.println("Username : " + username() + " Message : " + message);
+    public void sendMessage(String message) {
         out.println(message);
+        out.flush();
     }
     
     public void sendImageFile(String fileName) throws IOException {

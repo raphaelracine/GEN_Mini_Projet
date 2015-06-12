@@ -27,6 +27,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import scotlandyardclient.Utils;
 import scotlandyardclient.gui.GUIMap;
 import scotlandyardclient.json.GameData;
 import scotlandyardclient.json.PlayerData;
@@ -123,8 +124,6 @@ public class GUIGame extends JFrame implements Runnable {
     private boolean myTurn; // Dit si c'est au tour du joueur ou pas
     private boolean gameFinished; // Dit si c'est la fin du jeu ou pas
 
-    private final Object waitClientPlay = new Object(); // Permet d'attendre que le client joue
-
     private Thread gamePlaying;
 
     public GUIGame() {
@@ -175,9 +174,6 @@ public class GUIGame extends JFrame implements Runnable {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-
-        gamePlaying = new Thread(this);
-        gamePlaying.start();
     }
 
     JPanel southPanel() {
@@ -187,21 +183,21 @@ public class GUIGame extends JFrame implements Runnable {
     void initSouthPanel() {
         southPanel.add(new ControlPanel());
     }
+    
+    public void startGame() {
+        gamePlaying = new Thread(this);
+        gamePlaying.start();
+    }
 
     @Override
     public void run() {
         while (!gameFinished) {
-            String[] cmd = Client.getInstance().receiveCommand().split("#");
+            String[] cmd = Utils.parseCommand(Client.getInstance().receiveCommand());
 
             switch (cmd[0]) {
                 case "YOUR_TURN":
+                    System.out.println("C'est mon tour");
                     myTurn = true;
-                    try {
-                        System.out.println("C'est mon tour");
-                        waitClientPlay.wait();
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(GUIGame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                     break;
                 case "NOT_YOUR_TURN":
                     System.out.println("C'est pas mon tour");
@@ -228,9 +224,6 @@ public class GUIGame extends JFrame implements Runnable {
                         JOptionPane.showMessageDialog(rootPane, "Ce n'est pas votre tour de jouer", "Erreur", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-
-                    // Envoyer un message au serveur pour dire qu'on a joué
-                    GUIGame.this.waitClientPlay.notify();
                 }
             });
 
