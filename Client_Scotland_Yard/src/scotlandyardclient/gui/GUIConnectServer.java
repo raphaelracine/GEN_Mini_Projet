@@ -80,7 +80,7 @@ public class GUIConnectServer extends JFrame {
                     new GUIGameRoom(txtUsername.getText());
                     GUIConnectServer.this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(createAccount, "Mot de passe ou non d'utilisteur incorrecte", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(createAccount, "Mot de passe ou nom d'utilisateur incorrects", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
