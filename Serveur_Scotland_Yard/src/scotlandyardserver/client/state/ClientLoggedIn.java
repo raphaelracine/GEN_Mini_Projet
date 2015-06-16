@@ -1,3 +1,16 @@
+/**
+ * Cette classe représente l'état du client lorsqu'il est authentifié (State
+ * Pattern)
+ *
+ * Toutes les méthodes de cette classes sont expliquées dans la classe Client
+ * car elle sont simplement appelées par délégation
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardserver.client.state;
 
 import java.sql.SQLException;
@@ -8,8 +21,14 @@ import scotlandyardserver.games.Game;
 
 public class ClientLoggedIn extends ClientState {
 
-    private String username;
+    private String username; // Le nom d'utilisateur du client
 
+    /**
+     * Constructeur
+     *
+     * @param client Le client concerné
+     * @param username Le nom d'utilisateur
+     */
     public ClientLoggedIn(Client client, String username) {
         super(client);
         this.username = username;
@@ -48,32 +67,32 @@ public class ClientLoggedIn extends ClientState {
     public void setUsername(String newUsername) {
         this.username = newUsername;
     }
-    
+
     @Override
     public void createGame(String name, int numberOfPlayers, String map) {
-        if(client().server().getGamesManager().createGame(client(), name, numberOfPlayers, map)) {
+        if (client().server().getGamesManager().createGame(client(), name, numberOfPlayers, map)) {
             client().sendMessage("CREATEGAMEACCEPTED");
-        }
-        else
+        } else {
             client().sendMessage("CREATEGAMEREFUSED");
+        }
     }
-    
+
     @Override
     public void leaveGame() {
         // Le client ne peut pas quitter un jeu s'il n'est pas dedans
     }
-    
+
     @Override
     public void joinGame(String name) {
-        for(Game game : client().server().getGamesManager().games()) {
-            if(game.getName().equals(name)) {
-                if(game.joinGame(client())) {
-                    client().sendMessage("JOINGAMEACCEPTED");                 
+        for (Game game : client().server().getGamesManager().games()) {
+            if (game.getName().equals(name)) {
+                if (game.joinGame(client())) {
+                    client().sendMessage("JOINGAMEACCEPTED");
                     return;
                 }
             }
         }
-        
+
         client().sendMessage("JOINGAMEREFUSED");
     }
 

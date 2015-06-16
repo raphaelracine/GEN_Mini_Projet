@@ -1,3 +1,12 @@
+/**
+ * Cette classe est l'interface graphique permettant d'ajouter un utilisateur
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardserver.admin.user;
 
 import javax.swing.*;
@@ -21,6 +30,11 @@ public class GUIAddUser extends JFrame {
     private JButton add;
     private final JButton cancel;
 
+    /**
+     * Constructeur
+     *
+     * @param userManager GUIUser parent
+     */
     public GUIAddUser(GUIUser userManager) {
         this.userManager = userManager;
 

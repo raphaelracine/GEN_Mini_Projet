@@ -1,3 +1,12 @@
+/**
+ * Programme principal du serveur
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardserver;
 
 import scotlandyardserver.admin.map.GUIMap;

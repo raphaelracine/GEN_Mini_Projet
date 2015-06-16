@@ -1,3 +1,16 @@
+/**
+ * Cette classe représente l'état du client lorsqu'il n'est pas authentifié
+ * (State Pattern)
+ *
+ * Toutes les méthodes de cette classes sont expliquées dans la classe Client
+ * car elle sont simplement appelées par délégation
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardserver.client.state;
 
 import java.sql.ResultSet;
@@ -9,6 +22,11 @@ import scotlandyardserver.client.Client;
 
 public class ClientLoggedOut extends ClientState {
 
+    /**
+     * Constructeur
+     *
+     * @param client Le client concerné
+     */
     public ClientLoggedOut(Client client) {
         super(client);
     }
@@ -55,12 +73,12 @@ public class ClientLoggedOut extends ClientState {
     @Override
     public void setUsername(String newUsername) {
     }
-    
+
     @Override
     public void leaveGame() {
-        
+
     }
-    
+
     @Override
     public void createGame(String name, int numberOfPlayers, String map) {
         client().sendMessage("CREATEGAMEREFUSED");

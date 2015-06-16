@@ -1,7 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Cette classe est l'interface graphique permettant d'ajouter un lien entre
+ * deux stations
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardserver.admin.map;
 
@@ -12,10 +17,6 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Yassin
- */
 public class GUIAddStationLink extends JDialog {
 
     private final GUIEditMap parent;
@@ -31,6 +32,12 @@ public class GUIAddStationLink extends JDialog {
     private final JButton add;
     private final JButton cancel;
 
+    /**
+     * Constructeur
+     *
+     * @param parent Editeur de carte parent
+     * @throws SQLException
+     */
     public GUIAddStationLink(GUIEditMap parent) throws SQLException {
         this.parent = parent;
 
@@ -55,10 +62,10 @@ public class GUIAddStationLink extends JDialog {
         cbxType.setSelectedIndex(0);
 
         add = new JButton("Ajouter");
-        add.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        add.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 // teste que deux stations sont bien sélectionnées
                 if (cbxFrom.getSelectedIndex() < 0 || cbxTo.getSelectedIndex() < 0) {
                     JOptionPane.showMessageDialog(rootPane, "Une station n'est pas sélectionnée", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -130,45 +137,14 @@ public class GUIAddStationLink extends JDialog {
                     Logger.getLogger(GUIAddStationLink.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
         });
 
         cancel = new JButton("Annuler");
-        cancel.addMouseListener(new MouseListener() {
+        cancel.addActionListener(new ActionListener() {
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 GUIAddStationLink.this.dispose();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
             }
         });
 

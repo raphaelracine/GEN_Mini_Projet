@@ -1,7 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Cette classe est l'interface graphique permettant d'ajouter une carte
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardserver.admin.map;
 
@@ -14,10 +18,6 @@ import javax.imageio.*;
 import javax.swing.filechooser.*;
 import scotlandyardserver.Utils;
 
-/**
- *
- * @author Yassin
- */
 public class GUIAddMap extends JDialog {
 
     private final int WIDTH_MIN = 400;
@@ -36,6 +36,11 @@ public class GUIAddMap extends JDialog {
 
     private String mapUrl;
 
+    /**
+     * Constructeur
+     *
+     * @param mapManager Manager de carte
+     */
     public GUIAddMap(GUIMap mapManager) {
         this.mapManager = mapManager;
 
@@ -46,9 +51,11 @@ public class GUIAddMap extends JDialog {
         txtMap.setColumns(20);
 
         url = new JButton("...");
-        url.addMouseListener(new MouseListener() {
+
+        url.addActionListener(new ActionListener() {
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser();
                 FileNameExtensionFilter filter = new FileNameExtensionFilter(
                         "JPG & GIF Images", "jpg", "gif");
@@ -75,28 +82,14 @@ public class GUIAddMap extends JDialog {
                     }
                 }
             }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
         });
 
         add = new JButton("Ajouter");
-        add.addMouseListener(new MouseListener() {
+
+        add.addActionListener(new ActionListener() {
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 if (!Utils.checkPatternMatches(txtMap.getText(), "^(?=.*.)(?!.*[#|\\s]).{6,20}$")) {
                     JOptionPane.showMessageDialog(rootPane, "Nom de carte invalide...", "Erreur", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -119,45 +112,15 @@ public class GUIAddMap extends JDialog {
 //Logger.getLogger(GUIAddMap.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
         });
 
         cancel = new JButton("Annuler");
-        cancel.addMouseListener(new MouseListener() {
+
+        cancel.addActionListener(new ActionListener() {
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 GUIAddMap.this.dispose();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
             }
         });
 

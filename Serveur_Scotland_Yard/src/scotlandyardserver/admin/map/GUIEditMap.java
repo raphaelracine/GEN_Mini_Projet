@@ -1,7 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Cette classe est l'interface graphique permettant d'éditer une carte
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardserver.admin.map;
 
@@ -15,10 +19,6 @@ import java.util.logging.*;
 import javax.swing.table.*;
 import scotlandyardserver.Server;
 
-/**
- *
- * @author Yassin
- */
 public class GUIEditMap extends JDialog {
 
     private final GUIMap parent;
@@ -50,6 +50,14 @@ public class GUIEditMap extends JDialog {
         "Origine", "Destination", "Type"
     };
 
+    /**
+     * Constructeur
+     *
+     * @param parent GUIMap parent
+     * @param name Nom de la carte
+     * @param url Url de l'image
+     * @throws IOException
+     */
     public GUIEditMap(GUIMap parent, String name, String url) throws IOException {
         this.parent = parent;
         this.name = name;

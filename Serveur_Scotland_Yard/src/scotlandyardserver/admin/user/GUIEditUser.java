@@ -1,3 +1,12 @@
+/**
+ * Cette classe est l'interface graphique permettant d'éditer un utlisateur
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardserver.admin.user;
 
 import javax.swing.*;
@@ -23,6 +32,12 @@ public class GUIEditUser extends JFrame {
 
     private GUIUser userManager;
 
+    /**
+     * Constructeur
+     *
+     * @param userManager GUIUser parent
+     * @param username Le nom de l'utilisateur avant modification
+     */
     public GUIEditUser(GUIUser userManager, String username) {
         this.userManager = userManager;
         this.username = username;

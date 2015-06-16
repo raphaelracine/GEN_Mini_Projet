@@ -1,3 +1,13 @@
+/**
+ * Cette classe représente un manager de clients, qui s'occupe de recevoir les
+ * nouveaux clients qui se connectent au serveur
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardserver.client;
 
 import java.io.IOException;
@@ -8,10 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import scotlandyardserver.Server;
 
-/**
- *
- * @author Raphaël Racine
- */
 public class ClientsManager implements Runnable {
 
     private final Thread thread;
@@ -19,12 +25,20 @@ public class ClientsManager implements Runnable {
 
     private final Server server;
 
+    /**
+     * Constructeur
+     *
+     * @param server Référence vers le serveur
+     */
     public ClientsManager(Server server) {
         this.server = server;
         thread = new Thread(this);
         thread.start();
     }
 
+    /**
+     * Attente active de clients qui se connecte sur la socket du serveur
+     */
     @Override
     public void run() {
         try {
@@ -41,6 +55,11 @@ public class ClientsManager implements Runnable {
         }
     }
 
+    /**
+     * Retourne la liste des clients connectés au serveur
+     *
+     * @return Liste des clients connectés au serveur
+     */
     public LinkedList<Client> listClients() {
         return clients;
     }

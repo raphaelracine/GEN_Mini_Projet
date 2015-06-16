@@ -1,3 +1,13 @@
+/**
+ * Cette classe est l'interface graphique permettant d'afficher la liste des
+ * utilisateurs
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardserver.admin.user;
 
 import javax.swing.*;
@@ -30,6 +40,11 @@ public class GUIUser extends JFrame {
         "Nom d'utilisateur", "Est connecté", "Est bloqué"
     };
 
+    /**
+     * Constructeur
+     *
+     * @param server Référence vers le serveur
+     */
     public GUIUser(Server server) {
         this.server = server;
 

@@ -1,7 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Cette classe est l'interface graphique permettant de afficher la liste des
+ * cartes
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardserver.admin.map;
 
@@ -32,6 +37,11 @@ public class GUIMap extends JFrame {
         "Carte", "Url"
     };
 
+    /**
+     * Constructeur
+     *
+     * @param server Référence vers le serveur
+     */
     public GUIMap(Server server) {
         this.server = server;
 
