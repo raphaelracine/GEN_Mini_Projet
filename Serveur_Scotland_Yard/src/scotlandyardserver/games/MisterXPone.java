@@ -14,13 +14,5 @@ public class MisterXPone extends Pone {
         super(player, start, ticketsTaxi, ticketsBus, ticketsSubway);
         this.ticketsBlack = ticketsBlack;
         this.ticketsDouble = ticketsDouble;
-    }  
-    
-    public int ticketsDouble() {
-        return ticketsDouble;
-    }
-    
-    public int ticketsBlack() {
-        return ticketsBlack;
     }
 }

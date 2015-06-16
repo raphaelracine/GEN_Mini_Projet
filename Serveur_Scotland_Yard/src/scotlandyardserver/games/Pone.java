@@ -5,7 +5,7 @@ import scotlandyardserver.json.Station;
 
 public abstract class Pone {
     private Station currentStation;
-    private Client player;
+    private final Client player;
     
     private final int ticketsTaxi;
     private final int ticketsBus;
