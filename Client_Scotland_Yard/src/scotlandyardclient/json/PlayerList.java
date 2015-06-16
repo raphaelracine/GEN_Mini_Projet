@@ -1,19 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Classe qui permet de recevoir la liste des joueurs d'une partie en JSon
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardclient.json;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Raphaël Racine
- */
 public class PlayerList {
+
     private final ArrayList<String> players = new ArrayList<String>();
-    
+
     public ArrayList<String> players() {
         return players;
     }

@@ -1,3 +1,13 @@
+/**
+ * Classe qui représente l'interface graphique permettant à Mister X de se
+ * déplacer...
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardclient.gui.ingame;
 
 import java.awt.BorderLayout;
@@ -28,6 +38,12 @@ public class GUIMoveMisterX extends JFrame {
     private final JButton move = new JButton("Se déplacer");
     private final JButton cancel = new JButton("Annuler");
 
+    /**
+     * Constructeur
+     *
+     * @param link Lien sur lequel se déplacer
+     * @param destination Station de destination
+     */
     public GUIMoveMisterX(Link link, Station destination) {
         this.destination = destination;
         this.link = link;
@@ -36,9 +52,9 @@ public class GUIMoveMisterX extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String locomotionUsed;
-                
-                PoneMisterX pone = (PoneMisterX)Client.getInstance().getPone();
-                
+
+                PoneMisterX pone = (PoneMisterX) Client.getInstance().getPone();
+
                 if (radTaxi.isSelected()) {
                     locomotionUsed = "taxi";
                     if (!link.getLocomotions().contains(locomotionUsed)) {
@@ -58,10 +74,8 @@ public class GUIMoveMisterX extends JFrame {
                         return;
                     }
                 }
-                
+
                 // VERIFIER TICKETS POUR SE DEPLACER
-                
-                
                 pone.moveToStation(destination);
                 GUIMoveMisterX.this.dispose();
             }

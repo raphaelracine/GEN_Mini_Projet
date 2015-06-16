@@ -1,3 +1,16 @@
+/**
+ * Classe qui représente l'état d'un client lorsqu'il est déconnecté
+ * (utilisation du State Pattern).
+ *
+ * Il est à noter que toutes les méthodes de cette classe sont également dans la
+ * classe Client, mais ces méthodes sont appelées par délégation
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardclient.clientstate;
 
 import java.io.*;
@@ -13,7 +26,7 @@ public class DisconnectedState extends ClientState {
     @Override
     public void connect(String ipAddress, int port) {
         Client.getInstance().setState(this);
-        Socket socket;
+        Socket socket = null;
         InetAddress ip;
         try {
             ip = InetAddress.getByName(ipAddress);
@@ -26,25 +39,26 @@ public class DisconnectedState extends ClientState {
         }
     }
 
+    @Override
     public void disconnect() {
     }
-    
+
+    @Override
     public void sendCommand(String command) {
     }
 
+    @Override
     public boolean isConnected() {
         return false;
     }
 
     @Override
     public boolean logIn(String username, String password) {
-        // On ne fait rien car le client n'est pas connecté
         return false;
     }
 
     @Override
     public void logOut() {
-        // On ne fait rien car le client n'est pas connecté
     }
 
     @Override
@@ -56,12 +70,12 @@ public class DisconnectedState extends ClientState {
     public boolean editAccount(String newUsername, String newPassword) {
         return false;
     }
-    
+
     @Override
     public boolean joinGame(String gameName) {
         return false;
     }
-    
+
     @Override
     public boolean createGame(String partyName, int playersNb, String map) {
         return false;
@@ -71,7 +85,7 @@ public class DisconnectedState extends ClientState {
     public MapNames getMapNames() {
         return null;
     }
-    
+
     @Override
     public GameList getGameList() {
         return null;
@@ -81,12 +95,12 @@ public class DisconnectedState extends ClientState {
     public PlayerList getPlayerList(String game) {
         return null;
     }
-    
+
     @Override
     public String receiveCommand() {
         return "";
     }
-    
+
     @Override
     public String username() {
         return null;
@@ -100,12 +114,13 @@ public class DisconnectedState extends ClientState {
     public byte[] receiveImage() {
         return null;
     }
-    
+
     @Override
     public Pone getPone() {
         return null;
     }
-    
+
     @Override
-        public void setPone(Pone p) {}
+    public void setPone(Pone p) {
+    }
 }

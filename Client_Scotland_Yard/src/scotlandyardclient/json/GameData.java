@@ -1,35 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Classe qui permet de recevoir les données d'une partie en JSon
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardclient.json;
 
-/**
- *
- * @author Yassin
- */
 public class GameData {
-    private GameMap gameMap;
-    private PlayerDataList playerDataList;
-    private MisterXData misterXData;
-    
-    public GameData(GameMap gameMap, 
-            PlayerDataList playerDataList, 
+
+    private final GameMap gameMap;
+    private final PlayerDataList playerDataList;
+    private final MisterXData misterXData;
+
+    public GameData(GameMap gameMap,
+            PlayerDataList playerDataList,
             MisterXData misterXData) {
         this.gameMap = gameMap;
         this.playerDataList = playerDataList;
         this.misterXData = misterXData;
     }
-    
+
     public GameMap gameMap() {
         return gameMap;
     }
-    
+
     public PlayerDataList playerDataList() {
         return playerDataList;
     }
-    
+
     public MisterXData misterXData() {
         return misterXData;
     }

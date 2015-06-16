@@ -1,6 +1,18 @@
+/**
+ * Classe qui représente l'état d'un client lorsqu'il est connecté à un serveur
+ * mais pas authentifié (utilisation du State Pattern).
+ *
+ * Il est à noter que toutes les méthodes de cette classe sont également dans la
+ * classe Client, mais ces méthodes sont appelées par délégation
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardclient.clientstate;
 
-import java.io.IOException;
 import java.net.Socket;
 import scotlandyardclient.Client;
 import scotlandyardclient.json.*;
@@ -8,6 +20,11 @@ import scotlandyardclient.pone.Pone;
 
 class LoggedOutState extends ConnectedState {
 
+    /**
+     * Constructeur
+     *
+     * @param socket Socket de connexion vers le serveur
+     */
     public LoggedOutState(Socket socket) {
         super(socket);
     }
@@ -17,11 +34,12 @@ class LoggedOutState extends ConnectedState {
         sendCommand("AUTHENTICATE#" + username + "#" + password);
         String response = receiveCommand();
 
-        if (response.equals("AUTHENTICATEACCEPTED")) {
-            Client.getInstance().setState(new LoggedInState(getSocket(), username));
-            return true;
-        } else if (response.equals("AUTHENTICATEREFUSED")) {
-            return false;
+        switch (response) {
+            case "AUTHENTICATEACCEPTED":
+                Client.getInstance().setState(new LoggedInState(getSocket(), username));
+                return true;
+            case "AUTHENTICATEREFUSED":
+                return false;
         }
 
         return false;
@@ -37,10 +55,11 @@ class LoggedOutState extends ConnectedState {
         sendCommand("CREATEACCOUNT#" + username + "#" + password);
         String response = receiveCommand();
 
-        if (response.equals("CREATEACCOUNTACCEPTED")) {
-            return true;
-        } else if (response.equals("CREATEACCOUNTREFUSED")) {
-            return false;
+        switch (response) {
+            case "CREATEACCOUNTACCEPTED":
+                return true;
+            case "CREATEACCOUNTREFUSED":
+                return false;
         }
         return false;
     }
@@ -49,13 +68,14 @@ class LoggedOutState extends ConnectedState {
     public boolean editAccount(String newUsername, String newPassword) {
         return false;
     }
-    
+
+    @Override
     public boolean joinGame(String gameName) {
         return false;
     }
-    
+
     @Override
-    public boolean createGame(String partyName, int playersNb, String map){
+    public boolean createGame(String partyName, int playersNb, String map) {
         return false;
     }
 
@@ -63,30 +83,32 @@ class LoggedOutState extends ConnectedState {
     public MapNames getMapNames() {
         return null;
     }
-    
+
     @Override
     public GameList getGameList() {
         return null;
     }
-    
+
     @Override
     public PlayerList getPlayerList(String game) {
         return null;
     }
-    
+
     @Override
     public String username() {
         return null;
     }
-    
+
     @Override
-    public void leaveGame() {}
-    
+    public void leaveGame() {
+    }
+
     @Override
     public Pone getPone() {
         return null;
     }
-    
+
     @Override
-     public void setPone(Pone p) {}
+    public void setPone(Pone p) {
+    }
 }

@@ -1,7 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Classe qui représente l'interface graphique qui permet à un joueur d'attendre
+ * le début de la partie
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardclient.gui.waitinggame;
 
@@ -14,9 +19,16 @@ import scotlandyardclient.gui.GUIGameRoom;
 
 public class GUIPlayerWaiting extends GUIWaitingGame {
 
+    // Composants graphiques...
     JLabel label = new JLabel("En attente de joueurs...");
     private final JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
+    /**
+     * Constructeur
+     *
+     * @param room Interface graphique de la salle de jeu parente
+     * @param game Nom de la partie
+     */
     public GUIPlayerWaiting(GUIGameRoom room, String game) {
         super(room, game);
         centerPanel.add(label);
@@ -25,6 +37,9 @@ public class GUIPlayerWaiting extends GUIWaitingGame {
         pack();
     }
 
+    /**
+     * Attente active du début de la partie...
+     */
     @Override
     public void run() {
         while (true) {
@@ -39,7 +54,7 @@ public class GUIPlayerWaiting extends GUIWaitingGame {
                     Client.getInstance().leaveGame();
                     return;
                 case "PLAYERLEFTGAME":
-                    new GUIGameRoom(Client.getInstance().username());
+                    new GUIGameRoom(Client.getInstance().username()).refreshGameList();
                     dispose();
                     return;
             }

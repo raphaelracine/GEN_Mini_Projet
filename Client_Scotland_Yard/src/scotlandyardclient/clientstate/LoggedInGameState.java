@@ -1,7 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Classe qui représente l'état d'un client lorsqu'il est dans une partie
+ * (utilisation du State Pattern).
+ *
+ * Il est à noter que toutes les méthodes de cette classe sont également dans la
+ * classe Client, mais ces méthodes sont appelées par délégation
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardclient.clientstate;
 
@@ -9,14 +17,16 @@ import java.net.Socket;
 import scotlandyardclient.Client;
 import scotlandyardclient.pone.Pone;
 
-/**
- *
- * @author Raphaël Racine
- */
 public class LoggedInGameState extends LoggedInState {
 
-    private Pone pone;
+    private Pone pone; // Le pion qu'il joue dans la partie
 
+    /**
+     * Constructeur
+     *
+     * @param socket La socket de connexion vers le serveur
+     * @param username Le nom d'utilisateur du client
+     */
     public LoggedInGameState(Socket socket, String username) {
         super(socket, username);
     }

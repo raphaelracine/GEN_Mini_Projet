@@ -1,3 +1,12 @@
+/**
+ * Classe qui représente l'interface graphique du jeu principale
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardclient.gui.ingame;
 
 import java.awt.BorderLayout;
@@ -36,8 +45,13 @@ import scotlandyardclient.json.MisterXData;
 import scotlandyardclient.pone.Pone;
 import scotlandyardclient.pone.PoneMisterX;
 
+/**
+ * Class représentant un panel d'affichage des informations d'un joueur dans le
+ * JTabbedPane (cette classe est un observateur car elle observe un pion)
+ */
 class TicketsPanel extends JPanel implements Observer {
 
+    // Composants graphiques...
     private final JLabel lblBusTickets;
     private final JLabel lblTaxiTickets;
     private final JLabel lblSubwayTickets;
@@ -45,8 +59,13 @@ class TicketsPanel extends JPanel implements Observer {
     private final JLabel taxiTickets;
     private final JLabel subwayTickets;
 
-    private final Pone pone;
+    private final Pone pone; // Le pion du joueur concerné
 
+    /**
+     * Constructeur
+     *
+     * @param pone Pion dont on veut afficher les informations des tickets
+     */
     public TicketsPanel(Pone pone) {
         this.pone = pone;
         pone.addObserver(this);
@@ -68,6 +87,12 @@ class TicketsPanel extends JPanel implements Observer {
         add(taxiTickets);
     }
 
+    /**
+     * Appelée à chaque fois qu'un pion a changé d'état
+     *
+     * @param o Le pion qui a été modifié
+     * @param arg Argument pas utilisé
+     */
     @Override
     public void update(Observable o, Object arg) {
         taxiTickets.setText(String.valueOf(pone.getNbTaxiTickets()));
@@ -75,18 +100,32 @@ class TicketsPanel extends JPanel implements Observer {
         subwayTickets.setText(String.valueOf(pone.getNbMetroTickets()));
     }
 
+    /**
+     * Permet d'obtenir le pion qui concerne ce panel
+     *
+     * @return Le pion
+     */
     protected Pone getPone() {
         return pone;
     }
 }
 
+/**
+ * Sous-class de Tickets Panel qui représente le pion de Mister X
+ */
 class TicketsPanelMisterX extends TicketsPanel {
 
+    // Composants graphiques...
     private final JLabel lblBlackTickets;
     private final JLabel lblDoubleTickets;
     private final JLabel blackTickets;
     private final JLabel doubleTickets;
 
+    /**
+     * Constructeur
+     *
+     * @param pone Le pion de Mister X
+     */
     public TicketsPanelMisterX(PoneMisterX pone) {
         super(pone);
         lblBlackTickets = new JLabel("Nombre de tickets noirs");
@@ -101,6 +140,12 @@ class TicketsPanelMisterX extends TicketsPanel {
         add(blackTickets);
     }
 
+    /**
+     * Appelée à chaque mise à jour du pion de Mister X
+     *
+     * @param o Le pion observé
+     * @param arg Argument non utilisé
+     */
     @Override
     public void update(Observable o, Object arg) {
         PoneMisterX pone = (PoneMisterX) getPone();
@@ -111,6 +156,7 @@ class TicketsPanelMisterX extends TicketsPanel {
 
 public class GUIGame extends JFrame implements Runnable {
 
+    // Composants grpahiques...
     private final GUIMap mapPanel;
     private JPanel southPanel = new JPanel(new GridLayout(1, 2));
     private JPanel eastPanel = new JPanel(new BorderLayout());
@@ -119,13 +165,17 @@ public class GUIGame extends JFrame implements Runnable {
     private Vector<String> events = new Vector<>();
     private JList eventsList = new JList(events);
 
+    // HashMap pour associer les pions a des noms de joueurs
     private final HashMap<String, Pone> playersPones = new HashMap<>();
 
     private boolean myTurn; // Dit si c'est au tour du joueur ou pas
     private boolean gameFinished; // Dit si c'est la fin du jeu ou pas
 
-    private Thread gamePlaying;
+    private Thread gamePlaying; // Thread qui permet à la partie de se dérouler du côté du client
 
+    /**
+     * Constructeur
+     */
     public GUIGame() {
         events.add("Début de la partie");
 
@@ -176,19 +226,33 @@ public class GUIGame extends JFrame implements Runnable {
         setVisible(true);
     }
 
-    JPanel southPanel() {
+    /**
+     * Permet d'obtenir le panel SUD de la fenêtre (utile pour la sous-classe)
+     *
+     * @return Panel sud de la fenêtre
+     */
+    protected JPanel southPanel() {
         return southPanel;
     }
 
+    /**
+     * Permet d'initialiser le panel sur à partic de la sous-classe
+     */
     void initSouthPanel() {
         southPanel.add(new ControlPanel());
     }
-    
+
+    /**
+     * Permet de démarrer le déroulement de la partie
+     */
     public void startGame() {
         gamePlaying = new Thread(this);
         gamePlaying.start();
     }
 
+    /**
+     * Déroulement de la partie
+     */
     @Override
     public void run() {
         while (!gameFinished) {
@@ -207,14 +271,25 @@ public class GUIGame extends JFrame implements Runnable {
         }
     }
 
+    /**
+     * Dit si c'est au tour du client de jouer ou pas
+     *
+     * @return Retourne true si c'est au client de jouer, false sinon
+     */
     public boolean isMyTurn() {
         return myTurn;
     }
 
-    public class ControlPanel extends JPanel {
+    /**
+     * Classe interne qui représente les boutons d'actions...
+     */
+    class ControlPanel extends JPanel {
 
         private final JButton play = new JButton("Jouer");
 
+        /**
+         * Constructeur
+         */
         public ControlPanel() {
 
             play.addActionListener(new ActionListener() {
@@ -222,7 +297,6 @@ public class GUIGame extends JFrame implements Runnable {
                 public void actionPerformed(ActionEvent e) {
                     if (!GUIGame.this.isMyTurn()) {
                         JOptionPane.showMessageDialog(rootPane, "Ce n'est pas votre tour de jouer", "Erreur", JOptionPane.ERROR_MESSAGE);
-                        return;
                     }
                 }
             });
@@ -232,10 +306,22 @@ public class GUIGame extends JFrame implements Runnable {
         }
     }
 
+    /**
+     * Permet d'ajouter un onglet dans les onglets des joueurs
+     *
+     * @param name Le nom du joueurs
+     * @param ticketsPanel Un panel affichant les informations de son pion
+     * (tickets)
+     */
     void addTab(String name, TicketsPanel ticketsPanel) {
         tabbedPane.add(name, ticketsPanel);
     }
 
+    /**
+     * Permet d'ajouter un événement dans la liste d'événements
+     *
+     * @param event Le nom de l'événement
+     */
     public void addEvent(String event) {
         events.add(event);
     }

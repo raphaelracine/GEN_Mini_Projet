@@ -1,3 +1,12 @@
+/**
+ * Classe qui représente l'interface graphique de la salle des parties.
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardclient.gui;
 
 import scotlandyardclient.gui.waitinggame.GUIPlayerWaiting;
@@ -12,10 +21,14 @@ public class GUIGameRoom extends JFrame {
 
     class UserPanel extends JPanel {
 
+        // Composants graphiques...
         private final JLabel lblWelcome = new JLabel();
-        private JButton disconnect = new JButton("Se déconnecter");
-        private JButton editAccount = new JButton("Editer compte");
+        private final JButton disconnect = new JButton("Se déconnecter");
+        private final JButton editAccount = new JButton("Editer compte");
 
+        /**
+         * Constructeur
+         */
         UserPanel() {
             setLayout(new FlowLayout(FlowLayout.RIGHT));
             add(lblWelcome, BorderLayout.NORTH);
@@ -23,126 +36,75 @@ public class GUIGameRoom extends JFrame {
             add(editAccount, BorderLayout.CENTER);
             setUsername(username);
 
-            disconnect.addMouseListener(new MouseListener() {
+            disconnect.addActionListener(new ActionListener() {
 
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void actionPerformed(ActionEvent e) {
                     Client.getInstance().logOut();
                     GUIGameRoom.this.dispose();
-                    new GUIConnectServer();
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
                 }
             });
 
-            editAccount.addMouseListener(new MouseListener() {
+            editAccount.addActionListener(new ActionListener() {
 
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void actionPerformed(ActionEvent e) {
                     new GUIUserEditForm(GUIGameRoom.this, username);
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
                 }
             });
         }
 
+        /**
+         * Permet de changer le username dans le label qui affiche le nom de
+         * l'utilisateur
+         *
+         * @param username Nom de l'utilisateur
+         */
         private void setUsername(String username) {
             lblWelcome.setText("Bienvenue <" + username + ">");
         }
     }
 
+    /**
+     * Classe interne qui représente un JPanel avec les 3 boutons rafraichir,
+     * créer et rejoindre une partie
+     */
     class GamePanel extends JPanel {
 
-        private JButton refresh = new JButton("Rafraîchir");
-        private JButton createGame = new JButton("Créer une partie");
-        private JButton joinGame = new JButton("Rejoindre partie");
+        // Composants graphiques...
+        private final JButton refresh = new JButton("Rafraîchir");
+        private final JButton createGame = new JButton("Créer une partie");
+        private final JButton joinGame = new JButton("Rejoindre partie");
 
+        /**
+         * Constructeur
+         */
         GamePanel() {
             add(refresh);
             add(createGame);
             add(joinGame);
 
-            refresh.addMouseListener(new MouseListener() {
+            refresh.addActionListener(new ActionListener() {
 
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                   GUIGameRoom.this.refreshGameList();
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                }
-            });
-            
-            createGame.addMouseListener(new MouseListener() {
-
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                   new GUICreateGame(GUIGameRoom.this);
-                   GUIGameRoom.this.dispose();
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
+                public void actionPerformed(ActionEvent e) {
+                    GUIGameRoom.this.refreshGameList();
                 }
             });
 
-            joinGame.addMouseListener(new MouseListener() {
+            createGame.addActionListener(new ActionListener() {
 
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void actionPerformed(ActionEvent e) {
+                    new GUICreateGame(GUIGameRoom.this);
+                    GUIGameRoom.this.dispose();
+                }
+            });
+
+            joinGame.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
                     if (games.getSelectedRow() >= 0) {
                         if (Client.getInstance().joinGame((String) games.getValueAt(games.getSelectedRow(), 0))) {
                             new GUIPlayerWaiting(GUIGameRoom.this, (String) games.getValueAt(games.getSelectedRow(), 0)).startWaiting();
@@ -154,42 +116,32 @@ public class GUIGameRoom extends JFrame {
                         JOptionPane.showMessageDialog(rootPane, "Selectionner une partie", "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                }
             });
         }
     }
 
-    private JLabel lblGames = new JLabel("Liste des parties");
+    private final JLabel lblGames = new JLabel("Liste des parties");
 
-    private JPanel northPanel = new JPanel(new GridLayout(1, 2));
-    private JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    private final JPanel northPanel = new JPanel(new GridLayout(1, 2));
+    private final JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-    private UserPanel userPanel;
+    private final UserPanel userPanel;
 
-    private JTable games = new JTable();
-    private JScrollPane scrollGames = new JScrollPane(games);
+    private final JTable games = new JTable();
+    private final JScrollPane scrollGames = new JScrollPane(games);
 
+    // Noms des colonnes de la JTable
     private static final Object[] columnsNames = {
         "Partie", "Hôte", "Carte", "Joueurs"
     };
-    
-    private String username;
 
+    private String username; // Nom d'utilisateur
+
+    /**
+     * Constructeur
+     *
+     * @param username Le nom d'utilisateur du client
+     */
     public GUIGameRoom(String username) {
         this.username = username;
         userPanel = new UserPanel();
@@ -203,42 +155,46 @@ public class GUIGameRoom extends JFrame {
         getContentPane().add(scrollGames);
         getContentPane().add(southPanel, BorderLayout.SOUTH);
 
-        refreshGameList();
-        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Salle de jeu");
         pack();
         setVisible(true);
     }
 
+    /**
+     * Permet de changer le nom d'utilisateur affiché à l'écran
+     *
+     * @param username Le nouveau nom d'utilisateur
+     */
     public void setUsername(String username) {
         this.username = username;
         userPanel.setUsername(username);
     }
-    
+
+    /**
+     * Permet de rafraichir la liste des parties en cours
+     */
     public void refreshGameList() {
         GameList gameList = Client.getInstance().getGameList();
-        
+
         DefaultTableModel model = new DefaultTableModel(columnsNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        
+
         for (Game game : gameList.games()) {
-            model.addRow(new Object[] {
-                game.name(), 
-                game.host(), 
-                game.map(), 
-                (
-                        new Integer(game.getCurrentPlayers()).toString() 
-                        + "/" 
-                        + new Integer(game.getNumberPlayers()).toString()
-                        )
+            model.addRow(new Object[]{
+                game.name(),
+                game.host(),
+                game.map(),
+                (new Integer(game.getCurrentPlayers()).toString()
+                + "/"
+                + new Integer(game.getNumberPlayers()).toString())
             });
         }
-        
+
         games.setModel(model);
     }
 }

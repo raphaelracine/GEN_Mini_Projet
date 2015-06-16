@@ -1,3 +1,13 @@
+/**
+ * Classe qui représente l'interface graphique qui permet d'éditer un compte
+ * utilisateur.
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardclient.gui;
 
 import javax.swing.*;
@@ -8,6 +18,7 @@ import scotlandyardclient.Utils;
 
 public class GUIUserEditForm extends JFrame {
 
+    // Composants graphiques...
     private final JLabel lblUsername;
     private final JLabel lblPassword;
     private final JLabel lblPasswordConfirm;
@@ -19,8 +30,14 @@ public class GUIUserEditForm extends JFrame {
     private final JButton edit;
     private final JButton cancel;
 
-    private String username;
+    private String username; // Nom de l'utilisateur
 
+    /**
+     * Constructeur
+     *
+     * @param parent Fenêtre de salle de jeu parente
+     * @param username Nom d'utilisateur
+     */
     public GUIUserEditForm(GUIGameRoom parent, String username) {
         this.username = username;
 
@@ -33,26 +50,26 @@ public class GUIUserEditForm extends JFrame {
         txtPasswordConfirm = new JPasswordField(20);
 
         edit = new JButton("Editer");
-        edit.addMouseListener(new MouseListener() {
+
+        edit.addActionListener(new ActionListener() {
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 if (!Utils.checkPatternMatches(txtPassword.getText(), "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*[#|\\s]).{6,20}$")) {
                     JOptionPane.showMessageDialog(rootPane, "Mot de passe invalide...", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    return; // Ne pas enlever !
+                    return;
                 }
 
                 if (!Utils.checkPatternMatches(txtUsername.getText(), "^(?=.*.)(?!.*[#|\\s]).{6,20}$")) {
                     JOptionPane.showMessageDialog(rootPane, "Nom d'utilisateur invalide...", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    return; // Ne pas enlever !
+                    return;
                 }
 
-                // Je dois encore vérifier que les deux mot de passes sont les mêmes...
                 if (!txtPassword.getText().equals(txtPasswordConfirm.getText())) {
                     JOptionPane.showMessageDialog(rootPane, "Les deux mots de passe ne correspondent pas.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    return; // Ne pas enlever !
+                    return;
                 }
 
-                // Demander aux serveur d'éditer le compte
                 if (Client.getInstance().editAccount(txtUsername.getText(), txtPassword.getText())) {
                     JOptionPane.showMessageDialog(rootPane, "Compte edité avec succès.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                     GUIUserEditForm.this.dispose();
@@ -61,45 +78,15 @@ public class GUIUserEditForm extends JFrame {
                     JOptionPane.showMessageDialog(rootPane, "Erreur lors de l'édition du compte.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
         });
 
         cancel = new JButton("Annuler");
-        cancel.addMouseListener(new MouseListener() {
+
+        cancel.addActionListener(new ActionListener() {
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 GUIUserEditForm.this.dispose();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
             }
         });
 

@@ -1,3 +1,13 @@
+/**
+ * Classe qui représente l'interface graphique qui permet de créer un compte
+ * utilisateur
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardclient.gui;
 
 import javax.swing.*;
@@ -8,6 +18,7 @@ import scotlandyardclient.Utils;
 
 public class GUIUserAddForm extends JFrame {
 
+    // Composants graphiques...
     private JLabel lblUsername;
     private JLabel lblPassword;
     private JLabel lblPasswordConfirm;
@@ -19,6 +30,9 @@ public class GUIUserAddForm extends JFrame {
     private JButton add;
     private final JButton cancel;
 
+    /**
+     * Constructeur
+     */
     public GUIUserAddForm() {
 
         lblUsername = new JLabel("Nom d'utilisateur:");
@@ -30,27 +44,26 @@ public class GUIUserAddForm extends JFrame {
         txtPasswordConfirm = new JPasswordField(20);
 
         add = new JButton("Ajouter");
-        add.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
 
+        add.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 if (!Utils.checkPatternMatches(txtPassword.getText(), "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*[#|\\s]).{6,20}$")) {
                     JOptionPane.showMessageDialog(rootPane, "Mot de passe invalide...", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    return; // Ne pas enlever !
+                    return;
                 }
 
                 if (!Utils.checkPatternMatches(txtUsername.getText(), "^(?=.*.)(?!.*[#|\\s]).{6,20}$")) {
                     JOptionPane.showMessageDialog(rootPane, "Nom d'utilisateur invalide...", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    return; // Ne pas enlever !
+                    return;
                 }
 
-                // Je dois encore vérifier que les deux mot de passes sont les mêmes...
                 if (!txtPassword.getText().equals(txtPasswordConfirm.getText())) {
                     JOptionPane.showMessageDialog(rootPane, "Les deux mots de passe ne correspondent pas.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    return; // Ne pas enlever !
+                    return;
                 }
 
-                // Demander au serveur d'ajouter l'utilisateur
                 if (Client.getInstance().createAccount(txtUsername.getText(), txtPassword.getText())) {
                     JOptionPane.showMessageDialog(rootPane, "Le compte a été créé.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                     GUIUserAddForm.this.dispose();
@@ -58,45 +71,15 @@ public class GUIUserAddForm extends JFrame {
                     JOptionPane.showMessageDialog(rootPane, "Erreur lors de la création du compte.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
         });
 
         cancel = new JButton("Annuler");
-        cancel.addMouseListener(new MouseListener() {
+
+        cancel.addActionListener(new ActionListener() {
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 GUIUserAddForm.this.dispose();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
             }
         });
 

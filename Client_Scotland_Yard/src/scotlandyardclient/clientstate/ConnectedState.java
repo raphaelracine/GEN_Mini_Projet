@@ -1,3 +1,16 @@
+/**
+ * Classe qui représente l'état d'un client lorsqu'il est connecté à un serveur
+ * (utilisation du State Pattern).
+ *
+ * Il est à noter que toutes les méthodes de cette classe sont également dans la
+ * classe Client, mais ces méthodes sont appelées par délégation
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardclient.clientstate;
 
 import java.io.*;
@@ -8,8 +21,13 @@ import scotlandyardclient.Client;
 
 public abstract class ConnectedState extends ClientState {
 
-    private final Socket socket;
+    private final Socket socket; // La socket qu'il utilise pour comuniquer avec le serveur
 
+    /**
+     * Constructeur
+     *
+     * @param socket La socket pour la connexion avec le serveur
+     */
     public ConnectedState(Socket socket) {
         this.socket = socket;
     }
@@ -88,7 +106,12 @@ public abstract class ConnectedState extends ClientState {
         return !socket.isClosed() && socket.isConnected();
     }
 
-    public Socket getSocket() {
+    /**
+     * Permet d'obtenir la socket du serveur dans les sous-classes
+     *
+     * @return La socket de connexion vers le serveur
+     */
+    protected Socket getSocket() {
         return socket;
     }
 }

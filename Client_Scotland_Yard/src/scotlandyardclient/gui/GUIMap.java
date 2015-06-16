@@ -1,3 +1,15 @@
+/**
+ * Classe qui représente l'interface graphique de la carte du jeu (dans une
+ * partie)
+ *
+ * Cette classe est un Observateur car elle observe les pions qui se déplacent.
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
 package scotlandyardclient.gui;
 
 import java.awt.Dimension;
@@ -24,13 +36,21 @@ import scotlandyardclient.json.Station;
 
 public class GUIMap extends JPanel implements Observer {
 
-    private final BufferedImage background;
-    private final GameMap map;
-    private final GUIGame parent;
+    private final BufferedImage background; // Image de fond de la carte
+    private final GameMap map; // La carte de la partie
+    private final GUIGame parent; // L'interface graphique de jeu parent
 
+    // Les vues à dessiner
     private final LinkedList<StationView> stationViews = new LinkedList<>();
     private final LinkedList<LinkView> linkViews = new LinkedList<>();
 
+    /**
+     * Constructeur
+     *
+     * @param parent L'interface graphique de la partie parente
+     * @param map // Données de la carte du jeu
+     * @param background // L'image de fond de la carte
+     */
     public GUIMap(GUIGame parent, GameMap map, BufferedImage background) {
         this.background = background;
         this.map = map;
@@ -56,12 +76,11 @@ public class GUIMap extends JPanel implements Observer {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                // On vérifie que c'est bien au joueur de jouer
-                if(!parent.isMyTurn()) {
+                if (!parent.isMyTurn()) {
                     JOptionPane.showMessageDialog(GUIMap.this, "Ce n'est pas votre tour !", "Erreur", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                
+
                 for (StationView sv : stationViews) {
                     if (sv.contains(e.getX(), e.getY())) {
                         Station destination = sv.getStation();
@@ -78,7 +97,7 @@ public class GUIMap extends JPanel implements Observer {
                                         if (s.getPone().isMisterX()) {
                                             new GUIMoveMisterX(lv.model(), destination);
                                         } else {
-                                            new GUIMove(parent, lv.model(), destination);
+                                            new GUIMove(lv.model(), destination);
                                         }
                                     }
                                     break;
@@ -108,8 +127,12 @@ public class GUIMap extends JPanel implements Observer {
 
     }
 
+    /**
+     * Permet de dessiner la carte, avec les stations les liens et les pions
+     *
+     * @param g Contexte graphique pour dessiner
+     */
     @Override
-
     public void paint(Graphics g) {
         super.paint(g);
         g.drawImage(background, 0, 0, this);
@@ -123,6 +146,13 @@ public class GUIMap extends JPanel implements Observer {
         }
     }
 
+    /**
+     * Mise à jour de l'affichage de la carte à chaque fois qu'un pion se
+     * déplace
+     *
+     * @param o Le pion qui s'est déplacé
+     * @param arg Arguments (pas utile ici...)
+     */
     @Override
     public void update(Observable o, Object arg) {
         repaint();

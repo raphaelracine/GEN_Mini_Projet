@@ -1,7 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Classe qui représente l'interface graphique permettant de se déplacer avec un
+ * pion de détective
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardclient.gui.ingame;
 
@@ -16,11 +21,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import scotlandyardclient.Client;
-import scotlandyardclient.json.GameMap;
 import scotlandyardclient.json.Link;
 import scotlandyardclient.json.Station;
 import scotlandyardclient.pone.Pone;
-import scotlandyardclient.pone.PoneMisterX;
 
 public class GUIMove extends JFrame {
 
@@ -32,10 +35,14 @@ public class GUIMove extends JFrame {
     private final JButton move = new JButton("Se déplacer");
     private final JButton cancel = new JButton("Annuler");
     private final Link link;
-    private final GUIGame parent;
 
-    public GUIMove(GUIGame parent, Link link, Station destination) {
-        this.parent = parent;
+    /**
+     * Constructeur
+     *
+     * @param link Lien sur lequel le joueur veut se déplacer
+     * @param destination Station de destination
+     */
+    public GUIMove(Link link, Station destination) {
         this.link = link;
         this.destination = destination;
 
@@ -43,7 +50,7 @@ public class GUIMove extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 String locomotionUsed;
 
                 Pone pone = Client.getInstance().getPone();
