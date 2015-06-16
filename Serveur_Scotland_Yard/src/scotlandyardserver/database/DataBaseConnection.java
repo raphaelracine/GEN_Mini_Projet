@@ -1,3 +1,13 @@
+/**
+ * Cette classe représente la connexion à la base de données
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
+
 package scotlandyardserver.database;
 
 import java.sql.Connection;

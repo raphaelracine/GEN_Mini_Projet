@@ -1,8 +1,17 @@
+/**
+ * Cette classe permet de gérer le traitement des commandes recues par le serveur
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
+ */
+
 package scotlandyardserver.commands;
 
 import scotlandyardserver.Server;
 import scotlandyardserver.client.Client;
-import scotlandyardserver.games.Game;
 
 public class CommandManager {
 
