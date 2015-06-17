@@ -1,7 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Cette classe représentant l'état d'une partie en cours de jeu (State Pattern)
+ *
+ * Il est à noter que toutes ces méthodes sont décrites dans la classe Game mais
+ * elle sont appelées par délégation
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardserver.games.state;
 
@@ -24,6 +31,11 @@ public class PlayingGameState extends GameState {
 
     private static final HashMap<Integer, Boolean> turnsToShowMisterX = new HashMap<>();
 
+    /**
+     * Constructeur
+     *
+     * @param game La partie concernée
+     */
     public PlayingGameState(Game game) {
         super(game);
 
@@ -53,6 +65,9 @@ public class PlayingGameState extends GameState {
         /* TODO */
     }
 
+    /**
+     * Permet de demander au prochain joueur de jouer
+     */
     private void requestNextPlayerToPlay() {
         Client next = turns.remove();
 
@@ -62,12 +77,13 @@ public class PlayingGameState extends GameState {
         }
 
         for (Client c : game().players()) {
-            if (c == next)
+            if (c == next) {
                 c.sendMessage("YOUR_TURN#");
-            else
+            } else {
                 c.sendMessage("NOT_YOUR_TURN#" + next.username());
+            }
         }
-        
+
         turns.add(next);
     }
 }

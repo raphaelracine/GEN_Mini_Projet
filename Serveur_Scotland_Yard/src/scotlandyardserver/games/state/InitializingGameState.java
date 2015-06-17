@@ -1,7 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Cette classe représentant l'état d'une partie en cours d'initialisation (State Pattern)
+ * 
+ * Il est à noter que toutes ces méthodes sont décrites dans la classe Game mais
+ * elle sont appelées par délégation
+ *
+ * @author Raphaël Racine
+ * @author Yassin Kammoun
+ * @author Vanessa Michelle Meguep
+ *
+ * @date 16.05.2015
  */
 package scotlandyardserver.games.state;
 
@@ -37,6 +44,10 @@ public class InitializingGameState extends GameState {
     
     private static final Random random = new Random();
     
+    /**
+     * Constructeur
+     * @param game La partie concernée 
+     */
     public InitializingGameState(Game game) {
         super(game);
         initGame();

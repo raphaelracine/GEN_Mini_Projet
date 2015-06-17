@@ -1,3 +1,5 @@
+/** Classe expliquée du côté client **/
+
 package scotlandyardserver.json;
 
 public class Station {

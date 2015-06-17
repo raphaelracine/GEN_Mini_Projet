@@ -46,10 +46,19 @@ public class CommandManager {
 
     private Server server;
 
+    /**
+     * Constructeur
+     * @param server Le serveur 
+     */
     public CommandManager(Server server) {
         this.server = server;
     }
 
+    /**
+     * Permet d'exécuter une commande reçue par un client
+     * @param command La commande envoyée par le client
+     * @param client Le client qui a envoyé la commande
+     */
     public void executeCommand(String command, Client client) {
         String[] commandWithArgs = parseCommand(command);
         String nameOfCommand = commandWithArgs[0];
@@ -170,6 +179,11 @@ public class CommandManager {
 
     }
 
+    /**
+     * Permet de parser la commande selon le protocol de l'applicatif
+     * @param command La commande qu'on doit parser
+     * @return Un tableau de string représentant la commande parsée
+     */
     private String[] parseCommand(String command) {
         return command.split("#");
     }

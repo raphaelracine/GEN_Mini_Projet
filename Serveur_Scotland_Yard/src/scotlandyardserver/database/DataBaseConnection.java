@@ -23,6 +23,9 @@ public class DataBaseConnection {
     private Connection connection;
     private Statement statement;
 
+    /**
+     * Constructeur
+     */
     public DataBaseConnection() {
         String url = "jdbc:mysql://localhost:3306/scotlandyard?user=scotlandyard&password=scotlandyard";
 
@@ -36,10 +39,22 @@ public class DataBaseConnection {
         }
     }
 
+    /**
+     * Permet de faire une requête de sélection sur la base de données
+     * @param selectionQuery Requête de sélection SQL
+     * @return Un ResultSet qui contient le résultat de la requête
+     * @throws SQLException 
+     */
     public ResultSet getSQLSelection(String selectionQuery) throws SQLException {
         return statement.executeQuery(selectionQuery);
     }
 
+    /**
+     * Permet d'exécuter une requête de type (créate update delete) sur la base de données
+     * @param CRUDrequest La requête SQL à effectuer
+     * @return Retourne true si la requête s'est bien passée, false sinon
+     * @throws SQLException 
+     */
     public boolean executeCRUDrequest(String CRUDrequest) throws SQLException {
         return statement.execute(CRUDrequest);
     }
