@@ -35,7 +35,7 @@ import scotlandyardserver.json.Link;
  */
 public class InitializingGameState extends GameState {
     
-    static private Random random = new Random();
+    private static final Random random = new Random();
     
     public InitializingGameState(Game game) {
         super(game);

@@ -6,8 +6,8 @@ import scotlandyardserver.json.Station;
 
 public class MisterXPone extends Pone {
 
-    private int ticketsDouble;
-    private int ticketsBlack;
+    private final int ticketsDouble;
+    private final int ticketsBlack;
     
     public MisterXPone(Client player, Station start, int ticketsTaxi, int ticketsBus, int ticketsSubway
     , int ticketsBlack, int ticketsDouble) {
